@@ -1,3 +1,10 @@
+import { Footer } from "../../components/Footer";
+
 export default function Produto() {
-    return <h1>Produto</h1>;
+  return (
+    <main>
+      <h1>Produto</h1>
+      <Footer />
+    </main>
+  );
   }
