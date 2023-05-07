@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const FooterDefault = styled.footer`
+  background: #eff2f6;
   display: flex;
   justify-content: space-around;
-  background: #eff2f6;
   padding: 45px 0;
 `;
 
@@ -12,8 +12,8 @@ export const NewsletterContainer = styled.div`
 
   h2 {
     font-size: 2rem;
-    line-height: 44px;
     font-weight: 500;
+    line-height: 44px;
   }
 
   p {
@@ -24,20 +24,20 @@ export const NewsletterContainer = styled.div`
   }
 
   form {
-    margin-top: 10px;
-    border: 0.5px solid #000000;
     background: #fff;
+    border: 0.5px solid #000000;
+    margin-top: 10px;
   }
 
   input {
-    width: 80%;
-    padding: 10px;
     border: none;
+    padding: 10px;
+    width: 80%;
   }
 
   button {
-    border: none;
     background: #fff;
+    border: none;
     font-size: 0.8rem;
     font-weight: 600;
     line-height: 1rem;
@@ -46,9 +46,9 @@ export const NewsletterContainer = styled.div`
 `;
 
 export const LinksContainer = styled.div`
-  width: 40%;
   display: flex;
   font-size: 1rem;
+  width: 40%;
 
   ul {
     list-style: none;
