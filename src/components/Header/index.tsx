@@ -23,7 +23,11 @@ export default function Header() {
 
       <ListDefault>
         <ListItem>
-          <ImageLink src="" alt="icone de carrinho" href="/carrinho" />
+          <ImageLink
+            src="../../../assets/icons/carrinho.png"
+            alt="icone de carrinho"
+            href="/carrinho"
+          />
         </ListItem>
         <ListItem>
           <a href="/">Login</a>
