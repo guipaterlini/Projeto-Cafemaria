@@ -1,16 +1,13 @@
 import { Footer } from "../../components/Footer";
 import HeroSection from "../../components/HeroSection";
+import PromotionBanner from "../../components/PromotionBanner";
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
-      
-      <div>
-        <img src="" alt="" />
-        <img src="" alt="" />
-        <img src="" alt="" />
-      </div>
+
+      <PromotionBanner />
 
       <Footer />
     </main>

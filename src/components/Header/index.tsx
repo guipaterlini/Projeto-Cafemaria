@@ -1,5 +1,6 @@
 import React from "react";
 import { HeaderDefault, ListDefault, ListItem, InputDefault } from "./Style";
+import ImageLink from "../ImageLink";
 
 export default function Header() {
   return (
@@ -22,7 +23,7 @@ export default function Header() {
 
       <ListDefault>
         <ListItem>
-          <a href="/">incone carrinho</a>
+          <ImageLink src="" alt="icone de carrinho" href="/carrinho" />
         </ListItem>
         <ListItem>
           <a href="/">Login</a>
