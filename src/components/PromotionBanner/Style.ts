@@ -1,17 +1,19 @@
 import styled from "styled-components";
 
 export const BannerContainer = styled.div`
-margin-top: 80px;
   display: flex;
   justify-content: center;
+  margin: 80px 0;
 `;
 
-export const BannerImg = styled.img`
+export const Image = styled.img`
+  margin: 0;
+  max-width: 300px;
   height: 50vh;
-  width: 300px;
-  margin: 20px;
+  margin: 0 20px;
+  border: 1px solid #000;
 
   &:nth-child(2) {
-    margin: -30px 20px;
+    margin-top: -40px;
   }
 `;

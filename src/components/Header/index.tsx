@@ -5,11 +5,11 @@ import ImageLink from "../ImageLink";
 export default function Header() {
   return (
     <HeaderDefault>
-      <img src="" alt="Logo" />
+      <img src="../../../assets/images/logoprovisoria.png" alt="Logo" />
 
       <ListDefault>
         <ListItem>
-          <a href="/">Shop</a>
+          <a href="/Produtos">Produtos</a>
         </ListItem>
         <ListItem>
           <a href="/about">Stories</a>
@@ -30,7 +30,7 @@ export default function Header() {
           />
         </ListItem>
         <ListItem>
-          <a href="/">Login</a>
+          <a href="/login">Login</a>
         </ListItem>
       </ListDefault>
     </HeaderDefault>
