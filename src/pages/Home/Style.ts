@@ -19,12 +19,12 @@ export const Container = styled.div`
   }
 
   button {
+    background: #e5e5e5;
     border: 1px solid #0d0d0d;
-    margin-top: 40px;
-    padding: 15px 45px;
     font-size: 1rem;
     font-weight: 600;
-    background: #e5e5e5;
+    margin-top: 40px;
+    padding: 15px 45px;
   }
 `;
 
@@ -35,11 +35,10 @@ export const BannerContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  margin: 0;
-  max-width: 300px;
+  border: 1px solid #000;
   height: 50vh;
   margin: 0 20px;
-  border: 1px solid #000;
+  max-width: 300px;
 
   &:nth-child(2) {
     margin-top: -40px;

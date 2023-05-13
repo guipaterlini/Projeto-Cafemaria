@@ -1,11 +1,17 @@
 import React from "react";
-import { HeaderDefault, ListDefault, ListItem, InputDefault } from "./Style";
+import {
+  HeaderDefault,
+  ListDefault,
+  ListItem,
+  InputDefault,
+  Logo,
+} from "./Style";
 import ImageLink from "../ImageLink";
 
 export default function Header() {
   return (
     <HeaderDefault>
-      <img src="../../../assets/images/logoprovisoria.png" alt="Logo" />
+      <Logo src="../../../assets/images/logo-com-nome.png" alt="Logo" />
 
       <ListDefault>
         <ListItem>

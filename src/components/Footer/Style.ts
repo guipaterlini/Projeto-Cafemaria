@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const FooterDefault = styled.footer`
-  background: #eff2f6;
   display: flex;
   justify-content: space-around;
   padding: 45px 0;
@@ -36,12 +35,12 @@ export const NewsletterContainer = styled.div`
   }
 
   button {
+    cursor: pointer;
     background: #fff;
     border: none;
     font-size: 0.8rem;
     font-weight: 600;
     line-height: 1rem;
-    cursor: pointer;
   }
 `;
 
@@ -60,7 +59,7 @@ export const LinksContainer = styled.div`
 
   a {
     color: #111111;
-    opacity: 0.5;
     line-height: 26px;
+    opacity: 0.5;
   }
 `;

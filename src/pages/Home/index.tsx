@@ -1,7 +1,6 @@
 import { Footer } from "../../components/Footer";
 import { Container, BannerContainer, Image } from "./Style";
 
-
 export default function Home() {
   return (
     <main>

@@ -1,27 +1,34 @@
 import styled from "styled-components";
 
+export const Logo = styled.img`
+  height: 150px;
+  margin-bottom: -40px;
+`;
+
 export const HeaderDefault = styled.nav`
-  margin: 0 auto;
-  width: 100%;
-  height: 70px;
-  background-color: #312d2d;
   display: flex;
-`
+  margin-top: 20px;
+`;
+
 export const ListDefault = styled.ul`
+  align-items: center;
   display: flex;
-  text-align: center;
   justify-content: space-around;
   list-style-type: none;
-`
+  text-align: center;
+`;
+
 export const ListItem = styled.li`
-  text-decoration: none;
   padding: 1.5rem;
-`
+  text-decoration: none;
+`;
+
 export const InputDefault = styled.input`
+  align-self: center;
   border: 1px solid;
   border-radius: 20px;
   height: 1.5rem;
-  width: 40%;
-  text-align: center;
   margin: 1.29rem;
-`
+  text-align: center;
+  width: 30%;
+`;
