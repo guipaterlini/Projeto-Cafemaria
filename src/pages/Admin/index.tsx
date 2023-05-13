@@ -1,10 +1,7 @@
-import { Footer } from "../../components/Footer";
-
-export default function Admin() {
+export default function CenterMode() {
   return (
-    <main>
-      <h1>Admin</h1>
-      <Footer />
-    </main>
+    <div>
+      <h2>Pagina Admin</h2>
+    </div>
   );
 }
