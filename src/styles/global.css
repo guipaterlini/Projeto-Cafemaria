@@ -14,12 +14,12 @@
 }
 
 * {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  list-style: none;
   margin: 0 auto;
   padding: 0;
   text-decoration: none;
-  list-style: none;
-  font-family: sans-serif;
-  box-sizing: border-box;
 }
 
 body {
@@ -29,8 +29,8 @@ body {
 .App {
   background-image: url("../../public/assets/images/fundo-home.png");
   background-position: center center;
-  background-size: contain;
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 a {
