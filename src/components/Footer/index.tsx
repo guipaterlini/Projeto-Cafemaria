@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-import { FooterDefault, NewsletterContainer, LinksContainer } from "./Style";
+import {
+  FooterDefault,
+  NewsletterContainer,
+  LinksContainer,
+  FormNewsLetter,
+} from "./Style";
 
 export function Footer() {
   return (
@@ -10,12 +15,12 @@ export function Footer() {
           Seja o primeiro a saber sobre nossas ofertas especiais, eventos e
           lançamentos de produtos.
         </p>
-        <form>
+        <FormNewsLetter>
           <input type="text" name="email" placeholder="Seu melhor email" />
           <button aria-label="Digite aqui seu endereço de email">
             Inscreva-se
           </button>
-        </form>
+        </FormNewsLetter>
       </NewsletterContainer>
       <LinksContainer>
         <ul>
