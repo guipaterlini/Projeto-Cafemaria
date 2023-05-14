@@ -3,7 +3,7 @@ import {
   HeaderDefault,
   ListDefault,
   ListItem,
-  InputDefault,
+  // InputDefault,
   Logo,
 } from "./Style";
 import ImageLink from "../ImageLink";
@@ -15,17 +15,17 @@ export default function Header() {
 
       <ListDefault>
         <ListItem>
-          <a href="/Produtos">Produtos</a>
+          <a href="/Produtos">PRODUTOS</a>
         </ListItem>
         <ListItem>
-          <a href="/about">Stories</a>
+          <a href="/about">CONTATO</a>
         </ListItem>
         <ListItem>
-          <a href="/contact">About</a>
+          <a href="/contact">QUEM SOMOS</a>
         </ListItem>
       </ListDefault>
 
-      <InputDefault type="text" placeholder="Faça sua pesquisa aqui" />
+      {/* <InputDefault type="text" placeholder="Faça sua pesquisa aqui" /> */}
 
       <ListDefault>
         <ListItem>
@@ -36,7 +36,7 @@ export default function Header() {
           />
         </ListItem>
         <ListItem>
-          <a href="/login">Login</a>
+          <a href="/login">LOGIN</a>
         </ListItem>
       </ListDefault>
     </HeaderDefault>

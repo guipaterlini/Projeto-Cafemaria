@@ -1,10 +1,10 @@
 import { Footer } from "../../components/Footer";
-import { Container, BannerContainer, Image } from "./Style";
+import { FirstContainer, BannerContainer, Image } from "./Style";
 
 export default function Home() {
   return (
     <main>
-      <Container>
+      <FirstContainer>
         <h1>O Café da família brasileira</h1>
         <p>
           Há mais de sete décadas, a Cafemaria é sinônimo de qualidade e
@@ -13,7 +13,7 @@ export default function Home() {
           artesanal. Nossa história e tradição estão em cada xícara.
         </p>
         <button>Nossos Produtos</button>
-      </Container>
+      </FirstContainer>
 
       <BannerContainer>
         <Image src="../../../assets/images/1.png" alt="Image 1" />

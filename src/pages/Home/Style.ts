@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  margin: 60px 0;
+export const FirstContainer = styled.div`
+  margin: 30px 0;
   text-align: center;
 
   h1 {
+    /* font-family: ; */
     font-size: 3rem;
     font-weight: 600;
     margin-bottom: 30px;
