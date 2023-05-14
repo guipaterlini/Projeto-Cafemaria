@@ -5,26 +5,29 @@ export const FirstContainer = styled.div`
   text-align: center;
 
   h1 {
-    /* font-family: ; */
+    color: var(--cor-font-preta);
+    font-family: "Fraunces", serif;
     font-size: 3rem;
-    font-weight: 600;
-    margin-bottom: 30px;
+    font-weight: 700;
+    margin-bottom: 10px;
   }
 
   p {
-    color: #979797;
-    font-size: 1.2rem;
+    color: var(--cor-font-primaria);
+    font-size: var(--fonte-titulo);
     font-weight: 400;
     line-height: 1.3rem;
-    width: 50%;
+    width: 45%;
   }
 
   button {
-    background: #e5e5e5;
-    border: 1px solid #0d0d0d;
-    font-size: 1rem;
+    color: var(--cor-font-preta);
+    background: var(--cor-secundaria);
+    border: none;
+    border-radius: 30px;
+    font-size: var(--fonte-titulo);
     font-weight: 600;
-    margin-top: 40px;
+    margin-top: 30px;
     padding: 15px 45px;
   }
 `;

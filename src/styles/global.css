@@ -3,6 +3,7 @@
   --cor-secundaria: #de742c;
   --cor-font-primaria: #5f432c;
   --cor-font-secundaria: #fff;
+  --cor-font-preta: #000;
   --cor-alternativa: #e02515;
   --fonte-corpo: 0.875rem; /* 14px / 16px */
   --fonte-titulo: 1rem; /* 16px / 16px */
@@ -11,11 +12,12 @@
   --fonte-destaque: 2rem; /* 32px / 16px */
   --fonte-muito-grande: 2.5rem; /* 40px / 16px */
   --fonte-enorme: 3rem; /* 48px / 16px */
-  --fonte-family: 'Lora', serif;;
+  --fonte-family: "Lora", serif;
 }
 
 * {
   box-sizing: border-box;
+  color: var(--cor-font-primaria);
   font-family: sans-serif;
   list-style: none;
   margin: 0 auto;
@@ -32,8 +34,4 @@ body {
   background-position: top center;
   background-repeat: no-repeat;
   background-size: contain;
-}
-
-a {
-  color: #f7f7f7;
 }
