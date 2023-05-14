@@ -39,10 +39,13 @@ export const BannerContainer = styled.div`
 `;
 
 export const Image = styled.img`
+  background-color: #fff;
   border: 1px solid #000;
+  border-radius: 10px;
   height: 50vh;
+  max-height: 300px;
   margin: 0 20px;
-  max-width: 300px;
+  max-width: 250px;
 
   &:nth-child(2) {
     margin-top: -40px;

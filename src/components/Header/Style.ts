@@ -21,14 +21,16 @@ export const ListDefault = styled.ul`
 export const ListItem = styled.li`
   padding: 1.5rem;
   text-decoration: none;
+  font-weight: 600;
 `;
 
-// export const InputDefault = styled.input`
-//   align-self: center;
-//   border: 1px solid;
-//   border-radius: 20px;
-//   height: 1.5rem;
-//   margin: 1.29rem;
-//   text-align: center;
-//   width: 30%;
-// `;
+export const InputDefault = styled.input`
+  align-self: center;
+  border: 1px solid;
+  border-radius: 20px;
+  height: 1.5rem;
+  margin: 1.29rem;
+  text-align: center;
+  max-width: 250px;
+  width: 30%;
+`;

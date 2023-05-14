@@ -4,6 +4,7 @@ export const FooterDefault = styled.footer`
   display: flex;
   justify-content: space-around;
   padding: 45px 0;
+
 `;
 
 export const NewsletterContainer = styled.div`
@@ -58,8 +59,6 @@ export const LinksContainer = styled.div`
   }
 
   a {
-    color: #111111;
     line-height: 26px;
-    opacity: 0.5;
   }
 `;

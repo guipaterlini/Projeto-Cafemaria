@@ -31,7 +31,7 @@ body {
 
 .App {
   background-image: url("../../public/assets/images/fundo-home.png");
-  background-position: top center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
 }

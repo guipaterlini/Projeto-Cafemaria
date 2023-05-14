@@ -3,7 +3,7 @@ import {
   HeaderDefault,
   ListDefault,
   ListItem,
-  // InputDefault,
+  InputDefault,
   Logo,
 } from "./Style";
 import ImageLink from "../ImageLink";
@@ -11,22 +11,23 @@ import ImageLink from "../ImageLink";
 export default function Header() {
   return (
     <HeaderDefault>
-      <Logo src="../../../assets/images/logo-com-nome.png" alt="Logo" />
+      <a href="/">
+        <Logo src="../../../assets/images/logo-com-nome.png" alt="Logo" />
+      </a>
 
       <ListDefault>
         <ListItem>
-          <a href="/Produtos">PRODUTOS</a>
+          <a href="/produtos">PRODUTOS</a>
         </ListItem>
         <ListItem>
-          <a href="/about">CONTATO</a>
+          <a href="/contato">CONTATO</a>
         </ListItem>
         <ListItem>
-          <a href="/contact">QUEM SOMOS</a>
+          <a href="/about">QUEM SOMOS</a>
         </ListItem>
       </ListDefault>
 
-      {/* <InputDefault type="text" placeholder="Faça sua pesquisa aqui" /> */}
-
+      <InputDefault type="text" placeholder="Faça sua pesquisa aqui" />
       <ListDefault>
         <ListItem>
           <ImageLink

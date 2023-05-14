@@ -33,34 +33,34 @@ export function Footer() {
         <ul>
           <h3>Ajuda</h3>
           <li>
-            <Link to="/produtos">Central de Ajuda</Link>
+            <Link to="/helpcenter">Central de Ajuda</Link>
           </li>
           <li>
-            <Link to="/produtos">Meus pedidos</Link>
+            <Link to="/meuspedidos">Meus pedidos</Link>
           </li>
           <li>
-            <Link to="/produtos">Carrinho</Link>
+            <Link to="/carrinho">Carrinho</Link>
           </li>
           <li>
-            <Link to="/produtos">Política de devolução</Link>
+            <Link to="/politicas">Política de devolução</Link>
           </li>
           <li>
-            <Link to="/produtos">Contato</Link>
+            <Link to="/contato">Contato</Link>
           </li>
         </ul>
         <ul>
           <h3>Sobre nós</h3>
           <li>
-            <Link to="/produtos">Nossa história</Link>
+            <Link to="/about">Nossa história</Link>
           </li>
           <li>
-            <Link to="/produtos">Seja um representante</Link>
+            <Link to="/contato">Seja um representante</Link>
           </li>
           <li>
-            <Link to="/produtos">Trabalhe conosco</Link>
+            <Link to="/contato">Trabalhe conosco</Link>
           </li>
           <li>
-            <Link to="/produtos">Equipe Cafemaria</Link>
+            <Link to="/nossaequipe">Equipe Cafemaria</Link>
           </li>
         </ul>
       </LinksContainer>
