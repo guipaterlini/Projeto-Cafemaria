@@ -4,7 +4,6 @@ export const FooterDefault = styled.footer`
   display: flex;
   justify-content: space-around;
   padding: 45px 0;
-
 `;
 
 export const NewsletterContainer = styled.div`
@@ -25,12 +24,14 @@ export const NewsletterContainer = styled.div`
 
   form {
     background: #fff;
-    border: 0.5px solid #000000;
+    border: 1px solid;
+    border-radius: 20px;
     margin-top: 10px;
   }
 
   input {
     border: none;
+    border-radius: 20px;
     padding: 10px;
     width: 80%;
   }
