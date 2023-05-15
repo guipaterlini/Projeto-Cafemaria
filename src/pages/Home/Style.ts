@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FirstContainer = styled.div`
-  margin: 30px 0;
+  margin: 30px auto;
   text-align: center;
 
   h1 {
@@ -30,24 +30,14 @@ export const FirstContainer = styled.div`
     margin-top: 30px;
     padding: 15px 45px;
   }
-`;
 
-export const BannerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 80px 0;
-`;
+  @media (max-width: 1024px) {
+    width: 90%;
 
-export const Image = styled.img`
-  background-color: #fff;
-  border: 1px solid #000;
-  border-radius: 10px;
-  height: 50vh;
-  max-height: 300px;
-  margin: 0 20px;
-  max-width: 250px;
-
-  &:nth-child(2) {
-    margin-top: -40px;
+    p {
+      width: 80%;
+    }
   }
+
 `;
+
