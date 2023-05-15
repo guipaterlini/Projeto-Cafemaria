@@ -1,23 +1,57 @@
-import React from 'react';
-import  {HeaderDefault, ListDefault, ListItem, InputDefault} from './Style';
+import React from "react";
+import {
+  HeaderDefault,
+  ListDefault,
+  ListItem,
+  InputDefault,
+  StyledBurger,
+} from "./Style";
+import ImageLink from "../ImageLink";
 
-export default function Header() {
-  return(
+interface Props {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+const Header: React.FC<Props> = ({ setOpen, open }) => {
+  return (
     <HeaderDefault>
-        <img src="" alt="Logo" />
+      <a href="/">
+        <img src="../../../assets/images/logo-com-nome.png" alt="Logo" />
+      </a>
 
-        <ListDefault>
-          <ListItem><a href="/">Shop</a></ListItem>
-          <ListItem><a href="/about">Stories</a></ListItem>
-          <ListItem><a href="/contact">About</a></ListItem>
-        </ListDefault>
+      <ListDefault open={open}>
+        <ListItem>
+          <a href="/produtos">PRODUTOS</a>
+        </ListItem>
+        <ListItem>
+          <a href="/contato">CONTATO</a>
+        </ListItem>
+        <ListItem>
+          <a href="/about">QUEM SOMOS</a>
+        </ListItem>
 
-        <InputDefault type="text" placeholder='Faça sua pesquisa aqui'/>
+        <InputDefault type="text" placeholder="Busque produtos" />
 
-        <ListDefault>
-          <ListItem><a href="/">incone carrinho</a></ListItem>
-          <ListItem><a href="/">Login</a></ListItem>
-        </ListDefault>
+        <ListItem>
+          <ImageLink
+            src="../../../assets/icons/carrinho.png"
+            alt="icone de carrinho"
+            href="/carrinho"
+          />
+        </ListItem>
+        <ListItem>
+          <a href="/login">LOGIN</a>
+        </ListItem>
+      </ListDefault>
+
+      <StyledBurger open={open} onClick={() => setOpen(!open)}>
+        <div />
+        <div />
+        <div />
+      </StyledBurger>
     </HeaderDefault>
   );
-}
+};
+
+export default Header;

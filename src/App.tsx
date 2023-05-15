@@ -1,12 +1,18 @@
+import { useState } from "react";
 import Router from "./Router";
 import Header from "./components/Header";
-import "./styles/global.css"
+import "./styles/global.css";
 
 function App() {
+  const [open, setOpen] = useState(false)
+
   return (
     <div className="App">
-      <Header/>
+      <Header open={open} setOpen={setOpen}/>
+      
       <Router />
+
+      
     </div>
   );
 }

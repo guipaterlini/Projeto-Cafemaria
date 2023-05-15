@@ -1,3 +1,10 @@
+import { Footer } from "../../components/Footer";
+
 export default function Carrinho() {
-    return <h1>Carrinho</h1>;
-  }
+  return (
+    <main>
+      <h1>Carrinho</h1>
+      <Footer />
+    </main>
+  );
+}

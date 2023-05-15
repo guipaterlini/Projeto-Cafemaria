@@ -1,9 +1,37 @@
-*{
+:root {
+  --cor-primaria: #ffd398;
+  --cor-secundaria: #de742c;
+  --cor-font-primaria: #5f432c;
+  --cor-font-secundaria: #fff;
+  --cor-font-preta: #000;
+  --cor-alternativa: #e02515;
+  --fonte-corpo: 0.875rem; /* 14px / 16px */
+  --fonte-titulo: 1rem; /* 16px / 16px */
+  --fonte-grande: 1.25rem; /* 20px / 16px */
+  --fonte-maior: 1.5rem; /* 24px / 16px */
+  --fonte-destaque: 2rem; /* 32px / 16px */
+  --fonte-muito-grande: 2.5rem; /* 40px / 16px */
+  --fonte-enorme: 3rem; /* 48px / 16px */
+  --fonte-family: "Lora", serif;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--cor-font-primaria);
+  font-family: sans-serif;
+  list-style: none;
   margin: 0 auto;
   padding: 0;
   text-decoration: none;
 }
 
-a{
-  color: #f7f7f7;
+body {
+  background-color: var(--cor-primaria);
+}
+
+.App {
+  background-image: url("../../public/assets/images/fundo-home.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }

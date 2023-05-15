@@ -1,3 +1,7 @@
-export default function Admin() {
-  return <h1>Admin</h1>;
+export default function CenterMode() {
+  return (
+    <div>
+      <h2>Pagina Admin</h2>
+    </div>
+  );
 }

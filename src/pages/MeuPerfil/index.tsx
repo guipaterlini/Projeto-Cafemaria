@@ -1,3 +1,10 @@
+import { Footer } from "../../components/Footer";
+
 export default function MeuPerfil() {
-    return <h1>MeuPerfil</h1>;
+  return (
+    <main>
+      <h1>Meu Perfil</h1>
+      <Footer />
+    </main>
+  );
   }
