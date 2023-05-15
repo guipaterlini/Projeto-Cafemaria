@@ -4,13 +4,21 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const Wrapper = styled.div`
-  max-width: 55%;
+  max-width: 80%;
   margin: 40px auto;
+
+  @media (max-width: 1024px) {
+    max-width: 90%;
+  }
 `;
 export const Img = styled.img`
   max-width: 250px;
   background-color: #fff;
   border-radius: 30px;
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    max-width: 200px;
+  }
 `;
 
 export const StyledSlider = styled(Slider)`

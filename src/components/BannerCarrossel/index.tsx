@@ -1,13 +1,17 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Img, StyledSlider, Wrapper } from "./Style";
+import { useMediaQuery } from 'react-responsive'
+
 
 export default function BannerCarrossel() {
+  const isMobile = useMediaQuery({ maxWidth: 768 }); 
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: isMobile ? 1 : 3, 
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "10px",
