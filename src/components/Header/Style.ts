@@ -2,10 +2,15 @@ import styled from "styled-components";
 
 export const HeaderDefault = styled.nav`
   display: flex;
+  align-items: center;
   margin: 20px 0;
 
   @media (max-width: 1024px) {
     width: 50%;
+    a {
+      margin-right: auto;
+      flex-grow: 1;
+    }
   }
 `;
 
