@@ -1,6 +1,6 @@
 import { Footer } from "../../components/Footer";
 import BannerCarrossel from "../../components/BannerCarrossel";
-import { FirstContainer, BannerContainer, Image } from "./Style";
+import { FirstContainer } from "./Style";
 
 export default function Home() {
   return (
