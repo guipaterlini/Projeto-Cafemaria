@@ -4,18 +4,23 @@ import {
   ListDefault,
   ListItem,
   InputDefault,
-  Logo,
+  StyledBurger,
 } from "./Style";
 import ImageLink from "../ImageLink";
 
-export default function Header() {
+interface Props {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+const Header: React.FC<Props> = ({ setOpen, open }) => {
   return (
     <HeaderDefault>
       <a href="/">
-        <Logo src="../../../assets/images/logo-com-nome.png" alt="Logo" />
+        <img src="../../../assets/images/logo-com-nome.png" alt="Logo" />
       </a>
 
-      <ListDefault>
+      <ListDefault open={open}>
         <ListItem>
           <a href="/produtos">PRODUTOS</a>
         </ListItem>
@@ -25,10 +30,9 @@ export default function Header() {
         <ListItem>
           <a href="/about">QUEM SOMOS</a>
         </ListItem>
-      </ListDefault>
 
-      <InputDefault type="text" placeholder="Faça sua pesquisa aqui" />
-      <ListDefault>
+        <InputDefault type="text" placeholder="Busque produtos" />
+
         <ListItem>
           <ImageLink
             src="../../../assets/icons/carrinho.png"
@@ -40,6 +44,14 @@ export default function Header() {
           <a href="/login">LOGIN</a>
         </ListItem>
       </ListDefault>
+
+      <StyledBurger open={open} onClick={() => setOpen(!open)}>
+        <div />
+        <div />
+        <div />
+      </StyledBurger>
     </HeaderDefault>
   );
-}
+};
+
+export default Header;
