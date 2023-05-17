@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Img, StyledSlider, Wrapper } from "./Style";
 import { useMediaQuery } from "react-responsive";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 type ProductImage = {
   image: string;
@@ -17,13 +18,13 @@ function getProductImage(): Promise<ProductImage[]> {
     .then((data) => {
       // Extrair as URLs das imagens do objeto de resposta
       const imageUrls = data.message;
-      
+
       // Mapear as URLs para objetos ProductImage
       const productImages = imageUrls.map((imageUrl: any, index: any) => ({
         image: imageUrl,
         id: index,
         description: "",
-        title: ""
+        title: "",
       }));
 
       return productImages;
@@ -33,6 +34,7 @@ function getProductImage(): Promise<ProductImage[]> {
 export default function BannerCarrossel() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [productImages, setProductImages] = useState<ProductImage[]>([]);
+  const caminhoDaPagina = "/produto/";
 
   useEffect(() => {
     async function fetchProductImages() {
@@ -59,7 +61,9 @@ export default function BannerCarrossel() {
       <StyledSlider {...settings}>
         {productImages.map((image: ProductImage) => (
           <div>
-            <Img src={image.image} />
+            <Link to={caminhoDaPagina + image.id}>
+              <Img src={image.image} />
+            </Link>
           </div>
         ))}
       </StyledSlider>

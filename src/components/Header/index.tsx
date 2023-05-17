@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./Style";
 import ImageLink from "../ImageLink";
-import ProductSearch, { Produto } from "../ProductSearch";
+import ProductSearch from "../ProductSearch";
 
 interface Props {
   open: boolean;
