@@ -8,7 +8,7 @@ export const InputDefault = styled.input`
   margin: 1.29rem;
   text-align: center;
   max-width: 250px;
-  width: 30%;
+ 
 
   @media (max-width: 1024px) {
     display: none;

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./Style";
 import ImageLink from "../ImageLink";
-import ProductSearch from "../ProductSearch";
+import ProductSearch, { Produto } from "../ProductSearch";
 
 interface Props {
   open: boolean;
@@ -9,6 +9,8 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ setOpen, open }) => {
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <HeaderDefault>
       <a href="/">
@@ -26,7 +28,10 @@ const Header: React.FC<Props> = ({ setOpen, open }) => {
           <a href="/about">QUEM SOMOS</a>
         </ListItem>
 
-        <ProductSearch />
+        <ProductSearch
+          value={inputValue}
+          onChange={setInputValue}
+        />
 
         <ListItem>
           <ImageLink
