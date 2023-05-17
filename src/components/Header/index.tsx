@@ -28,10 +28,9 @@ const Header: React.FC<Props> = ({ setOpen, open }) => {
           <a href="/about">QUEM SOMOS</a>
         </ListItem>
 
-        <ProductSearch
-          value={inputValue}
-          onChange={setInputValue}
-        />
+        <ListItem>
+          <ProductSearch value={inputValue} onChange={setInputValue} />
+        </ListItem>
 
         <ListItem>
           <ImageLink

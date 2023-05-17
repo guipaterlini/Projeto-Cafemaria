@@ -1,4 +1,4 @@
-import { InputDefault } from "./Style";
+import { InputDefault, ResultadosPesquisa, SearchComponent, LoadingText } from "./Style";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ type Props = {
 
 export type Produto = {
   food: string;
-  id: string;
+  category: string;
 };
 
 const findProduct = async (query: string): Promise<Produto[]> => {
@@ -30,22 +30,26 @@ export default function ProductSearch(props: Props) {
   );
 
   return (
-    <div>
+    <SearchComponent>
       <InputDefault
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
         type="text"
         name="produto"
         placeholder="Busque produtos"
-      />
-      {isLoading && <p>Carregando ...</p>}
-      {data?.map((produto) => (
-        <div className="row" key={produto.food}>
-          <div className="column">
-            <Link to={caminhoDaPagina + produto.food}>{produto.food}</Link>
-          </div>
-        </div>
-      ))}
-    </div>
+        />
+        {isLoading && <LoadingText>Carregando ...</LoadingText>}
+      {data && data.length > 0 && (
+        <ResultadosPesquisa>
+          {data?.map((produto) => (
+            <div className="row" key={produto.food}>
+              <div className="column">
+                <Link to={caminhoDaPagina + produto.category}>{produto.food}</Link>
+              </div>
+            </div>
+          ))}
+        </ResultadosPesquisa>
+      )}
+    </SearchComponent>
   );
 }
