@@ -1,17 +1,53 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Img, StyledSlider, Wrapper } from "./Style";
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from "react-responsive";
+import { useState, useEffect } from "react";
 
+type ProductImage = {
+  image: string;
+  id: number;
+  description: string;
+  title: string;
+};
+
+function getProductImage(): Promise<ProductImage[]> {
+  return fetch("https://dog.ceo/api/breed/hound/images")
+    .then((res) => res.json())
+    .then((data) => {
+      // Extrair as URLs das imagens do objeto de resposta
+      const imageUrls = data.message;
+      
+      // Mapear as URLs para objetos ProductImage
+      const productImages = imageUrls.map((imageUrl: any, index: any) => ({
+        image: imageUrl,
+        id: index,
+        description: "",
+        title: ""
+      }));
+
+      return productImages;
+    });
+}
 
 export default function BannerCarrossel() {
-  const isMobile = useMediaQuery({ maxWidth: 768 }); 
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const [productImages, setProductImages] = useState<ProductImage[]>([]);
+
+  useEffect(() => {
+    async function fetchProductImages() {
+      const data = await getProductImage();
+      setProductImages(data);
+    }
+
+    fetchProductImages();
+  }, []);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: isMobile ? 1 : 3, 
+    slidesToShow: isMobile ? 1 : 3,
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "10px",
@@ -21,24 +57,11 @@ export default function BannerCarrossel() {
   return (
     <Wrapper>
       <StyledSlider {...settings}>
-        <div>
-          <Img src="../../../assets/images/1.png" alt="" />
-        </div>
-        <div>
-          <Img src="../../../assets/images/2.png" alt="" />
-        </div>
-        <div>
-          <Img src="../../../assets/images/3.png" alt="" />
-        </div>
-        <div>
-          <Img src="../../../assets/images/1.png" alt="" />
-        </div>
-        <div>
-          <Img src="../../../assets/images/2.png" alt="" />
-        </div>
-        <div>
-          <Img src="../../../assets/images/3.png" alt="" />
-        </div>
+        {productImages.map((image: ProductImage) => (
+          <div>
+            <Img src={image.image} />
+          </div>
+        ))}
       </StyledSlider>
     </Wrapper>
   );
