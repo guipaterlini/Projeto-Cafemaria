@@ -8,7 +8,7 @@ export default function Login() {
         <input name="email" type="text" placeholder="email"/>
         <input name="senha" type="text" placeholder="senha"/>
         <button>Fazer login</button>
-        <span>Cliente novo? <Link to={"/"}>Comece aqui.</Link></span>
+        <span>Cliente novo? <Link to={"/cadastro"}>Comece aqui.</Link></span>
       </form>
       <Footer />
     </main>

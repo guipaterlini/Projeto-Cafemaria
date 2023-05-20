@@ -8,12 +8,14 @@ import Produto from "./pages/Produto";
 import Produtos from "./pages/Produtos";
 import Sucesso from "./pages/Sucesso";
 import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/produtos" element={<Produtos />} />
