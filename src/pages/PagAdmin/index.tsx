@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Footer } from "../../components/Footer";
 
-export default function CenterMode() {
+export default function PagAdmin() {
   const [open, setOpen] = useState(false);
+  useEffect(() => {}, []);
   return (
-    <div>
+    <main>
       <Header open={open} setOpen={setOpen} />
-      <h2>Pagina Admin</h2>
+      <h1>Pagina Admin</h1>
+      <ul>
+        <li>Usuario 1</li>
+      </ul>
       <Footer />
-    </div>
+    </main>
   );
 }

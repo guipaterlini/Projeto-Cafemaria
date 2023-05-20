@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import Admin from "./pages/Admin";
+import PagAdmin from "./pages/PagAdmin";
 import Carrinho from "./pages/Carrinho";
 import MeuPerfil from "./pages/MeuPerfil";
 import Pedidos from "./pages/Pedidos";
@@ -17,7 +17,7 @@ export default function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<PagAdmin />} />
         <Route path="/produtos" element={<Produtos />} />
         <Route path="/produto/:id" element={<Produto />} />
         <Route path="/carrinho" element={<Carrinho />} />
