@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { Footer } from "../../components/Footer";
 import { FormEvent, useState } from "react";
 import { cadastroUsuario } from "../../services/MainApi/usuarios";
+import Header from "../../components/Header";
 
 export default function Cadastro() {
   const [email, setEmail] = useState<string>("");
   const [senha, setSenha] = useState<string>("");
+  const [open, setOpen] = useState(false);
 
   const cadastro = async (event: FormEvent) => {
     event.preventDefault();
@@ -30,6 +32,8 @@ export default function Cadastro() {
 
   return (
     <main>
+      <Header open={open} setOpen={setOpen} />
+
       <h1>Criar conta</h1>
       <form onSubmit={cadastro}>
         <div>
