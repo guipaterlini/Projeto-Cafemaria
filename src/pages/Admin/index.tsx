@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/Header";
+import { Footer } from "../../components/Footer";
 
 export default function CenterMode() {
   const [open, setOpen] = useState(false);
@@ -7,6 +8,7 @@ export default function CenterMode() {
     <div>
       <Header open={open} setOpen={setOpen} />
       <h2>Pagina Admin</h2>
+      <Footer />
     </div>
   );
 }
