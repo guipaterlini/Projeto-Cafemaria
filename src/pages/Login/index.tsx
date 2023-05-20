@@ -5,6 +5,7 @@ export default function Login() {
   return (
     <main>
       <form action="">
+        <h1>Fazer login</h1>
         <input name="email" type="text" placeholder="email"/>
         <input name="senha" type="text" placeholder="senha"/>
         <button>Fazer login</button>
