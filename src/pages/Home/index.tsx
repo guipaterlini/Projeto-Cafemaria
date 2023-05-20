@@ -1,15 +1,15 @@
 import { Footer } from "../../components/Footer";
 import BannerCarrossel from "../../components/BannerCarrossel";
 import { FirstContainer } from "./Style";
-import Header from "../../components/Header";
-import { useState } from "react";
+// import Header from "../../components/Header";
+// import { useState } from "react";
 
 export default function Home() {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   return (
     <main>
-      <Header open={open} setOpen={setOpen} />
+      {/* <Header open={open} setOpen={setOpen} /> */}
       <FirstContainer>
         <h1>O Café da Família Brasileira</h1>
         <p>
