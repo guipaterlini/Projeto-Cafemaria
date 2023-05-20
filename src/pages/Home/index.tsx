@@ -1,6 +1,6 @@
 import { Footer } from "../../components/Footer";
 import BannerCarrossel from "../../components/BannerCarrossel";
-import { FirstContainer } from "./Style";
+import { FirstContainer } from "./styles";
 import Header from "../../components/Header";
 import { useState } from "react";
 

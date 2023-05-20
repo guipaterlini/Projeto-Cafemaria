@@ -1,6 +1,6 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Img, StyledSlider, Wrapper } from "./Style";
+import { Img, StyledSlider, Wrapper } from "./styles";
 import { useMediaQuery } from "react-responsive";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
