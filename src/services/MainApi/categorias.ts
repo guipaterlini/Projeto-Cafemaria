@@ -9,17 +9,17 @@ interface CategoriaPayload {
 }
 
 export function cadastroCategoria(payload: CategoriaPayload) {
-  return baseAPI.post("/categoria", payload);
+  return baseAPI.post("/categories", payload);
 }
 export function listarCategorias() {
-  return baseAPI.get("/categorias");
+  return baseAPI.get("/categories");
 }
 export function listarCategoria() {
-  return baseAPI.get("/categoria/:id");
+  return baseAPI.get("/categories/:id");
 }
 export function atualizarCategoria() {
-  return baseAPI.put("/categoria/:id");
+  return baseAPI.put("/categories/:id");
 }
 export function deletarCategoria() {
-  return baseAPI.delete("/categoria/:id");
+  return baseAPI.delete("/categories/:id");
 }

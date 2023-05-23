@@ -6,17 +6,17 @@ interface UsuarioPayload {
 }
 
 export function cadastroUsuario(payload: UsuarioPayload) {
-  return baseAPI.post("/usuario", payload);
+  return baseAPI.post("/users", payload);
 }
 export function listarUsuarios() {
-  return baseAPI.get("/usuarios");
+  return baseAPI.get("/users");
 }
 export function listarUsuario() {
-  return baseAPI.get("/usuario/:id");
+  return baseAPI.get("/users/:id");
 }
 export function atualizarUsuario() {
-  return baseAPI.put("/usuario/:id");
+  return baseAPI.put("/users/:id");
 }
 export function deletarUsuario() {
-  return baseAPI.delete("/usuario/:id");
+  return baseAPI.delete("/users/:id");
 }
