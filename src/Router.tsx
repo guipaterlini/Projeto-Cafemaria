@@ -7,16 +7,15 @@ import Pedidos from "./pages/Pedidos";
 import Produto from "./pages/Produto";
 import Produtos from "./pages/Produtos";
 import Sucesso from "./pages/Sucesso";
-import Login from "./pages/Login";
-import Cadastro from "./pages/Cadastro";
+import AuthPage from "./pages/AuthPage";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<AuthPage formType="cadastro" />} />
+        <Route path="/login" element={<AuthPage formType="login" />} />
         <Route path="/admin" element={<PagAdmin />} />
         <Route path="/produtos" element={<Produtos />} />
         <Route path="/produto/:id" element={<Produto />} />
