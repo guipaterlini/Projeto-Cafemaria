@@ -9,6 +9,7 @@ import Produtos from "./pages/Produtos";
 import Sucesso from "./pages/Sucesso";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import Contato from "./pages/Contato";
 
 export default function Router() {
   return (
@@ -24,6 +25,7 @@ export default function Router() {
         <Route path="/sucesso" element={<Sucesso />} />
         <Route path="/meuperfil/:email" element={<MeuPerfil />} />
         <Route path="/pedidos/:id" element={<Pedidos />} />
+        <Route path="/contato" element={<Contato />} />
       </Routes>
     </BrowserRouter>
   );
