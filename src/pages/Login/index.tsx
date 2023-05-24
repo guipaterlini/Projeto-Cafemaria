@@ -23,7 +23,8 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     loginUsuario(data)
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
+        localStorage.removeItem("token"); // Remove o token antigo, se existir
+        localStorage.setItem("token", response.data.token); // Define o novo token
         navigate("/"); // Redirecionamento para a página Home
       })
       .catch((error) => {
