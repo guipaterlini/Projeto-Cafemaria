@@ -60,7 +60,7 @@ export default function BannerCarrossel() {
     <Wrapper>
       <StyledSlider {...settings}>
         {productImages.map((image: ProductImage) => (
-          <div>
+          <div key={image.id}>
             <Link to={caminhoDaPagina + image.id}>
               <Img src={image.image} />
             </Link>
