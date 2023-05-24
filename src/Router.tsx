@@ -8,6 +8,7 @@ import Produto from "./pages/Produto";
 import Produtos from "./pages/Produtos";
 import Sucesso from "./pages/Sucesso";
 import AuthPage from "./pages/AuthPage";
+import Contato from "./pages/Contato";
 
 export default function Router() {
   return (
@@ -23,6 +24,7 @@ export default function Router() {
         <Route path="/sucesso" element={<Sucesso />} />
         <Route path="/meuperfil/:email" element={<MeuPerfil />} />
         <Route path="/pedidos/:id" element={<Pedidos />} />
+        <Route path="/contato" element={<Contato />} />
       </Routes>
     </BrowserRouter>
   );
