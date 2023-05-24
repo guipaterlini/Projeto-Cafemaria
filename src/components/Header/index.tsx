@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./Style";
+import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./styles";
 import ImageLink from "../ImageLink";
 import ProductSearch from "../ProductSearch";
 

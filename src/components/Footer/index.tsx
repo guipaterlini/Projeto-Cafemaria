@@ -4,7 +4,7 @@ import {
   NewsletterContainer,
   LinksContainer,
   FormNewsLetter,
-} from "./Style";
+} from "./styles";
 
 export function Footer() {
   return (
