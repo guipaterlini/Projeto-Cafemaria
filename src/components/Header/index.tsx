@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./styles";
 import ImageLink from "../ImageLink";
 import ProductSearch from "../ProductSearch";
+import TokenButton from "../LoginBtn";
 
 interface Props {
   open: boolean;
@@ -41,7 +42,7 @@ const Header: React.FC<Props> = ({ setOpen, open }) => {
           />
         </ListItem>
         <ListItem>
-          <a href="/login">LOGIN</a>
+          <TokenButton />
         </ListItem>
       </ListDefault>
 
