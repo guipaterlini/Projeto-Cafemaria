@@ -1,4 +1,4 @@
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { loginUsuario } from "../../services/MainApi/login";
 
 type LoginFormValues = {
   email: string;
-  senha: string;
+  password: string;
 };
 
 export default function Login() {
@@ -21,10 +21,20 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
-    loginUsuario(data).then((response) => {
-      localStorage.setItem("token", response.data.token);
-      navigate("/"); // Redirecionamento para a página Home
-    });
+    loginUsuario(data)
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        navigate("/"); // Redirecionamento para a página Home
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // Verifica a resposta da API no console
+        }
+        // Exibe uma mensagem de erro genérica para o usuário
+        alert(
+          "Ocorreu um erro durante o login. Verifique seus dados e tente novamente."
+        );
+      });
   };
 
   return (
@@ -41,9 +51,9 @@ export default function Login() {
         <Input
           type="password"
           placeholder="Senha"
-          {...register("senha", { required: true })}
+          {...register("password", { required: true })}
         />
-        {errors.senha && <span>Este campo é obrigatorio</span>}
+        {errors.password && <span>Este campo é obrigatorio</span>}
         <Button>Login</Button>
         <span>
           Cliente novo? <Link to={"/cadastro"}>Comece aqui.</Link>
