@@ -1,8 +1,9 @@
 import baseAPI from "./config";
 
 interface UsuarioPayload {
+  name: string;
   email: string;
-  senha: string;
+  password: string;
 }
 
 export function cadastroUsuario(payload: UsuarioPayload) {
