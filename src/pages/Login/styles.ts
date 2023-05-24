@@ -43,3 +43,10 @@ export const Button = styled.button`
   background-color: #f2465c;
   font-weight: 500;
 `;
+
+export const Span = styled.span`
+color: red;
+opacity: 0.8;
+font-size: var(--fonte-corpo);
+margin-top: -10px;
+`

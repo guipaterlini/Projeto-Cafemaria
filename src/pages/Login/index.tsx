@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
 import { useState } from "react";
-import { Button, Form, Input, Main } from "./styles";
+import { Button, Form, Input, Main, Span } from "./styles";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { loginUsuario } from "../../services/MainApi/login";
 
@@ -48,13 +48,13 @@ export default function Login() {
           placeholder="Email"
           {...register("email", { required: true })}
         />
-        {errors.email && <span>Este campo é obrigatorio</span>}
+        {errors.email && <Span>Este campo é obrigatório.</Span>}
         <Input
           type="password"
           placeholder="Senha"
           {...register("password", { required: true })}
         />
-        {errors.password && <span>Este campo é obrigatorio</span>}
+        {errors.password && <Span>Este campo é obrigatório.</Span>}
         <Button>Login</Button>
         <span>
           Cliente novo? <Link to={"/cadastro"}>Comece aqui.</Link>
