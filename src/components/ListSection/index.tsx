@@ -8,10 +8,10 @@ interface ListItem {
   avatar: string;
 }
 interface ListSectionProps {
-  // Não é necessário passar os dados como propriedade agora
+  title: string;
 }
 
-const ListSection: React.FC<ListSectionProps> = () => {
+const ListSection: React.FC<ListSectionProps> = ({ title }) => {
   const [data, setData] = useState<ListItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,12 +38,25 @@ const ListSection: React.FC<ListSectionProps> = () => {
     return <div>Nenhum usuário encontrado.</div>;
   }
 
+  const handleEdit = (id: number) => {
+    // Lógica para editar o usuário com o ID fornecido
+  };
+
+  const handleDelete = (id: number) => {
+    // Lógica para deletar o usuário com o ID fornecido
+  };
+
   return (
     <div>
-      <h2>Título da Seção</h2>
+      <h2>{title}</h2>
+      <button>Adicionar usuário</button>
       <ul>
         {data.map((item: ListItem) => (
-          <li key={item.id}>{item.email}</li>
+          <li key={item.id}>
+            {item.email}
+            <button onClick={() => handleEdit(item.id)}>Editar</button>
+            <button onClick={() => handleDelete(item.id)}>Deletar</button>
+          </li>
         ))}
       </ul>
     </div>

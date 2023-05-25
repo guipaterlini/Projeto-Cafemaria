@@ -49,7 +49,7 @@ export default function PagAdmin() {
           {section === "categories" && <ListSection data={categoriesData} />}
           {section === "clients" && <ListSection data={clientsData} />}
           {section === "orders" && <ListSection data={ordersData} />} */}
-          {section === "users" && <ListSection />}
+          {section === "users" && <ListSection title="Título da Seção de Usuários"/>}
         </section>
       </Container>
 
