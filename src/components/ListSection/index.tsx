@@ -66,27 +66,37 @@ const ListSection: React.FC<ListSectionProps> = ({ title, dataKeys }) => {
     <div>
       <h2>{title}</h2>
       <button>Adicionar {title}</button>
-      <ul>
-        {data.map((user: UserData) => (
-          <li key={user.id}>
-            {dataKeys ? (
-              <>
-                {dataKeys.map((key) => (
-                  <span key={key}>{getProperty(user, key)}</span>
-                ))}
-              </>
-            ) : (
-              <>
-                {Object.entries(user).map(([key, value]) => (
-                  <span key={key}>{value}</span>
-                ))}
-              </>
-            )}
-            <button onClick={() => handleEdit(user.id)}>Editar</button>
-            <button onClick={() => handleDelete(user.id)}>Deletar</button>
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            {dataKeys &&
+              dataKeys.map((key) => {
+                if (key !== "id") {
+                  return <th key={key}>{key}</th>;
+                }
+                return null;
+              })}
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((user: UserData) => (
+            <tr key={user.id}>
+              {dataKeys &&
+                dataKeys.map((key) => {
+                  if (key !== "id") {
+                    return <td key={key}>{getProperty(user, key)}</td>;
+                  }
+                  return null;
+                })}
+              <td>
+                <button onClick={() => handleEdit(user.id)}>Editar</button>
+                <button onClick={() => handleDelete(user.id)}>Deletar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
