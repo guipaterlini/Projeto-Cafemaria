@@ -5,6 +5,7 @@ import {
   LinksContainer,
   FormNewsLetter,
 } from "./styles";
+import React from "react";
 
 export function Footer() {
   return (
