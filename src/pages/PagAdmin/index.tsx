@@ -4,9 +4,9 @@ import { Footer } from "../../components/Footer";
 import React from "react";
 import AsideItem from "../../components/AsideItem";
 import ListSection from "../../components/ListSection";
+import { Container } from "./styles";
 
 type Menu = "products" | "categories" | "clients" | "orders" | "users";
-
 
 export default function PagAdmin() {
   const [open, setOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function PagAdmin() {
   return (
     <main>
       <Header open={open} setOpen={setOpen} />
-      <div>
+      <Container>
         <aside>
           <ul>
             <AsideItem
@@ -45,13 +45,13 @@ export default function PagAdmin() {
           </ul>
         </aside>
         <section>
-          {section === "products" && <ListSection />}
-          {section === "categories" && <ListSection />}
-          {section === "clients" && <ListSection />}
-          {section === "orders" && <ListSection />}
+          {/* {section === "products" && <ListSection data={productsData} />}
+          {section === "categories" && <ListSection data={categoriesData} />}
+          {section === "clients" && <ListSection data={clientsData} />}
+          {section === "orders" && <ListSection data={ordersData} />} */}
           {section === "users" && <ListSection />}
         </section>
-      </div>
+      </Container>
 
       <Footer />
     </main>
