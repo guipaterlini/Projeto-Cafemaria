@@ -3,10 +3,11 @@ import {
   deletarUsuario,
   listarUsuarios,
 } from "../../services/MainApi/usuarios";
-import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri"; // Importando ícones do React Icons (https://react-icons.github.io/react-icons/)
 import FormModal from "../FormModal";
+import ListSectionHeader from "../ListSectionHeader";
+import Table from "../Table";
 
-interface UserData {
+export interface UserData {
   first_name: string;
   last_name: string;
   avatar: string;
@@ -19,7 +20,7 @@ interface UserData {
   type: string;
 }
 
-interface Column {
+export interface Column {
   key: keyof UserData;
   label: string;
 }
@@ -69,10 +70,6 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     }
   };
 
-  const getProperty = (obj: UserData, key: keyof UserData) => {
-    return obj[key];
-  };
-
   const handleAddUser = () => {
     setSelectedUserId(null);
     setIsModalOpen(true);
@@ -90,35 +87,13 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
 
   return (
     <div>
-      <h2>{title}</h2>
-      <button onClick={handleAddUser}>Adicionar {title}</button>
-      <table>
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.key}>{column.label}</th>
-            ))}
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((user: UserData) => (
-            <tr key={user.id}>
-              {columns.map((column) => (
-                <td key={column.key}>{getProperty(user, column.key)}</td>
-              ))}
-              <td>
-                <button onClick={() => handleEdit(user.id)}>
-                  <RiEdit2Line />
-                </button>
-                <button onClick={() => handleDelete(user.id)}>
-                  <RiDeleteBinLine />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ListSectionHeader title={title} onAddUser={handleAddUser} />
+      <Table
+        columns={columns}
+        data={data}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
       {isModalOpen && (
         <div className="modal" onClick={handleOutsideClick}>
           <div className="modal-content">
