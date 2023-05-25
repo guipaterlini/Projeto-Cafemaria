@@ -33,7 +33,7 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar a abertura/fechamento do modal
-
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null); // Estado para armazenar o ID do usuário selecionado para edição
 
   useEffect(() => {
     async function fetchListData() {
@@ -58,7 +58,8 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   }
 
   const handleEdit = (id: number) => {
-    // Lógica para editar o usuário com o ID fornecido
+    setSelectedUserId(id);
+    setIsModalOpen(true);
   };
 
   const handleDelete = (id: number) => {
@@ -73,11 +74,18 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   };
 
   const handleAddUser = () => {
-    setIsModalOpen(true); // Abre o modal quando o botão "Adicionar" é clicado
+    setSelectedUserId(null);
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false); // Fecha o modal
+  };
+
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal(); // Fecha o modal apenas se o clique foi fora da caixa do modal
+    }
   };
 
   return (
@@ -111,7 +119,13 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
           ))}
         </tbody>
       </table>
-      {isModalOpen && <FormModal onClose={handleCloseModal} />} {/* Renderiza o modal se isModalOpen for true */}
+      {isModalOpen && (
+        <div className="modal" onClick={handleOutsideClick}>
+          <div className="modal-content">
+            <FormModal onClose={handleCloseModal} userId={selectedUserId} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
