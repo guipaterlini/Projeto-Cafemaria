@@ -3,6 +3,8 @@ import {
   deletarUsuario,
   listarUsuarios,
 } from "../../services/MainApi/usuarios";
+import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri"; // Importando ícones do React Icons (https://react-icons.github.io/react-icons/)
+
 interface UserData {
   first_name: string;
   last_name: string;
@@ -15,19 +17,24 @@ interface UserData {
   password: string;
   type: string;
 }
-interface ListSectionProps {
-  title: string;
-  dataKeys?: (keyof UserData)[];
+
+interface Column {
+  key: keyof UserData;
+  label: string;
 }
 
-const ListSection: React.FC<ListSectionProps> = ({ title, dataKeys }) => {
+interface ListSectionProps {
+  title: string;
+  columns: Column[];
+}
+
+const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchListData() {
       try {
-        // Fazer a chamada à API e obter os dados
         const response = await listarUsuarios();
         setData(response.data.data);
         setLoading(false);
@@ -69,29 +76,25 @@ const ListSection: React.FC<ListSectionProps> = ({ title, dataKeys }) => {
       <table>
         <thead>
           <tr>
-            {dataKeys &&
-              dataKeys.map((key) => {
-                if (key !== "id") {
-                  return <th key={key}>{key}</th>;
-                }
-                return null;
-              })}
+            {columns.map((column) => (
+              <th key={column.key}>{column.label}</th>
+            ))}
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           {data.map((user: UserData) => (
             <tr key={user.id}>
-              {dataKeys &&
-                dataKeys.map((key) => {
-                  if (key !== "id") {
-                    return <td key={key}>{getProperty(user, key)}</td>;
-                  }
-                  return null;
-                })}
+              {columns.map((column) => (
+                <td key={column.key}>{getProperty(user, column.key)}</td>
+              ))}
               <td>
-                <button onClick={() => handleEdit(user.id)}>Editar</button>
-                <button onClick={() => handleDelete(user.id)}>Deletar</button>
+                <button onClick={() => handleEdit(user.id)}>
+                  <RiEdit2Line />
+                </button>
+                <button onClick={() => handleDelete(user.id)}>
+                  <RiDeleteBinLine />
+                </button>
               </td>
             </tr>
           ))}

@@ -50,7 +50,14 @@ export default function PagAdmin() {
           {section === "clients" && <ListSection data={clientsData} />}
           {section === "orders" && <ListSection data={ordersData} />} */}
           {section === "users" && (
-            <ListSection title="Usuários Admin" dataKeys={["email", "id"]} />
+            <ListSection
+              title="Usuários Admin"
+              columns={[
+                { key: "email", label: "Email" },
+                { key: "first_name", label: "Primeiro Nome" },
+                { key: "last_name", label: "Último Nome" },
+              ]}
+            />
           )}
         </section>
       </Container>
