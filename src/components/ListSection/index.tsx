@@ -4,6 +4,7 @@ import {
   listarUsuarios,
 } from "../../services/MainApi/usuarios";
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri"; // Importando ícones do React Icons (https://react-icons.github.io/react-icons/)
+import FormModal from "../FormModal";
 
 interface UserData {
   first_name: string;
@@ -31,6 +32,8 @@ interface ListSectionProps {
 const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar a abertura/fechamento do modal
+
 
   useEffect(() => {
     async function fetchListData() {
@@ -69,10 +72,18 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     return obj[key];
   };
 
+  const handleAddUser = () => {
+    setIsModalOpen(true); // Abre o modal quando o botão "Adicionar" é clicado
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Fecha o modal
+  };
+
   return (
     <div>
       <h2>{title}</h2>
-      <button>Adicionar {title}</button>
+      <button onClick={handleAddUser}>Adicionar {title}</button>
       <table>
         <thead>
           <tr>
@@ -100,6 +111,7 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
           ))}
         </tbody>
       </table>
+      {isModalOpen && <FormModal onClose={handleCloseModal} />} {/* Renderiza o modal se isModalOpen for true */}
     </div>
   );
 };
