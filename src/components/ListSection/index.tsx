@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { listarUsuarios } from "../../services/MainApi/usuarios";
-interface ListItem {
-  id: number;
-  email: string;
+import {
+  deletarUsuario,
+  listarUsuarios,
+} from "../../services/MainApi/usuarios";
+interface UserData {
   first_name: string;
   last_name: string;
   avatar: string;
+  job: string;
+
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  type: string;
 }
 interface ListSectionProps {
   title: string;
+  dataKeys?: (keyof UserData)[];
 }
 
-const ListSection: React.FC<ListSectionProps> = ({ title }) => {
-  const [data, setData] = useState<ListItem[]>([]);
+const ListSection: React.FC<ListSectionProps> = ({ title, dataKeys }) => {
+  const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,19 +52,38 @@ const ListSection: React.FC<ListSectionProps> = ({ title }) => {
   };
 
   const handleDelete = (id: number) => {
-    // Lógica para deletar o usuário com o ID fornecido
+    const confirmed = window.confirm("Tem certeza que deseja deletar?");
+    if (confirmed) {
+      deletarUsuario(id);
+    }
+  };
+
+  const getProperty = (obj: UserData, key: keyof UserData) => {
+    return obj[key];
   };
 
   return (
     <div>
       <h2>{title}</h2>
-      <button>Adicionar usuário</button>
+      <button>Adicionar {title}</button>
       <ul>
-        {data.map((item: ListItem) => (
-          <li key={item.id}>
-            {item.email}
-            <button onClick={() => handleEdit(item.id)}>Editar</button>
-            <button onClick={() => handleDelete(item.id)}>Deletar</button>
+        {data.map((user: UserData) => (
+          <li key={user.id}>
+            {dataKeys ? (
+              <>
+                {dataKeys.map((key) => (
+                  <span key={key}>{getProperty(user, key)}</span>
+                ))}
+              </>
+            ) : (
+              <>
+                {Object.entries(user).map(([key, value]) => (
+                  <span key={key}>{value}</span>
+                ))}
+              </>
+            )}
+            <button onClick={() => handleEdit(user.id)}>Editar</button>
+            <button onClick={() => handleDelete(user.id)}>Deletar</button>
           </li>
         ))}
       </ul>
