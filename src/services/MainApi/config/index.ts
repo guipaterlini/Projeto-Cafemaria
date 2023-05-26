@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiURL = "https://reqres.in/api"
+const apiURL = "https://fakestoreapi.com/"
 const token = localStorage.getItem("token");
 const authorizationHeader = token ? `Bearer ${token}` : undefined;
 
