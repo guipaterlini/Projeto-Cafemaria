@@ -85,6 +85,13 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     }
   };
 
+  const fields = [
+    { label: "Primeiro Nome", name: "firstName", type: "text", required: true },
+    { label: "Último Nome", name: "lastName", type: "text", required: true },
+    { label: "Email", name: "email", type: "email", required: true },
+    { label: "Senha", name: "password", type: "password", required: true },
+  ];
+
   return (
     <div>
       <ListSectionHeader title={title} onAddUser={handleAddUser} />
@@ -97,7 +104,11 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
       {isModalOpen && (
         <div className="modal" onClick={handleOutsideClick}>
           <div className="modal-content">
-            <FormModal onClose={handleCloseModal} userId={selectedUserId} />
+            <FormModal
+              onClose={handleCloseModal}
+              userId={selectedUserId}
+              fields={fields}
+            />
           </div>
         </div>
       )}

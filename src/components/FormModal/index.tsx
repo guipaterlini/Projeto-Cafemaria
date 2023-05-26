@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ModalContainer, ModalContent } from "./styles";
+
+interface Field {
+  label: string;
+  name: string;
+  type: string;
+  required: boolean;
+}
+
+interface FormValues {
+  [key: string]: string;
+}
 
 interface FormModalProps {
   onClose: () => void;
-  userId: number | null; // Adicionando a propriedade userId na interface
+  userId: number | null;
+  fields: Field[]; // Configurações dos campos do formulário
 }
 
-const FormModal: React.FC<FormModalProps> = ({ onClose, userId }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields }) => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormValues>();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     // Lógica para enviar os dados do formulário para a API e criar um novo usuário admin
     // Você pode usar a função de API adequada para isso (por exemplo, uma função chamada "criarUsuarioAdmin(payload)")
     // Após a criação bem-sucedida, pode fechar o modal chamando a função onClose()
@@ -21,7 +34,7 @@ const FormModal: React.FC<FormModalProps> = ({ onClose, userId }) => {
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
-      onClose(); // Fecha o modal apenas se o clique foi fora da caixa do modal
+      onClose();
     }
   };
 
@@ -29,39 +42,17 @@ const FormModal: React.FC<FormModalProps> = ({ onClose, userId }) => {
     <ModalContainer onClick={handleOutsideClick}>
       <ModalContent>
         <h2>Adicionar Novo Usuário Admin</h2>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Primeiro Nome:
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </label>
-          <label>
-            Último Nome:
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Senha:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {fields.map((field) => (
+            <label key={field.name}>
+              {field.label}:
+              <input
+                type={field.type}
+                {...register(field.name, { required: field.required })}
+              />
+              {errors[field.name] && <span>Este campo é obrigatório</span>}
+            </label>
+          ))}
           <button type="submit">Criar</button>
           <button type="button" onClick={onClose}>
             Cancelar
