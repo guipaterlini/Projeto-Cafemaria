@@ -4,7 +4,7 @@ import { Footer } from "../../components/Footer";
 import React from "react";
 import AsideItem from "../../components/AsideItem";
 import ListSection from "../../components/ListSection";
-import { Container } from "./styles";
+import { AsideMenu, Container } from "./styles";
 
 type Menu = "products" | "categories" | "clients" | "orders" | "users";
 
@@ -20,7 +20,7 @@ export default function PagAdmin() {
     <main>
       <Header open={open} setOpen={setOpen} />
       <Container>
-        <aside>
+        <AsideMenu>
           <ul>
             <AsideItem
               onClick={() => handleMenuClick("products")}
@@ -43,7 +43,7 @@ export default function PagAdmin() {
               label="Usuários Admin"
             />
           </ul>
-        </aside>
+        </AsideMenu>
         <section>
           {/* {section === "products" && <ListSection data={productsData} />}
           {section === "categories" && <ListSection data={categoriesData} />}
@@ -61,8 +61,6 @@ export default function PagAdmin() {
           )}
         </section>
       </Container>
-
-      <Footer />
     </main>
   );
 }

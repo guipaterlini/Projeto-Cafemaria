@@ -1,4 +1,5 @@
 import React from "react";
+import { MenuButton } from "./styles";
 
 interface AsideItemProps {
   onClick: () => void;
@@ -12,7 +13,7 @@ const AsideItem: React.FC<AsideItemProps> = ({ onClick, label }) => {
 
   return (
     <li>
-      <button onClick={handleClick}>{label}</button>
+      <MenuButton onClick={handleClick}>{label}</MenuButton>
     </li>
   );
 };
