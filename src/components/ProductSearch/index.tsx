@@ -1,7 +1,12 @@
-import { InputDefault, ResultadosPesquisa, SearchComponent, LoadingText } from "./styles";
-import axios from "axios";
+import {
+  InputDefault,
+  ResultadosPesquisa,
+  SearchComponent,
+  LoadingText,
+} from "./styles";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { listarProdutos } from "../../services/MainApi/produtos";
 
 type Props = {
   value: string;
@@ -9,15 +14,12 @@ type Props = {
 };
 
 export type Produto = {
-  food: string;
+  id: number;
+  title: string;
+  price: string;
   category: string;
-};
-
-const findProduct = async (query: string): Promise<Produto[]> => {
-  const response = await axios.get(
-    `https://foods-json-server.onrender.com/foods?q=${query}`
-  );
-  return response.data;
+  description: string;
+  image: string;
 };
 
 export default function ProductSearch(props: Props) {
@@ -29,6 +31,23 @@ export default function ProductSearch(props: Props) {
     { enabled: props.value.length > 2 }
   );
 
+  async function findProduct(query: string): Promise<Produto[]> {
+    try {
+      const response = await listarProdutos();
+      const produtos = response.data;
+
+      // Filtrar os produtos que correspondem à pesquisa
+      const produtosFiltrados = produtos.filter((produto: Produto) =>
+        produto.title.toLowerCase().includes(query.toLowerCase())
+      );
+
+      return produtosFiltrados;
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+      return [];
+    }
+  }
+
   return (
     <SearchComponent>
       <InputDefault
@@ -37,14 +56,16 @@ export default function ProductSearch(props: Props) {
         type="text"
         name="produto"
         placeholder="Busque produtos"
-        />
-        {isLoading && <LoadingText>Carregando ...</LoadingText>}
+      />
+      {isLoading && <LoadingText>Carregando ...</LoadingText>}
       {data && data.length > 0 && (
         <ResultadosPesquisa>
           {data?.map((produto) => (
-            <div className="row" key={produto.food}>
+            <div className="row" key={produto.id}>
               <div className="column">
-                <Link to={caminhoDaPagina + produto.category}>{produto.food}</Link>
+                <Link to={caminhoDaPagina + produto.id}>
+                  {produto.title}
+                </Link>
               </div>
             </div>
           ))}
