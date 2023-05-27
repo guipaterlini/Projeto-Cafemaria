@@ -40,7 +40,7 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     async function fetchListData() {
       try {
         const response = await listarUsuarios();
-        setData(response.data.data);
+        setData(response.data.result || []); // Set an empty array if data is undefined
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);

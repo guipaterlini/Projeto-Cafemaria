@@ -1,6 +1,7 @@
 import React from "react";
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
 import { Column, UserData } from "../ListSection";
+import { ActionButton, TableCell, TableHead, TableHeader, TableRow, TableWrapper } from "./styles";
 
 interface TableProps {
   columns: Column[];
@@ -15,33 +16,33 @@ const Table: React.FC<TableProps> = ({ columns, data, onEdit, onDelete }) => {
   };
 
   return (
-    <table>
-      <thead>
+    <TableWrapper>
+      <TableHead>
         <tr>
           {columns.map((column) => (
-            <th key={column.key}>{column.label}</th>
+            <TableHeader key={column.key}>{column.label}</TableHeader>
           ))}
-          <th>Ações</th>
+          <TableHeader>Ações</TableHeader>
         </tr>
-      </thead>
+      </TableHead>
       <tbody>
         {data.map((user: UserData) => (
-          <tr key={user.id}>
+          <TableRow key={user.id}>
             {columns.map((column) => (
-              <td key={column.key}>{getProperty(user, column.key)}</td>
+              <TableCell key={column.key}>{getProperty(user, column.key)}</TableCell>
             ))}
-            <td>
-              <button onClick={() => onEdit(user.id)}>
+            <TableCell>
+              <ActionButton onClick={() => onEdit(user.id)}>
                 <RiEdit2Line />
-              </button>
-              <button onClick={() => onDelete(user.id)}>
+              </ActionButton>
+              <ActionButton onClick={() => onDelete(user.id)} >
                 <RiDeleteBinLine />
-              </button>
-            </td>
-          </tr>
+              </ActionButton>
+            </TableCell>
+          </TableRow>
         ))}
       </tbody>
-    </table>
+    </TableWrapper>
   );
 };
 

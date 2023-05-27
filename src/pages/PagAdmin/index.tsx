@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "../../components/Header";
-import { Footer } from "../../components/Footer";
 import React from "react";
 import AsideItem from "../../components/AsideItem";
 import ListSection from "../../components/ListSection";
@@ -53,9 +52,8 @@ export default function PagAdmin() {
             <ListSection
               title="Usuários Admin"
               columns={[
+                { key: "name", label: "Nome" },
                 { key: "email", label: "Email" },
-                { key: "first_name", label: "Primeiro Nome" },
-                { key: "last_name", label: "Último Nome" },
               ]}
             />
           )}
