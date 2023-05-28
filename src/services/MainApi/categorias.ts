@@ -20,6 +20,6 @@ export function listarCategoria() {
 export function atualizarCategoria() {
   return baseAPI.put("/categories/:id");
 }
-export function deletarCategoria() {
-  return baseAPI.delete("/categories/:id");
+export function deletarCategoria(id: number) {
+  return baseAPI.delete(`/categories/${id}`);
 }

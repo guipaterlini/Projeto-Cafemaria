@@ -2,23 +2,11 @@ import React, { useEffect, useState } from "react";
 import {
   deletarUsuario,
   listarUsuarios,
-} from "../../services/MainApi/usuarios";
-import FormModal from "../FormModal";
-import ListSectionHeader from "../ListSectionHeader";
-import Table from "../Table";
-
-export interface UserData {
-  first_name: string;
-  last_name: string;
-  avatar: string;
-  job: string;
-
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  type: string;
-}
+} from "../../../services/MainApi/usuarios";
+import FormModal from "../../FormModal";
+import ListSectionHeader from "../../ListSectionHeader";
+import { UserData } from "../../../type";
+import TableCliente from "../../Table/TableCliente";
 
 export interface Column {
   key: keyof UserData;
@@ -30,17 +18,17 @@ interface ListSectionProps {
   columns: Column[];
 }
 
-const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
+const ClienteSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar a abertura/fechamento do modal
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null); // Estado para armazenar o ID do usuário selecionado para edição
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchListData() {
       try {
         const response = await listarUsuarios();
-        setData(response.data.result || []); // Set an empty array if data is undefined
+        setData(response.data.result || []);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);
@@ -49,14 +37,6 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
 
     fetchListData();
   }, []);
-
-  if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (data.length === 0) {
-    return <div>Nenhum usuário encontrado.</div>;
-  }
 
   const handleEdit = (id: number) => {
     setSelectedUserId(id);
@@ -76,12 +56,12 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Fecha o modal
+    setIsModalOpen(false);
   };
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
-      handleCloseModal(); // Fecha o modal apenas se o clique foi fora da caixa do modal
+      handleCloseModal();
     }
   };
 
@@ -95,12 +75,29 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   return (
     <div>
       <ListSectionHeader title={title} onAddUser={handleAddUser} />
-      <Table
-        columns={columns}
-        data={data}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      {loading && <div>Carregando...</div>}
+      {!loading && data.length === 0 && <div>Nenhum usuário encontrado.</div>}
+      {!loading && data.length > 0 && (
+        <>
+          <TableCliente
+            columns={columns}
+            data={data}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+          {isModalOpen && (
+            <div className="modal" onClick={handleOutsideClick}>
+              <div className="modal-content">
+                <FormModal
+                  onClose={handleCloseModal}
+                  userId={selectedUserId}
+                  fields={fields}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )}
       {isModalOpen && (
         <div className="modal" onClick={handleOutsideClick}>
           <div className="modal-content">
@@ -116,4 +113,4 @@ const ListSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   );
 };
 
-export default ListSection;
+export default ClienteSection;

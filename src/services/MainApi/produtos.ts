@@ -20,6 +20,6 @@ export function listarProduto() {
 export function atualizarProduto() {
   return baseAPI.put("/products/:id");
 }
-export function deletarProduto() {
-  return baseAPI.delete("/products/:id");
+export function deletarProduto(id: number) {
+  return baseAPI.delete(`/products/${id}`);
 }

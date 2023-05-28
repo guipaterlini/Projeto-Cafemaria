@@ -1,17 +1,31 @@
 import React from "react";
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
-import { Column, UserData } from "../ListSection";
-import { ActionButton, TableCell, TableHead, TableHeader, TableRow, TableWrapper } from "./styles";
+
+import {
+  ActionButton,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableWrapper,
+} from "./styles";
+import { Column } from "../../ListSection/ProductSection";
+import { ProductData } from "../../../type";
 
 interface TableProps {
   columns: Column[];
-  data: UserData[];
+  data: ProductData[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({ columns, data, onEdit, onDelete }) => {
-  const getProperty = (obj: UserData, key: keyof UserData) => {
+const TableProduct: React.FC<TableProps> = ({
+  columns,
+  data,
+  onEdit,
+  onDelete,
+}) => {
+  const getProperty = (obj: ProductData, key: keyof ProductData) => {
     return obj[key];
   };
 
@@ -26,16 +40,18 @@ const Table: React.FC<TableProps> = ({ columns, data, onEdit, onDelete }) => {
         </tr>
       </TableHead>
       <tbody>
-        {data.map((user: UserData) => (
-          <TableRow key={user.id}>
+        {data.map((product: ProductData) => (
+          <TableRow key={product.id}>
             {columns.map((column) => (
-              <TableCell key={column.key}>{getProperty(user, column.key)}</TableCell>
+              <TableCell key={column.key}>
+                {getProperty(product, column.key)}
+              </TableCell>
             ))}
             <TableCell>
-              <ActionButton onClick={() => onEdit(user.id)}>
+              <ActionButton onClick={() => onEdit(product.id)}>
                 <RiEdit2Line />
               </ActionButton>
-              <ActionButton onClick={() => onDelete(user.id)} >
+              <ActionButton onClick={() => onDelete(product.id)}>
                 <RiDeleteBinLine />
               </ActionButton>
             </TableCell>
@@ -46,4 +62,4 @@ const Table: React.FC<TableProps> = ({ columns, data, onEdit, onDelete }) => {
   );
 };
 
-export default Table;
+export default TableProduct;
