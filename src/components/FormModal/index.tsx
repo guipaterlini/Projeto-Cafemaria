@@ -1,16 +1,17 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Form, ModalContainer, ModalContent } from "./styles";
+import { CheckboxWrapper, Form, ModalContainer, ModalContent } from "./styles";
 
 interface Field {
   label: string;
   name: string;
   type: string;
   required: boolean;
+  defaultValue?: string | boolean;
 }
 
 interface FormValues {
-  [key: string]: string;
+  [key: string]: string | boolean;
 }
 
 interface FormModalProps {
@@ -20,7 +21,12 @@ interface FormModalProps {
   title: string; // Título personalizado
 }
 
-const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields, title }) => {
+const FormModal: React.FC<FormModalProps> = ({
+  onClose,
+  userId,
+  fields,
+  title,
+}) => {
   const {
     handleSubmit,
     register,
@@ -45,19 +51,48 @@ const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields, title })
         <h2>Adicionar {title}</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field) => (
-            <label key={field.name}>
-              {field.label}:
-              <input
-                type={field.type}
-                {...register(field.name, { required: field.required })}
-              />
+            <React.Fragment key={field.name}>
+              {field.type === "checkbox" ? (
+                <label>
+                  <input
+                    type="checkbox"
+                    {...register(field.name)}
+                    defaultChecked={field.defaultValue as boolean}
+                    disabled={field.defaultValue !== undefined}
+                  />
+                  {field.label}
+                </label>
+              ) : (
+                <label>
+                  {field.label}:
+                  {field.type === "image" ? (
+                    <input
+                      type="file"
+                      accept="image/*"
+                      {...register(field.name, { required: field.required })}
+                    />
+                  ) : (
+                    <input
+                      type={field.type}
+                      {...register(field.name, { required: field.required })}
+                      defaultValue={field.defaultValue as string}
+                      className={
+                        field.type === "checkbox" ? "checkbox-input" : ""
+                      }
+                      disabled={field.defaultValue !== undefined}
+                    />
+                  )}
+                </label>
+              )}
               {errors[field.name] && <span>Este campo é obrigatório</span>}
-            </label>
+            </React.Fragment>
           ))}
-          <button type="submit">Criar</button>
-          <button type="button" onClick={onClose}>
-            Cancelar
-          </button>
+          <div className="button-group">
+            <button type="submit">Criar</button>
+            <button type="button" onClick={onClose}>
+              Cancelar
+            </button>
+          </div>
         </Form>
       </ModalContent>
     </ModalContainer>

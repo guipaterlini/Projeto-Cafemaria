@@ -1,11 +1,13 @@
 import baseAPI from "./config";
 
 interface ProdutoPayload {
-  nome: string;
-  foto: string;
-  preco: number;
-  descricao: string;
-  categoria: string;
+  title: string;
+  description: string;
+  price: number;
+  amount: string;
+  option: string;
+  image: string;
+  published: string;
 }
 
 export function cadastroProduto(payload: ProdutoPayload) {

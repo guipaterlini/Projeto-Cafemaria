@@ -71,8 +71,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
     { label: "Preço", name: "price", type: "number", required: true },
     { label: "Quantidade", name: "amount", type: "number", required: true },
     { label: "Variante", name: "option", type: "text", required: true },
-    { label: "Foto", name: "image", type: "text", required: true },
-    { label: "Publicado", name: "published", type: "boolean", required: true },
+    { label: "Foto", name: "image", type: "image", required: true },
+    { label: "Publicado", name: "published", type: "checkbox", required: true },
   ];
 
   return (
