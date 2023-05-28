@@ -14,24 +14,14 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: var(--cor-font-primaria);
+  background-color: var(--cor-font-secundaria);
   padding: 20px;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 400px; /* Define a largura do modal */
-`;
+  width: 40%; /* Define a largura do modal */
 
-export const CheckboxWrapper = styled.label`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  color: var(--cor-font-secundaria);
-  font-size: var(--fonte-titulo);
-  font-family: var(--fonte-family);
-
-  input[type="checkbox"] {
-    margin-right: 8px;
-    transform: scale(1.5); /* Aumenta o tamanho do checkbox */
+  h2 {
+    width: 90%;
   }
 `;
 
@@ -43,11 +33,12 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    color: var(--cor-font-secundaria);
+    color: var(--cor-font-primaria);
     font-size: var(--fonte-titulo);
     font-family: var(--fonte-family);
-
+    width: 90%;
     input[type="checkbox"] {
+      margin-bottom: -20px;
       transform: scale(1.5); /* Aumenta o tamanho do checkbox */
     }
   }
@@ -58,20 +49,22 @@ export const Form = styled.form`
 
   input[type="text"],
   input[type="number"],
-  input[type="file"] {
+  input[type="file"],
+  input[type="email"],
+  input[type="password"] {
     padding: 8px;
     margin-bottom: 10px;
     border-radius: 4px;
-    border: 1px solid var(--cor-font-secundaria);
+    border: 1px solid var(--cor-font-primaria);
     font-size: var(--fonte-corpo);
     font-family: var(--fonte-family);
-    width: 200px; /* Defina o tamanho desejado aqui */
+    width: 100%;
   }
 
   span {
     color: var(--cor-alternativa);
     font-size: var(--fonte-corpo);
-    margin-top: 5px;
+    margin-top: -15px;
     font-family: var(--fonte-family);
   }
 
@@ -86,8 +79,8 @@ export const Form = styled.form`
     margin-top: 10px;
     border-radius: 4px;
     border: none;
-    background-color: var(--cor-primaria);
-    color: var(--cor-font-secundaria);
+    background-color: var(--cor-secundaria);
+    color: var(--cor-font-preta);
     cursor: pointer;
     font-size: var(--fonte-titulo);
     font-family: var(--fonte-family);
@@ -95,6 +88,6 @@ export const Form = styled.form`
 
   button[type="submit"]:hover,
   button[type="button"]:hover {
-    background-color: var(--cor-secundaria);
+    background-color: var(--cor-primaria);
   }
 `;

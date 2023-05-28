@@ -65,7 +65,7 @@ const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
   const fields = [
     { label: "Nome", name: "title", type: "text", required: true },
     { label: "Descrição", name: "description", type: "text", required: true },
-    { label: "Publicado", name: "published", type: "text", required: true },
+    { label: "Publicado", name: "published", type: "checkbox", required: true },
   ];
 
   return (

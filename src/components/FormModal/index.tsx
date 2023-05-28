@@ -1,6 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CheckboxWrapper, Form, ModalContainer, ModalContent } from "./styles";
+import { Form, ModalContainer, ModalContent } from "./styles";
 
 interface Field {
   label: string;
