@@ -14,11 +14,11 @@ export function cadastroProduto(payload: ProdutoPayload) {
 export function listarProdutos() {
   return baseAPI.get("/products");
 }
-export function listarProduto() {
-  return baseAPI.get("/products/:id");
+export function listarProduto(id: number) {
+  return baseAPI.get(`/products/${id}`);
 }
-export function atualizarProduto() {
-  return baseAPI.put("/products/:id");
+export function atualizarProduto(id: number, payload: ProdutoPayload) {
+  return baseAPI.put(`/products/${id}`, payload);
 }
 export function deletarProduto(id: number) {
   return baseAPI.delete(`/products/${id}`);

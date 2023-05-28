@@ -16,3 +16,9 @@ export const AsideMenu = styled.aside`
     width: 100%;
   }
 `;
+
+export const TableSection = styled.section`
+ flex: 1;
+  margin-left: 245px;
+  padding: 0 30px;
+`

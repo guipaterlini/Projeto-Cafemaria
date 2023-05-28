@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../../components/Header";
 import AsideItem from "../../components/AsideItem";
-import { AsideMenu, Container } from "./styles";
+import { AsideMenu, Container, TableSection } from "./styles";
 // import AdminSection from "../../components/ListSection/AdminSection";
 import ProductSection from "../../components/ListSection/ProductSection";
 import CategorySection from "../../components/ListSection/CategorySection";
@@ -50,7 +50,7 @@ export default function PagAdmin() {
             />
           </ul>
         </AsideMenu>
-        <section>
+        <TableSection>
           {section === "products" && (
             <ProductSection
               title="Produtos"
@@ -105,7 +105,7 @@ export default function PagAdmin() {
               ]}
             />
           )}
-        </section>
+        </TableSection>
       </Container>
     </main>
   );

@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 export const TableWrapper = styled.table`
-  width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   font-size: var(--fonte-corpo);
@@ -12,7 +11,6 @@ export const TableWrapper = styled.table`
 `;
 
 export const TableHead = styled.thead`
-  background-color: var(--cor-primaria);
   border-bottom: 1px solid var(--cor-secundaria);
 `;
 
