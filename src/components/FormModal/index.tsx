@@ -1,6 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ModalContainer, ModalContent } from "./styles";
+import { Form, ModalContainer, ModalContent } from "./styles";
 
 interface Field {
   label: string;
@@ -17,9 +17,10 @@ interface FormModalProps {
   onClose: () => void;
   userId: number | null;
   fields: Field[]; // Configurações dos campos do formulário
+  title: string; // Título personalizado
 }
 
-const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields }) => {
+const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields, title }) => {
   const {
     handleSubmit,
     register,
@@ -41,8 +42,8 @@ const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields }) => {
   return (
     <ModalContainer onClick={handleOutsideClick}>
       <ModalContent>
-        <h2>Adicionar Novo Usuário Admin</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <h2>Adicionar {title}</h2>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field) => (
             <label key={field.name}>
               {field.label}:
@@ -57,7 +58,7 @@ const FormModal: React.FC<FormModalProps> = ({ onClose, userId, fields }) => {
           <button type="button" onClick={onClose}>
             Cancelar
           </button>
-        </form>
+        </Form>
       </ModalContent>
     </ModalContainer>
   );

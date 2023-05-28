@@ -77,7 +77,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
 
   return (
     <div>
-      <ListSectionHeader title={title} onAddUser={handleAddProduct} />
+      <ListSectionHeader title={title} onAddItem={handleAddProduct} />
       {loading && <div>Carregando...</div>}
       {!loading && data.length === 0 && <div>Nenhum produto encontrado.</div>}
       {!loading && data.length > 0 && (
@@ -95,6 +95,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
                   onClose={handleCloseModal}
                   userId={selectedUserId}
                   fields={fields}
+                  title={title}
                 />
               </div>
             </div>
@@ -108,6 +109,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
               onClose={handleCloseModal}
               userId={selectedUserId}
               fields={fields}
+              title={title}
             />
           </div>
         </div>

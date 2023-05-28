@@ -1,16 +1,17 @@
 import React from "react";
+import { AddButton, Title, Wrapper } from "./styles";
 
 interface ListSectionHeaderProps {
   title: string;
-  onAddUser: () => void;
+  onAddItem: () => void;
 }
 
-const ListSectionHeader: React.FC<ListSectionHeaderProps> = ({ title, onAddUser }) => {
+const ListSectionHeader: React.FC<ListSectionHeaderProps> = ({ title, onAddItem }) => {
   return (
-    <div>
-      <h2>{title}</h2>
-      <button onClick={onAddUser}>Adicionar {title}</button>
-    </div>
+    <Wrapper>
+      <Title>{title}</Title>
+      <AddButton onClick={onAddItem}>Adicionar {title}</AddButton>
+    </Wrapper>
   );
 };
 

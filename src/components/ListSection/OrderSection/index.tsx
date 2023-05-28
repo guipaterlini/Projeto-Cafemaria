@@ -70,7 +70,7 @@ const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
 
   return (
     <div>
-      <ListSectionHeader title={title} onAddUser={handleAddUser} />
+      <ListSectionHeader title={title} onAddItem={handleAddUser} />
       {loading && <div>Carregando...</div>}
       {!loading && data.length === 0 && <div>Nenhum usuário encontrado.</div>}
       {!loading && data.length > 0 && (
@@ -88,6 +88,7 @@ const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
                   onClose={handleCloseModal}
                   userId={selectedUserId}
                   fields={fields}
+                  title={title}
                 />
               </div>
             </div>
@@ -101,6 +102,7 @@ const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
               onClose={handleCloseModal}
               userId={selectedUserId}
               fields={fields}
+              title={title}
             />
           </div>
         </div>

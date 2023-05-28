@@ -73,7 +73,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
 
   return (
     <div>
-      <ListSectionHeader title={title} onAddUser={handleAddUser} />
+      <ListSectionHeader title={title} onAddItem={handleAddUser} />
       {loading && <div>Carregando...</div>}
       {!loading && data.length === 0 && (
         <div>Nenhuma categoria encontrada.</div>
@@ -93,6 +93,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
                   onClose={handleCloseModal}
                   userId={selectedUserId}
                   fields={fields}
+                  title={title}
                 />
               </div>
             </div>
@@ -106,6 +107,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
               onClose={handleCloseModal}
               userId={selectedUserId}
               fields={fields}
+              title={title}
             />
           </div>
         </div>

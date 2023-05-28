@@ -2,21 +2,16 @@ import { useState } from "react";
 import Header from "../../components/Header";
 import AsideItem from "../../components/AsideItem";
 import { AsideMenu, Container, TableSection } from "./styles";
-// import AdminSection from "../../components/ListSection/AdminSection";
 import ProductSection from "../../components/ListSection/ProductSection";
 import CategorySection from "../../components/ListSection/CategorySection";
 import OrderSection from "../../components/ListSection/OrderSection";
 import ClienteSection from "../../components/ListSection/ClienteSection";
 import AdminSection from "../../components/ListSection/AdminSection";
-// import CategorySection from "../../components/ListSection/CategorySection";
-// import ClienteSection from "../../components/ListSection/ClienteSection";
-// import OrderSection from "../../components/ListSection/OrderSection";
-
-type Menu = "products" | "categories" | "clients" | "orders" | "users";
+import { Menu } from "../../type";
 
 export default function PagAdmin() {
   const [open, setOpen] = useState(false);
-  const [section, setSection] = useState<Menu | null>(null);
+  const [section, setSection] = useState<Menu | null>("products");
 
   const handleMenuClick = (menu: Menu) => {
     setSection(menu);
