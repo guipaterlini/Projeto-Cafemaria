@@ -1,8 +1,7 @@
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
 import React from "react";
-import { Product } from "../../components/ProductCard";
-import ProductList from "../../components/ProductList";
+import ProductList, { Product } from "../../components/ProductList";
 import { Main, TituloH1 } from "./styles";
 
 const products: Product[] = [

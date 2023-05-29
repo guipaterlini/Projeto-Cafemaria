@@ -9,6 +9,7 @@ import {
   PaginationContainer,
   PageButton,
   Container,
+  Button,
 } from "./styles";
 
 export interface Product {
@@ -46,7 +47,7 @@ const ProductList: React.FC<ProductListProps> = ({
             <Image src={product.photo} alt={product.name} />
             <Title>{product.name}</Title>
             <Price>R$ {product.price}</Price>
-            <button>Comprar</button>
+            <Button>Comprar</Button>
           </CardContainer>
         ))}
       </ListContainer>

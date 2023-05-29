@@ -13,29 +13,51 @@ export const ListContainer = styled.div`
 `;
 
 export const CardContainer = styled.div`
-  border: 1px solid #000;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 15px;
   margin: 10px;
   border-radius: 10px;
+  background-color: var(--cor-secundaria);
 `;
 
 export const Image = styled.img`
   width: 250px;
   height: 250px;
   border-radius: 10px;
+  border: 1px solid #000;
+  margin-bottom: 10px;
 `;
 
 export const Title = styled.h3`
-  font-size: 18px;
-  margin: 5px auto;
+  font-size: var(--fonte-grande);
+  color: var(--cor-font-preta);
+  font-family: var(--fonte-family);
 `;
 
 export const Price = styled.p`
-  font-size: 16px;
-  color: #666;
+  font-size: var(--fonte-titulo);
+  color: var(--cor-font-preta);
   margin-bottom: 10px;
+  font-family: var(--fonte-family);
+`;
+
+export const Button = styled.button`
+  font-size: var(--fonte-grande);
+  padding: 15px 0;
+  width: 90%;
+  border: none;
+  font-family: var(--fonte-family);
+  color: var(--cor-font-preta);
+  background-color: var(--cor-primaria);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  :hover {
+    background-color: var(--cor-font-primaria);
+    color: var(--cor-font-secundaria);
+  }
 `;
 
 export const PaginationContainer = styled.div`
