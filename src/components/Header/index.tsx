@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./styles";
+
 import ImageLink from "../ImageLink";
 import ProductSearch from "../ProductSearch";
 import TokenButton from "../LoginBtn";
 
-interface Props {
+import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./styles";
+
+type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
-}
+};
 
 
 const Header: React.FC<Props> = ({ setOpen, open }) => {

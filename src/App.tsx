@@ -3,11 +3,16 @@ import Router from "./Router";
 import "./styles/global.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Router />
-    </div>
-  );
+	const [open, setOpen] = useState(false);
+
+	return (
+		<div className='App'>
+			<Header open={open} setOpen={setOpen} />
+
+			<Router />
+		</div>
+	);
+
 }
 
 export default App;
