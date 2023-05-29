@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
 import React from "react";
@@ -13,18 +13,15 @@ import {
   ProductTitle,
   QuantitySelector,
 } from "./styles";
+import { useParams } from "react-router-dom";
+import { ProdutoPayload, listarProduto } from "../../services/MainApi/produtos";
 
 export default function Produto() {
   const [open, setOpen] = useState(false);
-  const product = {
-    title: "Nome do Produto",
-    image: "../../../assets/images/logo-com-nome.png",
-    price: 99.99,
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.",
-    stock: 20,
-  };
+  const [product, setProduct] = useState<ProdutoPayload | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const { id } = useParams();
+
 
   const handleQuantityChange = (event: { target: { value: string } }) => {
     const value = parseInt(event.target.value);
@@ -34,6 +31,24 @@ export default function Produto() {
   const handleAddToCart = () => {
     // Lógica para adicionar o produto ao carrinho
   };
+
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const response = await listarProduto(Number(id));
+        setProduct(response.data.result || []);
+      } catch (error) {
+        console.error("Erro ao buscar produto:", error);
+      }
+    }
+
+    fetchProduct();
+  }, [id]);
+
+  if (!product) {
+    // Renderizar um componente de carregamento ou uma mensagem de erro enquanto os dados do produto são buscados
+    return null;
+  }
 
   return (
     <main>
@@ -49,7 +64,7 @@ export default function Produto() {
             <ProductPrice>R$ {product.price}</ProductPrice>
 
             <QuantitySelector value={quantity} onChange={handleQuantityChange}>
-              {[...Array(product.stock)].map((_, index) => (
+              {[...Array(product.amount)].map((_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
                 </option>
