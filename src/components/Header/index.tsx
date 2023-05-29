@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import React, {useState} from 'react';
 import {HeaderDefault, ListDefault, ListItem, StyledBurger} from './Style';
 import ImageLink from '../ImageLink';
 import ProductSearch from '../ProductSearch';
+=======
+import React, { useState } from "react";
+import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./styles";
+import ImageLink from "../ImageLink";
+import ProductSearch from "../ProductSearch";
+>>>>>>> 8731914697e8ad52e780e20337c3e4696215323f
 
 type Props = {
 	open: boolean;

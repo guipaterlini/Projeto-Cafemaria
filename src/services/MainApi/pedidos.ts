@@ -9,17 +9,17 @@ interface PedidoPayload {
 }
 
 export function cadastroPedido(payload: PedidoPayload) {
-  return baseAPI.post("/pedido", payload);
+  return baseAPI.post("/order", payload);
 }
 export function listarPPedidos() {
-  return baseAPI.get("/pedidos");
+  return baseAPI.get("/order");
 }
 export function listarPedido() {
-  return baseAPI.get("/pedido/:id");
+  return baseAPI.get("/order/:id");
 }
 export function atualizarPedido() {
-  return baseAPI.put("/pedido/:id");
+  return baseAPI.put("/order/:id");
 }
 export function deletarPedido() {
-  return baseAPI.delete("/pedido/:id");
+  return baseAPI.delete("/order/:id");
 }

@@ -9,17 +9,17 @@ interface ProdutoPayload {
 }
 
 export function cadastroProduto(payload: ProdutoPayload) {
-  return baseAPI.post("/produto", payload);
+  return baseAPI.post("/products", payload);
 }
 export function listarProdutos() {
-  return baseAPI.get("/produtos");
+  return baseAPI.get("/products");
 }
 export function listarProduto() {
-  return baseAPI.get("/produto/:id");
+  return baseAPI.get("/products/:id");
 }
 export function atualizarProduto() {
-  return baseAPI.put("/produto/:id");
+  return baseAPI.put("/products/:id");
 }
 export function deletarProduto() {
-  return baseAPI.delete("/produto/:id");
+  return baseAPI.delete("/products/:id");
 }

@@ -1,10 +1,18 @@
 import {Link} from 'react-router-dom';
 import {
+<<<<<<< HEAD
 	FooterDefault,
 	NewsletterContainer,
 	LinksContainer,
 	FormNewsLetter,
 } from './Style';
+=======
+  FooterDefault,
+  NewsletterContainer,
+  LinksContainer,
+  FormNewsLetter,
+} from "./styles";
+>>>>>>> 8731914697e8ad52e780e20337c3e4696215323f
 
 export function Footer() {
 	return (

@@ -1,8 +1,16 @@
+import { useState } from "react";
 import { Footer } from "../../components/Footer";
+<<<<<<< HEAD
 import { Container, ContainerInfo, BotaoAddCarrinho } from "./style";
+=======
+import Header from "../../components/Header";
+>>>>>>> 8731914697e8ad52e780e20337c3e4696215323f
 
 export default function Produto() {
+  const [open, setOpen] = useState(false);
+
   return (
+<<<<<<< HEAD
     <>
       <Container>
         <img src="../../../assets/images/cafe-forte.png" alt="" />
@@ -14,7 +22,13 @@ export default function Produto() {
         </ContainerInfo>
       </Container>
 
+=======
+    <main>
+      <Header open={open} setOpen={setOpen} />
+
+      <h1>Produto</h1>
+>>>>>>> 8731914697e8ad52e780e20337c3e4696215323f
       <Footer />
     </>
   );
-  }
+}

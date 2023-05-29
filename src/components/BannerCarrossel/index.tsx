@@ -1,6 +1,6 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Img, StyledSlider, Wrapper } from "./Style";
+import { Img, StyledSlider, Wrapper } from "./styles";
 import { useMediaQuery } from "react-responsive";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -60,7 +60,7 @@ export default function BannerCarrossel() {
     <Wrapper>
       <StyledSlider {...settings}>
         {productImages.map((image: ProductImage) => (
-          <div>
+          <div key={image.id}>
             <Link to={caminhoDaPagina + image.id}>
               <Img src={image.image} />
             </Link>
