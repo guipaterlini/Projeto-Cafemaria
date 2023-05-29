@@ -8,6 +8,7 @@ import OrderSection from "../../components/ListSection/OrderSection";
 import ClienteSection from "../../components/ListSection/ClienteSection";
 import AdminSection from "../../components/ListSection/AdminSection";
 import { Menu } from "../../type";
+import { useNavigate } from "react-router-dom";
 
 export default function PagAdmin() {
   const [open, setOpen] = useState(false);
@@ -15,6 +16,13 @@ export default function PagAdmin() {
 
   const handleMenuClick = (menu: Menu) => {
     setSection(menu);
+  };
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token"); // Remove o token antigo, se existir
+    navigate("/"); // Redirecionamento para a página Home
   };
 
   return (
@@ -43,6 +51,7 @@ export default function PagAdmin() {
               onClick={() => handleMenuClick("users")}
               label="Usuários Admin"
             />
+            <AsideItem onClick={() => logout()} label="Logout" />
           </ul>
         </AsideMenu>
         <TableSection>

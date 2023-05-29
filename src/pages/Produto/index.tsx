@@ -1,44 +1,85 @@
-import Header from "../../components/Header";
-import { Footer } from "../../components/Footer";
-import { useState } from "react";
-import { Container, ContainerInfo, BotaoAddCarrinho } from "./style";
 
+import { useEffect, useState } from "react";
+import { Footer } from "../../components/Footer";
+import Header from "../../components/Header";
+import React from "react";
+import {
+  AddToCartButton,
+  ProductDescription,
+  ProductDetailsContainer,
+  ProductImage,
+  ProductInfoContainer,
+  ProductPageContainer,
+  ProductPrice,
+  ProductTitle,
+  QuantitySelector,
+} from "./styles";
+import { useParams } from "react-router-dom";
+import { ProdutoPayload, listarProduto } from "../../services/MainApi/produtos";
 
 export default function Produto() {
-
   const [open, setOpen] = useState(false);
+  const [product, setProduct] = useState<ProdutoPayload | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const { id } = useParams();
+
+
+  const handleQuantityChange = (event: { target: { value: string } }) => {
+    const value = parseInt(event.target.value);
+    setQuantity(value);
+  };
+
+  const handleAddToCart = () => {
+    // Lógica para adicionar o produto ao carrinho
+  };
+
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const response = await listarProduto(Number(id));
+        setProduct(response.data.result || []);
+      } catch (error) {
+        console.error("Erro ao buscar produto:", error);
+      }
+    }
+
+    fetchProduct();
+  }, [id]);
+
+  if (!product) {
+    // Renderizar um componente de carregamento ou uma mensagem de erro enquanto os dados do produto são buscados
+    return null;
+  }
 
   return (
-    <>
+    <main>
       <Header open={open} setOpen={setOpen} />
 
-      <Container>
-        <img src="../../../assets/images/cafe-forte.png" alt="" />
-        <ContainerInfo>
-          <h1>Café Maria Tradicional</h1>
-          <p>
-            Uma experiência indulgente para os amantes de café que buscam um
-            sabor intenso e uma dose perfeita de energia para começar o
-            dia.Nosso café forte de torra média é cuidadosamente selecionado a
-            partir dos melhores grãos arábica, provenientes de regiões
-            conhecidas por sua qualidade excepcional. Esses grãos são submetidos
-            a uma torra média precisa, que acentua seus sabores e aromas
-            distintos, sem comprometer a suavidade característica da torra
-            média.O resultado é uma xícara de café encorpado e rico, com um
-            sabor marcante e notas pronunciadas de chocolate amargo, nozes
-            torradas e um toque sutil de caramelo. Cada gole revela uma
-            combinação perfeitamente equilibrada de intensidade e suavidade,
-            oferecendo uma experiência sensorial inigualável.
-          </p>
-          <span>R$ 45,00</span>
-          <BotaoAddCarrinho>
-            {" "}
-            <a href="*">Adicionar ao carrinho</a>{" "}
-          </BotaoAddCarrinho>
-        </ContainerInfo>
-      </Container>
+      <ProductPageContainer>
+        <ProductInfoContainer>
+          <ProductImage src={product.image} alt={product.title} />
+
+          <ProductDetailsContainer>
+            <ProductTitle>{product.title}</ProductTitle>
+            <ProductDescription>{product.description}</ProductDescription>
+            <ProductPrice>R$ {product.price}</ProductPrice>
+
+            <QuantitySelector value={quantity} onChange={handleQuantityChange}>
+              {[...Array(product.amount)].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </QuantitySelector>
+
+            <AddToCartButton onClick={handleAddToCart}>
+              Adicionar ao Carrinho
+            </AddToCartButton>
+          </ProductDetailsContainer>
+        </ProductInfoContainer>
+      </ProductPageContainer>
 
       <Footer />
-    </>
+    </main>
   );
 }

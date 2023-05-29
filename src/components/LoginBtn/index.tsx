@@ -15,9 +15,9 @@ const TokenButton: React.FC = () => {
     } else {
       try {
         const decodedToken: any = jose.decodeJwt(token);
-        const userType = decodedToken.tipo;
+        const userType = decodedToken.role;
 
-        if (userType === "usuario") {
+        if (userType === "buyer") {
           navigate("/minhaconta");
         } else if (userType === "admin") {
           navigate("/admin");
@@ -35,9 +35,9 @@ const TokenButton: React.FC = () => {
   } else {
     try {
       const decodedToken: any = jose.decodeJwt(token);
-      const userType = decodedToken.tipo;
+      const userType = decodedToken.role;
 
-      if (userType === "usuario") {
+      if (userType === "buyer") {
         buttonText = "Minha conta";
       } else if (userType === "admin") {
         buttonText = "Painel Admin";

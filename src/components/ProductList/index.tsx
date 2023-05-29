@@ -15,8 +15,8 @@ import { Link } from "react-router-dom";
 
 export interface Product {
   id: number;
-  name: string;
-  photo: string;
+  title: string;
+  image: string;
   price: number;
 }
 
@@ -45,8 +45,8 @@ const ProductList: React.FC<ProductListProps> = ({
       <ListContainer>
         {currentItems.map((product) => (
           <CardContainer key={product.id}>
-            <Image src={product.photo} alt={product.name} />
-            <Title>{product.name}</Title>
+            <Image src={product.image} alt={product.title} />
+            <Title>{product.title}</Title>
             <Price>R$ {product.price}</Price>
             <Link to={`/produto/${product.id}`} className="link-produto-id">
               <Button>Comprar</Button>
