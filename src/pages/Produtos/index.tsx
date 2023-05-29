@@ -1,4 +1,5 @@
 import { Footer } from "../../components/Footer";
+
 import Header from "../../components/Header";
 import React, { useEffect, useState } from "react";
 import ProductList from "../../components/ProductList";
@@ -25,6 +26,7 @@ export default function Produtos() {
   return (
     <Main>
       <Header open={open} setOpen={setOpen} />
+
 
       <TituloH1> Nossos Produtos</TituloH1>
       <ProductList products={products} itemsPerPage={10} />
