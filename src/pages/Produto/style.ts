@@ -1,60 +1,85 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-
-   img{
-    width: 60%;
-    height: 85vh;
-    border: none;
-    border-radius: 10px;
-    margin: 1rem;
-   }
-`;
-
-export const ContainerInfo = styled.div`
+export const ProductPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
-  
-  h1{
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
+  align-items: center;
+  padding: 20px;
+`;
 
-  h1, span{
-    display: flex;
+export const ProductTitle = styled.h1`
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--cor-font-primaria);
+`;
+
+export const ProductInfoContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    text-align: center;
-    font-family: var(--fonte-destaque);
-  	font-size: var(--fonte-muito-grande);
-    width: 100%;
-    padding: 0.3rem;
-  }
-
-  p{
-    font-family: var(--fonte-family);
-    width: 80%;
-    text-align: justify;
-    font-weight: 700;
-    color: #000;
   }
 `;
 
-export const BotaoAddCarrinho = styled.button`
-	margin-bottom: 20px;
-	display: flex;
-	padding: 0.5rem;
-	border: none;
-	border-radius: 20px;
-	width: 300px;
-	background-color: var(--cor-secundaria);
-  margin-top: 30px;
-	
-		a{
-			color: #fff;
-			font-weight: 800;
-			text-transform: uppercase;
-		}
+export const ProductImage = styled.img`
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 10px;
+
+  @media (max-width: 768px) {
+    margin: 20px auto;
+  }
+`;
+
+export const ProductDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+  @media (max-width: 768px) {
+    align-items: center;
+    width: 80%;
+    margin-bottom: 80px;
+  }
+`;
+
+export const ProductPrice = styled.p`
+  font-size: 18px;
+  color: var(--cor-font-primaria);
+  margin-bottom: 10px;
+`;
+
+export const ProductDescription = styled.p`
+  font-size: 16px;
+  color: var(--cor-font-primaria);
+  margin-bottom: 10px;
+`;
+
+export const QuantitySelector = styled.select`
+  font-size: 16px;
+  padding: 8px;
+  margin-bottom: 10px;
+  color: var(--cor-font-primaria);
+`;
+
+export const AddToCartButton = styled.button`
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: var(--cor-secundaria);
+  border: none;
+  border-radius: 4px;
+  color: var(--cor-font-preta);
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
