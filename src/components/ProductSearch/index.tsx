@@ -34,7 +34,7 @@ export default function ProductSearch(props: Props) {
   async function findProduct(query: string): Promise<Produto[]> {
     try {
       const response = await listarProdutos();
-      const produtos = response.data;
+      const produtos = response.data.result;
 
       // Filtrar os produtos que correspondem à pesquisa
       const produtosFiltrados = produtos.filter((produto: Produto) =>

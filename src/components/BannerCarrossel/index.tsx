@@ -22,7 +22,7 @@ export default function BannerCarrossel() {
     async function fetchProductImages() {
       try {
         const response = await listarProdutos();
-        const produtos = response.data;
+        const produtos = response.data.result;
 
         // Extrair as informações relevantes das imagens
         const imagensCarrossel = produtos.map((produto: any) => ({
