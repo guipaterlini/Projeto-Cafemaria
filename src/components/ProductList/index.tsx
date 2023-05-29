@@ -11,9 +11,10 @@ import {
   Container,
   Button,
 } from "./styles";
+import { Link } from "react-router-dom";
 
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   photo: string;
   price: number;
@@ -47,7 +48,9 @@ const ProductList: React.FC<ProductListProps> = ({
             <Image src={product.photo} alt={product.name} />
             <Title>{product.name}</Title>
             <Price>R$ {product.price}</Price>
-            <Button>Comprar</Button>
+            <Link to={`/produto/${product.id}`} className="link-produto-id">
+              <Button>Comprar</Button>
+            </Link>
           </CardContainer>
         ))}
       </ListContainer>

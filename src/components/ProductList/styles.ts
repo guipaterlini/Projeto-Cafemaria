@@ -19,6 +19,12 @@ export const CardContainer = styled.div`
   margin: 10px;
   border-radius: 10px;
   background-color: var(--cor-secundaria);
+
+  .link-produto-id {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const Image = styled.img`
@@ -53,7 +59,7 @@ export const Button = styled.button`
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
-
+  margin-bottom: 10px;
   :hover {
     background-color: var(--cor-font-primaria);
     color: var(--cor-font-secundaria);
