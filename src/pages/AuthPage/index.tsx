@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import { Button, Form, Input, Main, Span } from "./styles";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { loginUsuario } from "../../services/MainApi/login";
+import React from "react";
 
 type AuthFormValues = {
   name?: string;

@@ -1,8 +1,6 @@
-
-import {useState} from 'react';
-import Router from './Router';
-import Header from './components/Header';
-import './styles/global.css';
+import React from "react";
+import Router from "./Router";
+import "./styles/global.css";
 
 function App() {
 	const [open, setOpen] = useState(false);

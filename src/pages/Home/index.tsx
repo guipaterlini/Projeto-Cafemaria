@@ -3,6 +3,7 @@ import BannerCarrossel from "../../components/BannerCarrossel";
 import { FirstContainer } from "./styles";
 import Header from "../../components/Header";
 import { useState } from "react";
+import React from "react";
 
 export default function Home() {
   const [open, setOpen] = useState(false);

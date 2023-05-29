@@ -1,11 +1,10 @@
 import baseAPI from "./config";
 
 interface PedidoPayload {
-  nome: string;
-  foto: string;
-  preco: number;
-  descricao: string;
-  categoria: string;
+  email: string;
+  cart_id: string;
+  buyer_id: number;
+  total_value: string;
 }
 
 export function cadastroPedido(payload: PedidoPayload) {
@@ -20,6 +19,6 @@ export function listarPedido() {
 export function atualizarPedido() {
   return baseAPI.put("/order/:id");
 }
-export function deletarPedido() {
-  return baseAPI.delete("/order/:id");
+export function deletarPedido(id: number) {
+  return baseAPI.delete(`/order/${id}`);
 }

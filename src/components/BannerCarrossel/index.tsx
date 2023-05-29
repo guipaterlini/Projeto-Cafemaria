@@ -4,6 +4,7 @@ import { Img, StyledSlider, Wrapper } from "./styles";
 import { useMediaQuery } from "react-responsive";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { listarProdutos } from "../../services/MainApi/produtos";
 
 type ProductImage = {
   image: string;
@@ -12,25 +13,6 @@ type ProductImage = {
   title: string;
 };
 
-function getProductImage(): Promise<ProductImage[]> {
-  return fetch("https://dog.ceo/api/breed/hound/images")
-    .then((res) => res.json())
-    .then((data) => {
-      // Extrair as URLs das imagens do objeto de resposta
-      const imageUrls = data.message;
-
-      // Mapear as URLs para objetos ProductImage
-      const productImages = imageUrls.map((imageUrl: any, index: any) => ({
-        image: imageUrl,
-        id: index,
-        description: "",
-        title: "",
-      }));
-
-      return productImages;
-    });
-}
-
 export default function BannerCarrossel() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [productImages, setProductImages] = useState<ProductImage[]>([]);
@@ -38,8 +20,22 @@ export default function BannerCarrossel() {
 
   useEffect(() => {
     async function fetchProductImages() {
-      const data = await getProductImage();
-      setProductImages(data);
+      try {
+        const response = await listarProdutos();
+        const produtos = response.data.result;
+
+        // Extrair as informações relevantes das imagens
+        const imagensCarrossel = produtos.map((produto: any) => ({
+          image: produto.image,
+          id: produto.id,
+          description: produto.description,
+          title: produto.title,
+        }));
+
+        setProductImages(imagensCarrossel);
+      } catch (error) {
+        console.error("Erro ao buscar as imagens do carrossel:", error);
+      }
     }
 
     fetchProductImages();
@@ -56,6 +52,7 @@ export default function BannerCarrossel() {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+
   return (
     <Wrapper>
       <StyledSlider {...settings}>

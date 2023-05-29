@@ -7,17 +7,20 @@ interface UsuarioPayload {
 }
 
 export function cadastroUsuario(payload: UsuarioPayload) {
-  return baseAPI.post("/users", payload);
+  return baseAPI.post("/buyer", payload);
+}
+export function cadastroAdmin(payload: UsuarioPayload) {
+  return baseAPI.post("/admin", payload);
 }
 export function listarUsuarios() {
   return baseAPI.get("/users");
 }
-export function listarUsuario() {
-  return baseAPI.get("/users/:id");
+export function listarUsuario(id: number) {
+  return baseAPI.get(`/users/${id}`);
 }
-export function atualizarUsuario() {
-  return baseAPI.put("/users/:id");
+export function atualizarUsuario(id: number, payload: UsuarioPayload) {
+  return baseAPI.put(`/users/${id}`, payload);
 }
-export function deletarUsuario() {
-  return baseAPI.delete("/users/:id");
+export function deletarUsuario(id: number) {
+  return baseAPI.delete(`/users/${id}`);
 }

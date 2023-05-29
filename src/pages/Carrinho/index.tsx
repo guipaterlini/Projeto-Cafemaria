@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
+
 import carrinho from "../../services/MainApi/config"
 import CartTable from "../../components/CartTable";
 
@@ -13,6 +14,7 @@ import CartTable from "../../components/CartTable";
 //     - Puxar info das APIs
 //     - Checar se está logado
 //     - cupom de desconto?
+
 
 export default function Carrinho() {
   const [open, setOpen] = useState(false);

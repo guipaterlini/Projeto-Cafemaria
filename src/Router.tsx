@@ -9,6 +9,7 @@ import Produtos from "./pages/Produtos";
 import Sucesso from "./pages/Sucesso";
 import AuthPage from "./pages/AuthPage";
 import Contato from "./pages/Contato";
+import React from "react";
 
 export default function Router() {
   return (

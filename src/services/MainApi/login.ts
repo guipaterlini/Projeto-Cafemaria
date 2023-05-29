@@ -6,5 +6,5 @@ interface UsuarioPayload {
 }
 
 export function loginUsuario(payload: UsuarioPayload) {
-  return baseAPI.post("/login", payload);
+  return baseAPI.post("/auth", payload);
 }

@@ -6,17 +6,14 @@ interface CarrinhoPayload {
 }
 
 export function cadastroCarrinho(payload: CarrinhoPayload) {
-  return baseAPI.post("/cart", payload);
-}
-export function listarCarrinhos() {
-  return baseAPI.get("/cart");
+  return baseAPI.post("/cart/add-to-cart", payload);
 }
 export function listarCarrinho() {
-  return baseAPI.get("/cart/:id");
+  return baseAPI.get("/cart/:user_id");
 }
 export function atualizarCarrinho() {
-  return baseAPI.put("/cart/:id");
+  return baseAPI.put("/cart/:user_id/:cart_id");
 }
 export function deletarCarrinho() {
-  return baseAPI.delete("/cart/:id");
+  return baseAPI.delete("/cart/:user_id/:cart_id");
 }
