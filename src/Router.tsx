@@ -24,7 +24,7 @@ export default function Router() {
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/sucesso" element={<Sucesso />} />
         <Route path="/meuperfil/:email" element={<MeuPerfil />} />
-        <Route path="/pedidos/:id" element={<Pedidos />} />
+        <Route path="/pedidos" element={<Pedidos />} />
         <Route path="/contato" element={<Contato />} />
       </Routes>
     </BrowserRouter>

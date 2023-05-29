@@ -1,11 +1,17 @@
+import Header from "../../components/Header";
 import { Footer } from "../../components/Footer";
+import { useState } from "react";
 import { Container, ContainerInfo, BotaoAddCarrinho } from "./style";
 
-import React from "react";
 
 export default function Produto() {
+
+  const [open, setOpen] = useState(false);
+
   return (
     <>
+      <Header open={open} setOpen={setOpen} />
+
       <Container>
         <img src="../../../assets/images/cafe-forte.png" alt="" />
         <ContainerInfo>
