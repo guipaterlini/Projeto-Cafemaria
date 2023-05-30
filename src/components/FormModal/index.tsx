@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
+import { cadastroProduto } from "../../services/MainApi/produtos";
 
 interface Field {
   label: string;
@@ -32,11 +33,28 @@ const FormModal: React.FC<FormModalProps> = ({
     register,
     formState: { errors },
   } = useForm<FormValues>();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // Lógica para enviar os dados do formulário para a API e criar um novo usuário admin
-    // Você pode usar a função de API adequada para isso (por exemplo, uma função chamada "criarUsuarioAdmin(payload)")
-    // Após a criação bem-sucedida, pode fechar o modal chamando a função onClose()
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const formData = new FormData();
+
+    // Adicionar campos e valores ao objeto FormData
+    Object.entries(data).forEach(([name, value]) => {
+      if (name === "image" && selectedFile) {
+        formData.append(name, selectedFile);
+      } else {
+        formData.append(name, value as string);
+      }
+    });
+
+    try {
+      // Enviar o objeto FormData para a API
+      await cadastroProduto(formData);
+      // Fechar o modal após o envio bem-sucedido
+      onClose();
+    } catch (error) {
+      console.error("Erro ao enviar dados do formulário:", error);
+    }
   };
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,11 +83,13 @@ const FormModal: React.FC<FormModalProps> = ({
               ) : (
                 <label>
                   {field.label}:
-                  {field.type === "image" ? (
+                  {field.type === "file" ? (
                     <input
                       type="file"
                       accept="image/*"
-                      {...register(field.name, { required: field.required })}
+                      onChange={(e) =>
+                        setSelectedFile(e.target.files?.[0] || null)
+                      }
                     />
                   ) : (
                     <input

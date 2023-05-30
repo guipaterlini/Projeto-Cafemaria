@@ -1,6 +1,6 @@
 import baseAPI from "./config";
 
-interface ProdutoPayload {
+export interface ProdutoPayload {
   title: string;
   description: string;
   price: number;
@@ -10,9 +10,10 @@ interface ProdutoPayload {
   published: string;
 }
 
-export function cadastroProduto(payload: ProdutoPayload) {
+export function cadastroProduto(payload: FormData) {
   return baseAPI.post("/products", payload);
 }
+
 export function listarProdutos() {
   return baseAPI.get("/products");
 }
