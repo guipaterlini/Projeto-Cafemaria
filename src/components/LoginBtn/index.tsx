@@ -18,7 +18,7 @@ const TokenButton: React.FC = () => {
         const userType = decodedToken.role;
 
         if (userType === "buyer") {
-          navigate("/minhaconta");
+          navigate("/pedidos");
         } else if (userType === "admin") {
           navigate("/admin");
         }

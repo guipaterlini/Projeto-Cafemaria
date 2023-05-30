@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
-import {Container, ListItem} from "./style";
+import {Container, ListItem, LogoutBtn} from "./styles";
+import { useNavigate } from "react-router-dom";
 
 export default function Pedidos() {
   const [open, setOpen] = useState(false);
@@ -72,9 +73,19 @@ export default function Pedidos() {
       valor: 'R$ 45,00',
 		}
 	] 
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token"); // Remove o token antigo, se existir
+    navigate("/"); // Redirecionamento para a página Home
+  };
+  
   return (
     <main>
       <Header open={open} setOpen={setOpen} />
+
+      <LogoutBtn onClick={() => logout()}>Logout</LogoutBtn>
 
       <Container>
         <thead>
