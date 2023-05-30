@@ -1,64 +1,72 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect} from "react"
+// import { Container } from "./style";
 import { listarCarrinho } from "../../services/MainApi/carrinho";
+import { baseAPI } from "../../services/MainApi/carrinho";
 
-interface CarrinhoProduto {
-    id: string
-    cart_id: string
-    product_id: string
-    product_quantity: number
-    product_price: number
-    product_name: string
+
+
+//MOCK PRODUCTS
+
+interface CartTableProps {
+    data: Produto;
+    handleRemoveItem: (props: Produto) => void;
 }
+interface Produto {
+    _id: string
+    name: string
+    category: string
+    price: number
+    quantity: number
+  }
+const CartTable = (props:CartTableProps, handleRemoveItem:CartTableProps)=>{
+    
+    
+    // const [CarrinhoProdutos, setCarrinhoProdutos] = useState<CarrinhoProduto[]>([]);
+    // useEffect(()=>{
+    //     const getData =async () => {
+    //         try {
+    //             const response = await listarCarrinho();
+    //             setCarrinho(response.data)                
+    //         } catch (error) {
+    //             alert ('algo deu errado')                
+    //         }           
+    //     };
+    //     getData();
+    // },[setCarrinho])        
 
-
-export default function CartTable(){
-    const [CarrinhoProdutos, setCarrinho] = useState<CarrinhoProduto[]>([]);
-    useEffect(()=>{
-        const getData =async () => {
-            try {
-                const response = await listarCarrinho();
-                setCarrinho(response.data)                
-            } catch (error) {
-                alert ('algo deu errado')                
-            }           
-        };
-        getData();
-    },[setCarrinho])
+    useEffect(()=>(console.log(props)))
     return (        
         <tr>
-            {CarrinhoProdutos.map((produto)=>(
-                                                
-                <><td>
-                    <div className="produto">
-                        <div className="info">
-                            <div className="nome">{produto.product_name}</div>
-                        </div>
+            <td>
+                <div className="produto">
+                    <div className="info">
+                        <div className="nome">{props.data.name}</div>
                     </div>
-                </td>
-                <td>{produto.product_price}</td>
+                </div>
+            </td>
+                <td>{props.data.price}</td>
                 <td>
                     <div className="quantidade">
                         <button>
                             <i> - </i>                        
                          </button>
-                        <span>{produto.product_quantity}</span>
+                        <span>{props.data.quantity}</span>
                         <button>
                             <i> + </i>
                      </button>
                     </div>
                 </td>
-                <td>{(produto.product_price)*(produto.product_quantity)}</td>
+                <td>{(props.data.price)*(props.data.quantity)}</td>
                 <td>
-                    <button className="btn-remove-produto">
+                    <button className="btn-remove-produto" onClick={()=>handleRemoveItem}>
                         <i> remover </i>
                     </button>
-                </td>
-                </>               
-                 
-            ))}
+                </td>            
         </tr>
-        );
-    };          
+        )
+    }
+    
+    export default CartTable
 
 
     // {cart.map(item=> <CartTable/>)}
