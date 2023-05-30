@@ -10,6 +10,14 @@ import Sucesso from "./pages/Sucesso";
 import AuthPage from "./pages/AuthPage";
 import Contato from "./pages/Contato";
 import React from "react";
+import withAuth from "./components/ProtectedRoute";
+
+const AdminRoute = withAuth(PagAdmin);
+const ProdutosRoute = withAuth(Produtos);
+const ProdutoRoute = withAuth(Produto);
+const CarrinhoRoute = withAuth(Carrinho);
+const PedidoRoute = withAuth(Pedidos);
+const SucessoRoute = withAuth(Sucesso);
 
 export default function Router() {
   return (
@@ -18,13 +26,13 @@ export default function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<AuthPage formType="cadastro" />} />
         <Route path="/login" element={<AuthPage formType="login" />} />
-        <Route path="/admin" element={<PagAdmin />} />
-        <Route path="/produtos" element={<Produtos />} />
-        <Route path="/produto/:id" element={<Produto />} />
-        <Route path="/carrinho" element={<Carrinho />} />
-        <Route path="/sucesso" element={<Sucesso />} />
+        <Route path="/admin" element={<AdminRoute />} />
+        <Route path="/produtos" element={<ProdutosRoute />} />
+        <Route path="/produto/:id" element={<ProdutoRoute />} />
+        <Route path="/carrinho" element={<CarrinhoRoute />} />
+        <Route path="/sucesso" element={<SucessoRoute />} />
         <Route path="/meuperfil/:email" element={<MeuPerfil />} />
-        <Route path="/pedidos" element={<Pedidos />} />
+        <Route path="/pedidos" element={<PedidoRoute />} />
         <Route path="/contato" element={<Contato />} />
       </Routes>
     </BrowserRouter>
