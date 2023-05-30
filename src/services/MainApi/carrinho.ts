@@ -1,4 +1,16 @@
-import baseAPI from "./config";
+//import baseAPI from "./config";
+
+import axios from "axios";
+
+const apiURL = 'https://crudcrud.com/api/61ace0154e9e40b8aa74cb245b39a98d/'
+export const baseAPI = axios.create({
+  // withCredentials: true,
+  baseURL: apiURL,
+  // headers: {
+  //   "Content-Type": "application/json",
+  //   //Authorization: authorizationHeader,
+  // },
+});
 
 interface CarrinhoPayload {
   email: string;
