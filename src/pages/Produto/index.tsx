@@ -17,6 +17,8 @@ import { useParams } from "react-router-dom";
 import { ProdutoPayload, listarProduto } from "../../services/MainApi/produtos";
 import * as jose from "jose";
 import { addToCart } from "../../services/MainApi/carrinho";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Produto() {
   const [open, setOpen] = useState(false);
@@ -46,8 +48,15 @@ export default function Produto() {
       product_id: productId,
       product_quantity: quantity,
     };
-    console.log(cartObj)
-    addToCart(cartObj);
+
+    addToCart(cartObj)
+    .then(() => {
+      toast.success(`O item "${product?.title}" foi adicionado ao carrinho`);
+    })
+    .catch((error) => {
+      console.error('Erro ao adicionar ao carrinho:', error);
+      toast.error('Erro ao adicionar ao carrinho. Por favor, tente novamente.');
+    });
   };
 
   useEffect(() => {
@@ -92,6 +101,7 @@ export default function Produto() {
             <AddToCartButton onClick={handleAddToCart}>
               Adicionar ao Carrinho
             </AddToCartButton>
+            <ToastContainer position="top-right" autoClose={3000} />
           </ProductDetailsContainer>
         </ProductInfoContainer>
       </ProductPageContainer>
