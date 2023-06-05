@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const ProductPageContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   padding: 20px;
+  width: 90%;
 `;
 
 export const ProductTitle = styled.h1`
@@ -19,7 +20,7 @@ export const ProductInfoContainer = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   width: 100%;
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -33,6 +34,8 @@ export const ProductImage = styled.img`
   height: 330px;
   object-fit: cover;
   border-radius: 10px;
+  background-color: var(--cor-font-secundaria);
+  margin: 0;
 
   @media (max-width: 768px) {
     margin: 20px auto;
@@ -44,6 +47,7 @@ export const ProductDetailsContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 40%;
+  margin: 0;
   @media (max-width: 768px) {
     align-items: center;
     width: 80%;
@@ -78,6 +82,7 @@ export const AddToCartButton = styled.button`
   border-radius: 4px;
   color: var(--cor-font-preta);
   cursor: pointer;
+  transition: 300ms;
 
   &:hover {
     opacity: 0.8;

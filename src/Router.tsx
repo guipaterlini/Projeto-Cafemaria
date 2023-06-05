@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import PagAdmin from "./pages/PagAdmin";
-import Carrinho from "./pages/Carrinho";
+// import Carrinho from "./pages/Carrinho";
 import MeuPerfil from "./pages/MeuPerfil";
 import Pedidos from "./pages/Pedidos";
 import Produto from "./pages/Produto";
@@ -15,7 +15,7 @@ import withAuth from "./components/ProtectedRoute";
 const AdminRoute = withAuth(PagAdmin);
 const ProdutosRoute = withAuth(Produtos);
 const ProdutoRoute = withAuth(Produto);
-const CarrinhoRoute = withAuth(Carrinho);
+// const CarrinhoRoute = withAuth(Carrinho);
 const PedidoRoute = withAuth(Pedidos);
 const SucessoRoute = withAuth(Sucesso);
 
@@ -29,7 +29,7 @@ export default function Router() {
         <Route path="/admin" element={<AdminRoute />} />
         <Route path="/produtos" element={<ProdutosRoute />} />
         <Route path="/produto/:id" element={<ProdutoRoute />} />
-        <Route path="/carrinho" element={<CarrinhoRoute />} />
+        {/* <Route path="/carrinho" element={<CarrinhoRoute />} /> */}
         <Route path="/sucesso" element={<SucessoRoute />} />
         <Route path="/meuperfil/:email" element={<MeuPerfil />} />
         <Route path="/pedidos" element={<PedidoRoute />} />

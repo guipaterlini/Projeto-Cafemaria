@@ -1,7 +1,7 @@
 import React, { useEffect} from "react"
 // import { Container } from "./style";
 import { listarCarrinho } from "../../services/MainApi/carrinho";
-import { baseAPI } from "../../services/MainApi/carrinho";
+// import { baseAPI } from "../../services/MainApi/carrinho";
 
 
 

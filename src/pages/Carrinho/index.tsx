@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
-import {baseAPI, listarCarrinho, atualizarCarrinho, cadastroCarrinho, deletarCarrinho} from "../../services/MainApi/carrinho"
+// import {baseAPI, listarCarrinho, atualizarCarrinho, cadastroCarrinho, deletarCarrinho} from "../../services/MainApi/carrinho"
 
 import carrinho from "../../services/MainApi/config"
 import CartTable from "../../components/CartTable";
@@ -16,7 +16,7 @@ interface Produto  {
 }
 
 
-//todo X fazer um placeholder para quando não houver itens no carrinho
+// todo X fazer um placeholder para quando não houver itens no carrinho
 //     - inserção de novos produtos no carrinho
 //     - remoção de produtos
 //     - alteração de quantidade
@@ -25,7 +25,7 @@ interface Produto  {
 //     - Checar se está logado
 //     - cupom de desconto?
 
-//MOCK ITEM CREATOR
+// MOCK ITEM CREATOR
 function randomNumber (min: number, max: number){
   return Math.floor(Math.random()*(max-min)+min);
 }
@@ -42,19 +42,19 @@ export default function Carrinho() {
     quantity: 1
   };
   useEffect(()=>{
-    getData();
+    // getData();
   },[]);
   
-  const getData = ()=>{    
-    baseAPI.get('/cart').then((response)=> setCart(response.data))
-  }
+  // const getData = ()=>{    
+  //   baseAPI.get('/cart').then((response)=> setCart(response.data))
+  // }
 
-  const handleAddItem = ()=>{
-    baseAPI.post('/cart',productObject).then((response)=>{
-      getData();
-      console.log(response);
-      console.log('Disparou addItem');})
-  }
+  // const handleAddItem = ()=>{
+  //   baseAPI.post('/cart',productObject).then((response)=>{
+  //     getData();
+  //     console.log(response);
+  //     console.log('Disparou addItem');})
+  // }
 
   const handleRemoveItem = (item: Produto)=>{    
     console.log({item});
@@ -73,7 +73,7 @@ export default function Carrinho() {
 
       <main>
         <h1>Carrinho</h1>
-        <button onClick={handleAddItem} style={{padding: '5px 10px', margin: '15px' }}>add to cart</button>
+        {/* <button onClick={handleAddItem} style={{padding: '5px 10px', margin: '15px' }}>add to cart</button> */}
         <div className="cart-content">
           <Container>            
               <thead>
