@@ -3,8 +3,8 @@ import baseAPI from "./config";
 interface CarrinhoPayload {
   cart_id?: number;
   user_id: number;
-  product_id: number;
-  product_quantity: number;
+  product_id?: number;
+  product_quantity?: number;
 }
 
 export function addToCart(payload: CarrinhoPayload) {
@@ -22,3 +22,4 @@ export function atualizarStatusCarrinho(user_id: number, cart_id: number) {
 export function deletarCarrinho(user_id: number, cart_id: number) {
   return baseAPI.delete(`/cart/${user_id}/${cart_id}`);
 }
+

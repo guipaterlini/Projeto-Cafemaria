@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { Container } from "./style";
 import { listarCarrinho } from "../../services/MainApi/carrinho";
-import { baseAPI } from "../../services/MainApi/carrinho";
 
 interface CartTableProps {
   data: Produto;
   handleRemoveItem: (props: Produto) => void;
+  userId: number | undefined;
 }
+
 interface Produto {
   _id: string;
   name: string;
@@ -14,23 +14,22 @@ interface Produto {
   price: number;
   quantity: number;
 }
-const CartTable = (props: CartTableProps, handleRemoveItem: CartTableProps) => {
-  const [CarrinhoProdutos, setCarrinhoProdutos] = useState<CarrinhoProduto[]>(
-    []
-  );
+
+const CartTable = (props: CartTableProps) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await listarCarrinho();
-        setCarrinho(response.data);
+        const response = await listarCarrinho(props.userId || 0);
+        // setCarrinhoProdutos(response.data);
       } catch (error) {
         alert("algo deu errado");
       }
     };
     getData();
-  }, [setCarrinho]);
+  }, []);
 
   useEffect(() => console.log(props));
+
   return (
     <tr>
       <td>
@@ -54,7 +53,10 @@ const CartTable = (props: CartTableProps, handleRemoveItem: CartTableProps) => {
       </td>
       <td>{props.data.price * props.data.quantity}</td>
       <td>
-        <button className="btn-remove-produto" onClick={() => handleRemoveItem}>
+        <button
+          className="btn-remove-produto"
+          onClick={() => props.handleRemoveItem(props.data)}
+        >
           <i> remover </i>
         </button>
       </td>
@@ -63,11 +65,3 @@ const CartTable = (props: CartTableProps, handleRemoveItem: CartTableProps) => {
 };
 
 export default CartTable;
-
-// {cart.map(item=> <CartTable/>)}
-//             {cart.length === 0 && (
-//             <tr>
-//               <td colSpan={5} style={{textAlign: 'center'}}>
-//                 <b>Seu carrinho de compras está vazio.</b>
-//               </td>
-//             </tr> )}
