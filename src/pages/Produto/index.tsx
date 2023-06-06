@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Footer } from "../../components/Footer";
 import Header from "../../components/Header";
@@ -16,6 +15,10 @@ import {
 } from "./styles";
 import { useParams } from "react-router-dom";
 import { ProdutoPayload, listarProduto } from "../../services/MainApi/produtos";
+import * as jose from "jose";
+import { addToCart } from "../../services/MainApi/carrinho";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Produto() {
   const [open, setOpen] = useState(false);
@@ -23,14 +26,37 @@ export default function Produto() {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
-
   const handleQuantityChange = (event: { target: { value: string } }) => {
     const value = parseInt(event.target.value);
     setQuantity(value);
   };
 
   const handleAddToCart = () => {
-    // Lógica para adicionar o produto ao carrinho
+    const productId = Number(id);
+    let userId;
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const decodedToken = jose.decodeJwt(token);
+      userId = decodedToken.id;
+    } else {
+      console.error("Usuário nao está logado.");
+    }
+
+    const cartObj = {
+      user_id: userId as number, // Conversão explícita de tipo
+      product_id: productId,
+      product_quantity: quantity,
+    };
+
+    addToCart(cartObj)
+    .then(() => {
+      toast.success(`O item "${product?.title}" foi adicionado ao carrinho`);
+    })
+    .catch((error) => {
+      console.error('Erro ao adicionar ao carrinho:', error);
+      toast.error('Erro ao adicionar ao carrinho. Por favor, tente novamente.');
+    });
   };
 
   useEffect(() => {
@@ -75,6 +101,7 @@ export default function Produto() {
             <AddToCartButton onClick={handleAddToCart}>
               Adicionar ao Carrinho
             </AddToCartButton>
+            <ToastContainer position="top-right" autoClose={3000} />
           </ProductDetailsContainer>
         </ProductInfoContainer>
       </ProductPageContainer>

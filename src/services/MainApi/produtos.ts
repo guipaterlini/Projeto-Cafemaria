@@ -1,6 +1,7 @@
 import baseAPI from "./config";
 
 export interface ProdutoPayload {
+  id: number;
   title: string;
   description: string;
   price: number;
