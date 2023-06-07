@@ -40,12 +40,10 @@ const FormModal: React.FC<FormModalProps> = ({
 
     // Adicionar campos e valores ao objeto FormData
     Object.entries(data).forEach(([name, value]) => {
-      if (name === "image" && selectedFile) {
-        formData.append(name, selectedFile);
-      } else {
-        formData.append(name, value as string);
-      }
+      formData.append(name, value as string);
     });
+
+    formData.append("image", selectedFile || "");
 
     try {
       // Enviar o objeto FormData para a API

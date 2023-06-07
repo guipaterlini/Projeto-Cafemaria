@@ -12,7 +12,9 @@ export interface ProdutoPayload {
 }
 
 export function cadastroProduto(payload: FormData) {
-  return baseAPI.post("/products", payload);
+  return baseAPI.post("/products", payload, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 }
 
 export function listarProdutos() {
