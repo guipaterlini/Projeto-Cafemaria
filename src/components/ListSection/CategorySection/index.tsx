@@ -23,6 +23,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
   useEffect(() => {
     async function fetchListData() {
@@ -37,6 +38,20 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
 
     fetchListData();
   }, []);
+
+  const handleCreateCategorySuccess = async () => {
+    setIsCreatingCategory(true);
+  
+    try {
+      const response = await listarCategorias();
+      setData(response.data.result || []);
+    } catch (error) {
+      console.error("Erro ao buscar dados da lista:", error);
+    }
+  
+    setIsCreatingCategory(false);
+  };
+  
 
   const handleEdit = (id: number) => {
     setSelectedUserId(id);
@@ -75,6 +90,8 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
     <div>
       <ListSectionHeader title={title} onAddItem={handleAddUser} />
       {loading && <div>Carregando...</div>}
+      {isCreatingCategory && <div>Criando categoria...</div>}
+
       {!loading && data.length === 0 && (
         <div>Nenhuma categoria encontrada.</div>
       )}
@@ -95,6 +112,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
                   fields={fields} // Fields para criar categorias
                   entityType="Categorias" // Tipo de entidade
                   title={title}
+                  onCreateSuccess={handleCreateCategorySuccess}
                 />
               </div>
             </div>
@@ -110,6 +128,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
               fields={fields} // Fields para criar categorias
               entityType="Categorias" // Tipo de entidade
               title={title}
+              onCreateSuccess={handleCreateCategorySuccess}
             />
           </div>
         </div>

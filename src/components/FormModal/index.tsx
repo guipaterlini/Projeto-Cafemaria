@@ -24,14 +24,16 @@ interface FormModalProps {
   onCreate?: () => void; // Função de criação específica para cada entidade
   entityType: "Categorias" | "Produtos" | "Usuários"; // Tipo de entidade
   title: string; // Título personalizado
+  onCreateSuccess?: () => void; // Função para ser chamada após a criação bem-sucedida
 }
 
 const FormModal: React.FC<FormModalProps> = ({
   onClose,
   userId,
   fields,
-  entityType, // Adicione a propriedade entityType aqui
+  entityType,
   title,
+  onCreateSuccess, // Adicione a propriedade onCreateSuccess aqui
 }) => {
   const {
     handleSubmit,
@@ -51,7 +53,6 @@ const FormModal: React.FC<FormModalProps> = ({
     formData.append("image", selectedFile || "");
 
     try {
-      // Enviar o objeto FormData para a API
       switch (entityType) {
         case "Categorias":
           await cadastroCategoria(formData);
@@ -65,7 +66,10 @@ const FormModal: React.FC<FormModalProps> = ({
         default:
           break;
       }
-      // Fechar o modal após o envio bem-sucedido
+      if (onCreateSuccess) {
+        onCreateSuccess(); // Chame a função onCreateSuccess se estiver definida
+      }
+
       onClose();
     } catch (error) {
       console.error("Erro ao enviar dados do formulário:", error);
