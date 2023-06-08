@@ -95,6 +95,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
                   onClose={handleCloseModal}
                   userId={selectedUserId}
                   fields={fields}
+                  entityType="Produtos" // Tipo de entidade
                   title={title}
                 />
               </div>
@@ -109,6 +110,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
               onClose={handleCloseModal}
               userId={selectedUserId}
               fields={fields}
+              entityType="Produtos" // Tipo de entidade
               title={title}
             />
           </div>

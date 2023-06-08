@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
 import { cadastroProduto } from "../../services/MainApi/produtos";
+import { cadastroCategoria } from "../../services/MainApi/categorias";
+import { cadastroUsuario } from "../../services/MainApi/usuarios";
 
 interface Field {
   label: string;
@@ -18,7 +20,9 @@ interface FormValues {
 interface FormModalProps {
   onClose: () => void;
   userId: number | null;
-  fields: Field[]; // Configurações dos campos do formulário
+  fields?: Field[]; // Configurações dos campos do formulário
+  onCreate?: () => void; // Função de criação específica para cada entidade
+  entityType: "Categorias" | "Produtos" | "Usuários"; // Tipo de entidade
   title: string; // Título personalizado
 }
 
@@ -26,6 +30,7 @@ const FormModal: React.FC<FormModalProps> = ({
   onClose,
   userId,
   fields,
+  entityType, // Adicione a propriedade entityType aqui
   title,
 }) => {
   const {
@@ -47,7 +52,19 @@ const FormModal: React.FC<FormModalProps> = ({
 
     try {
       // Enviar o objeto FormData para a API
-      await cadastroProduto(formData);
+      switch (entityType) {
+        case "Categorias":
+          await cadastroCategoria(formData);
+          break;
+        case "Produtos":
+          await cadastroProduto(formData);
+          break;
+        // case "Usuários":
+        //   await cadastroUsuario(formData);
+        //   break;
+        default:
+          break;
+      }
       // Fechar o modal após o envio bem-sucedido
       onClose();
     } catch (error) {
@@ -66,7 +83,7 @@ const FormModal: React.FC<FormModalProps> = ({
       <ModalContent>
         <h2>Adicionar {title}</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          {fields.map((field) => (
+          {fields?.map((field) => (
             <React.Fragment key={field.name}>
               {field.type === "checkbox" ? (
                 <label>

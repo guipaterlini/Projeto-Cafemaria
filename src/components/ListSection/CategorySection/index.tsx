@@ -92,7 +92,8 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
                 <FormModal
                   onClose={handleCloseModal}
                   userId={selectedUserId}
-                  fields={fields}
+                  fields={fields} // Fields para criar categorias
+                  entityType="Categorias" // Tipo de entidade
                   title={title}
                 />
               </div>
@@ -106,7 +107,8 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
             <FormModal
               onClose={handleCloseModal}
               userId={selectedUserId}
-              fields={fields}
+              fields={fields} // Fields para criar categorias
+              entityType="Categorias" // Tipo de entidade
               title={title}
             />
           </div>

@@ -26,7 +26,7 @@ export function listarProdutos() {
 export function listarProduto(id: number) {
   return baseAPI.get(`/products/${id}`);
 }
-export function atualizarProduto(id: number, payload: ProdutoPayload) {
+export function atualizarProduto(id: number, payload: FormData) {
   return baseAPI.put(`/products/${id}`, payload);
 }
 export function deletarProduto(id: number) {
