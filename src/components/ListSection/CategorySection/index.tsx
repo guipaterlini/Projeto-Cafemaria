@@ -58,13 +58,19 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     const confirmed = window.confirm("Tem certeza que deseja deletar?");
     if (confirmed) {
-      deletarCategoria(id);
+      try {
+        await deletarCategoria(id);
+        const response = await listarCategorias();
+        setData(response.data.result || []);
+      } catch (error) {
+        console.error("Erro ao deletar categoria:", error);
+      }
     }
   };
-
+  
   const handleAddUser = () => {
     setSelectedUserId(null);
     setIsModalOpen(true);
