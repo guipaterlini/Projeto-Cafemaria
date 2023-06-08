@@ -1,4 +1,4 @@
-import baseAPI from "./config";
+import baseAPI, { authorizationHeader } from "./config";
 
 export interface ProdutoPayload {
   id: number;
@@ -13,7 +13,10 @@ export interface ProdutoPayload {
 
 export function cadastroProduto(payload: FormData) {
   return baseAPI.post("/products", payload, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: authorizationHeader,
+    },
   });
 }
 

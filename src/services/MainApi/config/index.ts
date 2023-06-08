@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiURL = "https://api-ecommerce-cafemaria.onrender.com/";
 const token = localStorage.getItem("token");
-const authorizationHeader = token ? `Bearer ${token}` : undefined;
+export const authorizationHeader = token ? `Bearer ${token}` : undefined;
 
 const baseAPI = axios.create({
   baseURL: apiURL,
