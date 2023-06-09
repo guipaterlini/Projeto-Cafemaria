@@ -7,7 +7,7 @@ import {
   listarCategorias,
 } from "../../../../services/MainApi/categorias";
 import TableCategory from "../TableCategory";
-import FormModal from "../../Components/FormModal";
+import CategoryModal from "../CategoryModal";
 
 export interface Column {
   key: keyof CategoryData;
@@ -55,6 +55,15 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
   
 
   const handleEdit = (id: number) => {
+    // Buscar os dados da categoria com base no id dela usando a function listarCategoria(id: number)
+  
+    // Prencher os inputs do formulario com os dados categoria
+
+    // Ao se clicar em enviar deve ser usada a function atualizarCategoria(id: number, payload: FormData)
+
+    // Modal precisa ser fechado
+
+    // List com categorias precisa ser atualizada usando a function listarCategorias()
     setSelectedUserId(id);
     setIsModalOpen(true);
   };
@@ -113,7 +122,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
           {isModalOpen && (
             <div className="modal" onClick={handleOutsideClick}>
               <div className="modal-content">
-                <FormModal
+                <CategoryModal
                   onClose={handleCloseModal}
                   userId={selectedUserId}
                   fields={fields} // Fields para criar categorias
@@ -129,7 +138,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
       {isModalOpen && (
         <div className="modal" onClick={handleOutsideClick}>
           <div className="modal-content">
-            <FormModal
+            <CategoryModal
               onClose={handleCloseModal}
               userId={selectedUserId}
               fields={fields} // Fields para criar categorias
