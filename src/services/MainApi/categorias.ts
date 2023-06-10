@@ -1,11 +1,5 @@
 import baseAPI from "./config";
 
-interface CategoriaPayload {
-  title: string;
-  description: string;
-  published: string;
-}
-
 export function cadastroCategoria(payload: FormData) {
   return baseAPI.post("/categories", payload);
 }

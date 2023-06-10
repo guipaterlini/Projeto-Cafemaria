@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm, FieldError } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
-import { ProductData } from "../../../../type";
+import { CategoryData, ProductData } from "../../../../type";
 import {
   atualizarProduto,
   cadastroProduto,
 } from "../../../../services/MainApi/produtos";
+import { listarCategorias } from "../../../../services/MainApi/categorias";
 
 interface FormModalProps {
   onClose: () => void;
@@ -21,6 +22,7 @@ const ProductModal: React.FC<FormModalProps> = ({
   const { handleSubmit, register, formState, setValue } = useForm();
   const { errors } = formState;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [categories, setCategories] = useState<CategoryData[]>([]);
 
   useEffect(() => {
     if (product) {
@@ -33,6 +35,20 @@ const ProductModal: React.FC<FormModalProps> = ({
       setValue("image", product.image);
     }
   }, [product, setValue]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await listarCategorias();
+        const fetchedCategories = response.data.result;
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error("Erro ao buscar categorias:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   // Função de callback que é executada quando o formulário é submetido
   const onSubmit: SubmitHandler<any> = async (data) => {
@@ -48,13 +64,10 @@ const ProductModal: React.FC<FormModalProps> = ({
       formData.append("category_id", data.category_id);
       formData.append("image", selectedFile || "");
 
-    
       if (product) {
         // Chama a função de atualização do produto para enviar os dados para a API
         await atualizarProduto(product.id, formData);
-        
       } else {
-
         // Modo de criação - cria um novo produto
         await cadastroProduto(formData);
       }
@@ -137,6 +150,7 @@ const ProductModal: React.FC<FormModalProps> = ({
             Variante:
             <input
               type="text"
+              placeholder="Ex: Azul, 110v, etc"
               {...register("option", {
                 required: true,
                 maxLength: { value: 100, message: "Máximo de 100 caracteres" },
@@ -151,13 +165,14 @@ const ProductModal: React.FC<FormModalProps> = ({
           )}
 
           <label>
-            Codigo da Categoria:
-            <input
-              type="number"
-              {...register("category_id", {
-                required: true,
-              })}
-            />
+            Categoria:
+            <select {...register("category_id", { required: true })}>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
           </label>
           {errors.category_id && <span>"Este campo é obrigatório"</span>}
 

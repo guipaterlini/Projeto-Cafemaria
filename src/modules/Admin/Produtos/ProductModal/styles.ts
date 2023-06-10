@@ -60,7 +60,7 @@ export const Form = styled.form`
     margin-bottom: 5px;
   }
 
-  input {
+  input, select {
     padding: 8px;
     margin-bottom: 10px;
     border-radius: 4px;
