@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import ListSectionHeader from "../../Components/ListSectionHeader";
 import { CategoryData } from "../../../../type";
 import {
   deletarCategoria,
   listarCategorias,
+  listarCategoria,
 } from "../../../../services/MainApi/categorias";
 import TableCategory from "../TableCategory";
 import CategoryModal from "../CategoryModal";
@@ -16,21 +16,23 @@ export interface Column {
 
 interface ListSectionProps {
   title: string;
-  columns: Column[];
 }
 
-const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
+const CategorySection: React.FC<ListSectionProps> = ({ title }) => {
   const [data, setData] = useState<CategoryData[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(
+    null
+  );
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
+  // Busca os dados da lista de categorias quando o componente é montado
   useEffect(() => {
     async function fetchListData() {
       try {
         const response = await listarCategorias();
-        setData(response.data.result || []);
+        setData(response.data?.result || []);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);
@@ -40,114 +42,96 @@ const CategorySection: React.FC<ListSectionProps> = ({ title, columns }) => {
     fetchListData();
   }, []);
 
+  // Busca os dados de uma categoria específica pelo ID
+  const fetchCategoryData = async (id: number) => {
+    try {
+      const response = await listarCategoria(id);
+      setSelectedCategory(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar dados da categoria:", error);
+    }
+  };
+
+  // Função de callback chamada quando a criação de uma categoria é bem-sucedida
   const handleCreateCategorySuccess = async () => {
     setIsCreatingCategory(true);
-  
+
     try {
       const response = await listarCategorias();
-      setData(response.data.result || []);
+      setData(response.data?.result || []);
     } catch (error) {
       console.error("Erro ao buscar dados da lista:", error);
     }
-  
+
     setIsCreatingCategory(false);
   };
-  
 
-  const handleEdit = (id: number) => {
-    // Buscar os dados da categoria com base no id dela usando a function listarCategoria(id: number)
-  
-    // Prencher os inputs do formulario com os dados categoria
-
-    // Ao se clicar em enviar deve ser usada a function atualizarCategoria(id: number, payload: FormData)
-
-    // Modal precisa ser fechado
-
-    // List com categorias precisa ser atualizada usando a function listarCategorias()
-    setSelectedUserId(id);
+  // Função para editar uma categoria pelo ID
+  const handleEdit = async (id: number) => {
     setIsModalOpen(true);
+    await fetchCategoryData(id);
   };
 
+  // Função para excluir uma categoria pelo ID
   const handleDelete = async (id: number) => {
     const confirmed = window.confirm("Tem certeza que deseja deletar?");
-    if (confirmed) {
-      try {
-        await deletarCategoria(id);
-        const response = await listarCategorias();
-        setData(response.data.result || []);
-      } catch (error) {
-        console.error("Erro ao deletar categoria:", error);
-      }
+    if (!confirmed) return;
+
+    try {
+      await deletarCategoria(id);
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar categoria:", error);
     }
   };
-  
-  const handleAddUser = () => {
-    setSelectedUserId(null);
+
+  // Função para adicionar uma nova categoria
+  const handleAddCategory = () => {
     setIsModalOpen(true);
   };
 
+  // Função para fechar o modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
-  const fields = [
-    { label: "Nome", name: "title", type: "text", required: true },
-    { label: "Descrição", name: "description", type: "text", required: true },
-    { label: "Publicado", name: "published", type: "checkbox", required: true },
-  ];
-
   return (
     <div>
-      <ListSectionHeader title={title} onAddItem={handleAddUser} />
+      {/* Cabeçalho da seção de lista de categorias */}
+      <ListSectionHeader title={title} onAddItem={handleAddCategory} />
+
+      {/* Exibe uma mensagem de carregamento enquanto os dados estão sendo buscados */}
       {loading && <div>Carregando...</div>}
+
+      {/* Exibe uma mensagem de criação da categoria */}
       {isCreatingCategory && <div>Criando categoria...</div>}
 
+      {/* Exibe uma mensagem caso não haja categorias encontradas */}
       {!loading && data.length === 0 && (
         <div>Nenhuma categoria encontrada.</div>
       )}
+
+      {/* Renderiza a tabela de categorias se houver dados */}
       {!loading && data.length > 0 && (
         <>
           <TableCategory
-            columns={columns}
             data={data}
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
+
+          {/* Renderiza o modal para adicionar/editar uma categoria */}
           {isModalOpen && (
-            <div className="modal" onClick={handleOutsideClick}>
+            <div className="modal">
               <div className="modal-content">
                 <CategoryModal
                   onClose={handleCloseModal}
-                  userId={selectedUserId}
-                  fields={fields} // Fields para criar categorias
-                  entityType="Categorias" // Tipo de entidade
-                  title={title}
                   onCreateSuccess={handleCreateCategorySuccess}
                 />
               </div>
             </div>
           )}
         </>
-      )}
-      {isModalOpen && (
-        <div className="modal" onClick={handleOutsideClick}>
-          <div className="modal-content">
-            <CategoryModal
-              onClose={handleCloseModal}
-              userId={selectedUserId}
-              fields={fields} // Fields para criar categorias
-              entityType="Categorias" // Tipo de entidade
-              title={title}
-              onCreateSuccess={handleCreateCategorySuccess}
-            />
-          </div>
-        </div>
       )}
     </div>
   );

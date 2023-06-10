@@ -9,43 +9,28 @@ import {
   TableWrapper,
 } from "./styles";
 import { CategoryData } from "../../../../type";
-import { Column } from "../CategorySection";
 
 interface TableProps {
-  columns: Column[];
   data: CategoryData[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-const TableCategory: React.FC<TableProps> = ({
-  columns,
-  data,
-  onEdit,
-  onDelete,
-}) => {
-  const getProperty = (obj: CategoryData, key: keyof CategoryData) => {
-    return obj[key];
-  };
-
+const TableCategory: React.FC<TableProps> = ({ data, onEdit, onDelete }) => {
   return (
     <TableWrapper>
       <TableHead>
         <tr>
           <TableHeader>Nome</TableHeader>
           <TableHeader>Descrição</TableHeader>
-          <TableHeader>Publicado</TableHeader>
           <TableHeader>Ações</TableHeader>
         </tr>
       </TableHead>
       <tbody>
         {data.map((category: CategoryData) => (
           <TableRow key={category.id}>
-            {columns.map((column) => (
-              <TableCell key={column.key}>
-                {getProperty(category, column.key)}
-              </TableCell>
-            ))}
+            <TableCell>{category.title}</TableCell>
+            <TableCell>{category.description}</TableCell>
             <TableCell>
               <ActionButton onClick={() => onEdit(category.id)}>
                 <RiEdit2Line />

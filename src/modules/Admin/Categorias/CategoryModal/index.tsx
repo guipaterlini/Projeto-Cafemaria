@@ -1,126 +1,68 @@
-import React, { useState } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
 import { cadastroCategoria } from "../../../../services/MainApi/categorias";
 
-interface Field {
-  label: string;
-  name: string;
-  type: string;
-  required: boolean;
-  defaultValue?: string | boolean;
-}
-
-interface FormValues {
-  [key: string]: string | boolean;
-}
-
 interface FormModalProps {
   onClose: () => void;
-  userId: number | null;
-  fields?: Field[]; // Configurações dos campos do formulário
-  onCreate?: () => void; // Função de criação específica para cada entidade
-  entityType: "Categorias" | "Produtos" | "Usuários"; // Tipo de entidade
-  title: string; // Título personalizado
-  onCreateSuccess?: () => void; // Função para ser chamada após a criação bem-sucedida
+  onCreateSuccess?: () => void;
 }
 
 const CategoryModal: React.FC<FormModalProps> = ({
   onClose,
-  userId,
-  fields,
-  entityType,
-  title,
-  onCreateSuccess, // Adicione a propriedade onCreateSuccess aqui
+  onCreateSuccess,
 }) => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<FormValues>();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { handleSubmit, register, formState } = useForm();
+  const { errors } = formState;
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const formData = new FormData();
-
-    // Adicionar campos e valores ao objeto FormData
-    Object.entries(data).forEach(([name, value]) => {
-      formData.append(name, value as string);
-    });
-
-    formData.append("image", selectedFile || "");
-
+  // Função de callback que é executada quando o formulário é submetido
+  const onSubmit: SubmitHandler<any> = async (data) => {
     try {
-      switch (entityType) {
-        case "Categorias":
-          await cadastroCategoria(formData);
-          break;
-        default:
-          break;
-      }
-      if (onCreateSuccess) {
-        onCreateSuccess(); // Chame a função onCreateSuccess se estiver definida
-      }
+      // Cria um novo FormData e preenche com os dados do formulário
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("published", "true");
 
+      // Chama a função de cadastroCategoria para enviar os dados para a API
+      await cadastroCategoria(formData);
+
+      // Chama a função onCreateSuccess, se fornecida, para indicar o sucesso da criação da categoria
+      onCreateSuccess && onCreateSuccess();
+
+      // Fecha o modal
       onClose();
     } catch (error) {
       console.error("Erro ao enviar dados do formulário:", error);
     }
   };
 
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  // Função de callback para fechar o modal quando ocorre um clique fora dele
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) =>
+    e.target === e.currentTarget && onClose();
 
   return (
     <ModalContainer onClick={handleOutsideClick}>
       <ModalContent>
-        <h2>Adicionar {title}</h2>
+        <h2>Adicionar Categoria</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          {fields?.map((field) => (
-            <React.Fragment key={field.name}>
-              {field.type === "checkbox" ? (
-                <label>
-                  <input
-                    type="checkbox"
-                    {...register(field.name)}
-                    defaultChecked={field.defaultValue as boolean}
-                    disabled={field.defaultValue !== undefined}
-                  />
-                  {field.label}
-                </label>
-              ) : (
-                <label>
-                  {field.label}:
-                  {field.type === "file" ? (
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) =>
-                        setSelectedFile(e.target.files?.[0] || null)
-                      }
-                    />
-                  ) : (
-                    <input
-                      type={field.type}
-                      {...register(field.name, { required: field.required })}
-                      defaultValue={field.defaultValue as string}
-                      className={
-                        field.type === "checkbox" ? "checkbox-input" : ""
-                      }
-                      disabled={field.defaultValue !== undefined}
-                    />
-                  )}
-                </label>
-              )}
-              {errors[field.name] && <span>Este campo é obrigatório</span>}
-            </React.Fragment>
-          ))}
+          <label>
+            Nome:
+            <input type="text" {...register("title", { required: true })} />
+          </label>
+          {errors.title && <span>Este campo é obrigatório</span>}
+
+          <label>
+            Descrição:
+            <input
+              type="text"
+              {...register("description", { required: true })}
+            />
+          </label>
+          {errors.description && <span>Este campo é obrigatório</span>}
           <div className="button-group">
             <button type="submit">Criar</button>
-            <button type="button" onClick={onClose}>
+            <button type="button" onClick={() => onClose()}>
               Cancelar
             </button>
           </div>

@@ -72,11 +72,6 @@ export default function PagAdmin() {
           {section === "categories" && (
             <CategorySection
               title="Categorias"
-              columns={[
-                { key: "title", label: "Nome" },
-                { key: "description", label: "Descrição" },
-                { key: "published", label: "Publicado" },
-              ]}
             />
           )}
           {section === "clients" && (
