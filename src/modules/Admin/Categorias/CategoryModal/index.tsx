@@ -66,9 +66,20 @@ const CategoryModal: React.FC<FormModalProps> = ({
         <Form onSubmit={handleSubmit(onSubmit)}>
           <label>
             Nome:
-            <input type="text" {...register("title", { required: true })} />
+            <input
+              type="text"
+              {...register("title", {
+                required: true,
+                maxLength: { value: 100, message: "Máximo de 100 caracteres" },
+              })}
+            />
           </label>
-          {errors.title && <span>Este campo é obrigatório</span>}
+          {errors.title && (
+            <span>
+              {(errors.title as FieldError)?.message ||
+                "Este campo é obrigatório"}
+            </span>
+          )}
 
           <label>
             Descrição:

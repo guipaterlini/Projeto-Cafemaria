@@ -55,25 +55,8 @@ export default function PagAdmin() {
           </ul>
         </AsideMenu>
         <TableSection>
-          {section === "products" && (
-            <ProductSection
-              title="Produtos"
-              columns={[
-                { key: "title", label: "Nome" },
-                { key: "description", label: "Descrição" },
-                { key: "price", label: "Preço" },
-                { key: "amount", label: "Quantidade" },
-                { key: "option", label: "Variante" },
-                { key: "image", label: "Foto" },
-                { key: "published", label: "Publicado" },
-              ]}
-            />
-          )}
-          {section === "categories" && (
-            <CategorySection
-              title="Categorias"
-            />
-          )}
+          {section === "products" && <ProductSection title="Produtos" />}
+          {section === "categories" && <CategorySection title="Categorias" />}
           {section === "clients" && (
             <ClienteSection
               title="Cliente"

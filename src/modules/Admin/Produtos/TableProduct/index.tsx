@@ -1,6 +1,5 @@
 import React from "react";
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
-
 import {
   ActionButton,
   TableCell,
@@ -9,44 +8,39 @@ import {
   TableRow,
   TableWrapper,
 } from "./styles";
-import { Column } from "../ProductSection";
 import { ProductData } from "../../../../type";
 
 interface TableProps {
-  columns: Column[];
   data: ProductData[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-const TableProduct: React.FC<TableProps> = ({
-  columns,
-  data,
-  onEdit,
-  onDelete,
-}) => {
-  const getProperty = (obj: ProductData, key: keyof ProductData) => {
-    return obj[key];
-  };
-
+const TableProduct: React.FC<TableProps> = ({ data, onEdit, onDelete }) => {
   return (
     <TableWrapper>
       <TableHead>
         <tr>
-          {columns.map((column) => (
-            <TableHeader key={column.key}>{column.label}</TableHeader>
-          ))}
+          <TableHeader>Nome</TableHeader>
+          <TableHeader>Descrição</TableHeader>
+          <TableHeader>Preço</TableHeader>
+          <TableHeader>Quantidade</TableHeader>
+          <TableHeader>Variante</TableHeader>
+          <TableHeader>Codigo Categoria</TableHeader>
+          <TableHeader>Imagem</TableHeader>
           <TableHeader>Ações</TableHeader>
         </tr>
       </TableHead>
       <tbody>
         {data.map((product: ProductData) => (
           <TableRow key={product.id}>
-            {columns.map((column) => (
-              <TableCell key={column.key}>
-                {getProperty(product, column.key)}
-              </TableCell>
-            ))}
+            <TableCell>{product.title}</TableCell>
+            <TableCell>{product.description}</TableCell>
+            <TableCell>{product.price}</TableCell>
+            <TableCell>{product.amount}</TableCell>
+            <TableCell>{product.option}</TableCell>
+            <TableCell>{product.category_id}</TableCell>
+            <TableCell>{product.image}</TableCell>
             <TableCell>
               <ActionButton onClick={() => onEdit(product.id)}>
                 <RiEdit2Line />

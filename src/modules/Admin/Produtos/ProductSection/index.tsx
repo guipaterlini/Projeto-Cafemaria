@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
-import FormModal from "../../Components/FormModal";
 import ListSectionHeader from "../../Components/ListSectionHeader";
 import {
   deletarProduto,
+  listarProduto,
   listarProdutos,
 } from "../../../../services/MainApi/produtos";
 import TableProduct from "../TableProduct";
 import { ProductData } from "../../../../type";
-
-export interface Column {
-  key: keyof ProductData;
-  label: string;
-}
+import ProductModal from "../ProductModal";
 
 interface ProductSectionProps {
   title: string;
-  columns: Column[];
 }
 
-const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
+const ProductSection: React.FC<ProductSectionProps> = ({ title }) => {
   const [data, setData] = useState<ProductData[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductData | null>(
+    null
+  );
+  const [isCreatingProduct, setIsCreatingProduct] = useState(false);
 
   useEffect(() => {
     async function fetchListData() {
       try {
         const response = await listarProdutos();
-        setData(response.data.result || []);
+        setData(response.data?.result || []);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);
@@ -38,83 +36,79 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, columns }) => {
     fetchListData();
   }, []);
 
-  const handleEdit = (id: number) => {
-    setSelectedUserId(id);
-    setIsModalOpen(true);
+  const fetchProductData = async (id: number) => {
+    try {
+      const response = await listarProduto(id);
+      setSelectedProduct(response.data.result);
+    } catch (error) {
+      console.error("Erro ao buscar dados do produto:", error);
+    }
   };
 
-  const handleDelete = (id: number) => {
+  const handleCreateProductSuccess = async () => {
+    setIsCreatingProduct(true);
+
+    try {
+      const response = await listarProdutos();
+      setData(response.data?.result || []);
+    } catch (error) {
+      console.error("Erro ao buscar dados da lista:", error);
+    }
+
+    setIsCreatingProduct(false);
+  };
+
+  const handleEdit = async (id: number) => {
+    setIsModalOpen(true);
+    await fetchProductData(id);
+  };
+
+  const handleDelete = async (id: number) => {
     const confirmed = window.confirm("Tem certeza que deseja deletar?");
-    if (confirmed) {
-      deletarProduto(id);
+    if (!confirmed) return;
+
+    try {
+      await deletarProduto(id);
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar produto:", error);
     }
   };
 
   const handleAddProduct = () => {
-    setSelectedUserId(null);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedProduct(null);
   };
-
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
-  const fields = [
-    { label: "Nome", name: "title", type: "text", required: true },
-    { label: "Descrição", name: "description", type: "text", required: true },
-    { label: "Preço", name: "price", type: "number", required: true },
-    { label: "Quantidade", name: "amount", type: "number", required: true },
-    { label: "Variante", name: "option", type: "text", required: true },
-    { label: "Foto", name: "image", type: "file", required: true },
-    { label: "Publicado", name: "published", type: "checkbox", required: true },
-  ];
 
   return (
     <div>
       <ListSectionHeader title={title} onAddItem={handleAddProduct} />
       {loading && <div>Carregando...</div>}
+      {isCreatingProduct && <div>Criando produto...</div>}
       {!loading && data.length === 0 && <div>Nenhum produto encontrado.</div>}
       {!loading && data.length > 0 && (
         <>
           <TableProduct
-            columns={columns}
             data={data}
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
           {isModalOpen && (
-            <div className="modal" onClick={handleOutsideClick}>
+            <div className="modal">
               <div className="modal-content">
-                <FormModal
+                <ProductModal
                   onClose={handleCloseModal}
-                  userId={selectedUserId}
-                  fields={fields}
-                  entityType="Produtos" // Tipo de entidade
-                  title={title}
+                  onCreateSuccess={handleCreateProductSuccess}
+                  product={selectedProduct}
                 />
               </div>
             </div>
           )}
         </>
-      )}
-      {isModalOpen && (
-        <div className="modal" onClick={handleOutsideClick}>
-          <div className="modal-content">
-            <FormModal
-              onClose={handleCloseModal}
-              userId={selectedUserId}
-              fields={fields}
-              entityType="Produtos" // Tipo de entidade
-              title={title}
-            />
-          </div>
-        </div>
       )}
     </div>
   );

@@ -23,12 +23,20 @@ export function cadastroProduto(payload: FormData) {
 export function listarProdutos() {
   return baseAPI.get("/products");
 }
+
 export function listarProduto(id: number) {
   return baseAPI.get(`/products/${id}`);
 }
+
 export function atualizarProduto(id: number, payload: FormData) {
-  return baseAPI.put(`/products/${id}`, payload);
+  return baseAPI.put(`/products/${id}`, payload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: authorizationHeader,
+    },
+  });
 }
+
 export function deletarProduto(id: number) {
   return baseAPI.delete(`/products/${id}`);
 }
