@@ -9,11 +9,6 @@ import {
 import TableCategory from "../TableCategory";
 import CategoryModal from "../CategoryModal";
 
-export interface Column {
-  key: keyof CategoryData;
-  label: string;
-}
-
 interface ListSectionProps {
   title: string;
 }
@@ -127,6 +122,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title }) => {
                 <CategoryModal
                   onClose={handleCloseModal}
                   onCreateSuccess={handleCreateCategorySuccess}
+                  category={selectedCategory} 
                 />
               </div>
             </div>

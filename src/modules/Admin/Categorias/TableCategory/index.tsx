@@ -11,27 +11,33 @@ import {
 import { CategoryData } from "../../../../type";
 
 interface TableProps {
-  data: CategoryData[];
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
+  data: CategoryData[]; // Propriedade que recebe os dados da tabela
+  onEdit: (id: number) => void; // Função de callback para editar uma categoria pelo ID
+  onDelete: (id: number) => void; // Função de callback para excluir uma categoria pelo ID
 }
 
 const TableCategory: React.FC<TableProps> = ({ data, onEdit, onDelete }) => {
   return (
     <TableWrapper>
+      {/* Cabeçalho da tabela */}
       <TableHead>
         <tr>
+          {/* Cabeçalho da coluna "Nome" */}
           <TableHeader>Nome</TableHeader>
+          {/* Cabeçalho da coluna "Descrição" */}
           <TableHeader>Descrição</TableHeader>
-          <TableHeader>Ações</TableHeader>
+          {/* Cabeçalho da coluna "Ações" */}
+          <TableHeader>Ações</TableHeader>{" "}
         </tr>
       </TableHead>
       <tbody>
+        {/* Mapeamento dos dados para renderizar as linhas da tabela */}
         {data.map((category: CategoryData) => (
           <TableRow key={category.id}>
-            <TableCell>{category.title}</TableCell>
-            <TableCell>{category.description}</TableCell>
+            <TableCell>{category.title}</TableCell> {/* Exibe o nome da categoria */}
+            <TableCell>{category.description}</TableCell> {/* Exibe a descrição da categoria */}
             <TableCell>
+              {/* Botões de ação para editar e excluir a categoria */}
               <ActionButton onClick={() => onEdit(category.id)}>
                 <RiEdit2Line />
               </ActionButton>

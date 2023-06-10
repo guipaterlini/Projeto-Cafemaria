@@ -2,15 +2,18 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
 import { cadastroCategoria } from "../../../../services/MainApi/categorias";
+import { CategoryData } from "../../../../type";
 
 interface FormModalProps {
   onClose: () => void;
   onCreateSuccess?: () => void;
+  category: CategoryData | null; // Categoria selecionada como propriedade
 }
 
 const CategoryModal: React.FC<FormModalProps> = ({
   onClose,
   onCreateSuccess,
+  category,
 }) => {
   const { handleSubmit, register, formState } = useForm();
   const { errors } = formState;
