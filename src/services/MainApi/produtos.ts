@@ -1,4 +1,4 @@
-import baseAPI from "./config";
+import baseAPI, { authorizationHeader } from "./config";
 
 export interface ProdutoPayload {
   id: number;
@@ -13,19 +13,30 @@ export interface ProdutoPayload {
 
 export function cadastroProduto(payload: FormData) {
   return baseAPI.post("/products", payload, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: authorizationHeader,
+    },
   });
 }
 
 export function listarProdutos() {
   return baseAPI.get("/products");
 }
+
 export function listarProduto(id: number) {
   return baseAPI.get(`/products/${id}`);
 }
-export function atualizarProduto(id: number, payload: ProdutoPayload) {
-  return baseAPI.put(`/products/${id}`, payload);
+
+export function atualizarProduto(id: number, payload: FormData) {
+  return baseAPI.put(`/products/${id}`, payload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: authorizationHeader,
+    },
+  });
 }
+
 export function deletarProduto(id: number) {
   return baseAPI.delete(`/products/${id}`);
 }

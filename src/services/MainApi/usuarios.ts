@@ -9,7 +9,7 @@ interface UsuarioPayload {
 export function cadastroUsuario(payload: UsuarioPayload) {
   return baseAPI.post("/buyer", payload);
 }
-export function cadastroAdmin(payload: UsuarioPayload) {
+export function cadastroAdmin(payload: FormData) {
   return baseAPI.post("/admin", payload);
 }
 export function listarUsuarios() {

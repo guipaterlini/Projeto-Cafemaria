@@ -7,6 +7,7 @@ import { Button, Form, Input, Main, Span } from "./styles";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { loginUsuario } from "../../services/MainApi/login";
 import React from "react";
+import baseAPI from "../../services/MainApi/config";
 
 type AuthFormValues = {
   name?: string;
@@ -35,6 +36,9 @@ export default function AuthPage({ formType }: Props) {
         .then((response) => {
           localStorage.removeItem("token"); // Remove o token antigo, se existir
           localStorage.setItem("token", response.data.token); // Define o novo token
+
+          baseAPI.defaults.headers["Authorization"] = `Bearer ${response.data.token}`; // Define o token como padrão para todas as requisições
+
           navigate("/"); // Redirecionamento para a página Home
         })
         .catch((error) => {
