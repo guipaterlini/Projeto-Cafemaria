@@ -41,7 +41,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title }) => {
   const fetchCategoryData = async (id: number) => {
     try {
       const response = await listarCategoria(id);
-      setSelectedCategory(response.data);
+      setSelectedCategory(response.data.result);
     } catch (error) {
       console.error("Erro ao buscar dados da categoria:", error);
     }
@@ -88,6 +88,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title }) => {
   // Função para fechar o modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedCategory(null);
   };
 
   return (
@@ -122,7 +123,7 @@ const CategorySection: React.FC<ListSectionProps> = ({ title }) => {
                 <CategoryModal
                   onClose={handleCloseModal}
                   onCreateSuccess={handleCreateCategorySuccess}
-                  category={selectedCategory} 
+                  category={selectedCategory}
                 />
               </div>
             </div>
