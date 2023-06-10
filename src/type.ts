@@ -9,6 +9,7 @@ export interface ProductData {
   option: string;
   image: string;
   published: boolean;
+  category_id: number;
 }
 
 export interface CategoryData {
@@ -31,5 +32,3 @@ export interface UserData {
   email: string;
   password: string;
 }
-
-
