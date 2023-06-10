@@ -52,18 +52,13 @@ export const Form = styled.form`
     font-size: ${fonts.title};
     font-family: ${fonts.family};
     width: 90%;
-
-    input[type="checkbox"] {
-      margin-bottom: -20px;
-      transform: scale(1.5);
-    }
   }
 
   label span {
     margin-bottom: 5px;
   }
 
-  input[type="text"] {
+  input {
     padding: 8px;
     margin-bottom: 10px;
     border-radius: 4px;
@@ -71,6 +66,22 @@ export const Form = styled.form`
     font-size: ${fonts.body};
     font-family: ${fonts.family};
     width: 100%;
+  }
+
+  textarea {
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid ${colors.fontPrimary};
+    font-size: ${fonts.body};
+    font-family: ${fonts.family};
+    width: 100%;
+
+    /* Estilos para tornar o textarea expansível */
+    resize: vertical;
+    min-height: 100px;
+    overflow: auto;
+    max-height: 300px; /* Defina a altura máxima desejada */
   }
 
   span {

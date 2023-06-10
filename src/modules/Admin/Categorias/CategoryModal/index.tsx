@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, FieldError } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
 import {
   atualizarCategoria,
@@ -72,12 +72,20 @@ const CategoryModal: React.FC<FormModalProps> = ({
 
           <label>
             Descrição:
-            <input
-              type="text"
-              {...register("description", { required: true })}
+            <textarea
+              {...register("description", {
+                required: true,
+                maxLength: { value: 300, message: "Máximo de 300 caracteres" },
+              })}
             />
           </label>
-          {errors.description && <span>Este campo é obrigatório</span>}
+          {errors.description && (
+            <span>
+              {(errors.description as FieldError)?.message ||
+                "Este campo é obrigatório"}
+            </span>
+          )}
+
           <div className="button-group">
             <button type="submit">{category ? "Editar" : "Criar"}</button>
             <button type="button" onClick={() => onClose()}>
