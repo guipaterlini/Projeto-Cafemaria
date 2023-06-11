@@ -18,7 +18,7 @@ export const AsideMenu = styled.aside`
 `;
 
 export const TableSection = styled.section`
- flex: 1;
+  flex: 1;
   margin-left: 245px;
   padding: 0 30px;
-`
+`;
