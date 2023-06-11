@@ -11,7 +11,6 @@ type Props = {
   setOpen: (open: boolean) => void;
 };
 
-
 const Header: React.FC<Props> = ({ setOpen, open }) => {
   const [inputValue, setInputValue] = useState("");
 

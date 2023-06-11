@@ -38,6 +38,4 @@ export const FirstContainer = styled.div`
       width: 80%;
     }
   }
-
 `;
-

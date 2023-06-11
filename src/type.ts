@@ -21,9 +21,12 @@ export interface CategoryData {
 
 export interface OrderData {
   id: number;
-  title: string;
-  description: string;
-  published: boolean;
+  cart_id: number;
+  buyer_id: number;
+  total_value: number;
+  cart: string[];
+  created_at: string;
+  buyer: string;
 }
 
 export interface UserData {

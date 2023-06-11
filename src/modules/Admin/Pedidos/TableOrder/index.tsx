@@ -1,44 +1,46 @@
 import React from "react";
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
-
-import { ActionButton, TableCell, TableHead, TableHeader, TableRow, TableWrapper } from "./styles";
-import { Column } from "../OrderSection";
+import {
+  ActionButton,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableWrapper,
+} from "./styles";
 import { OrderData } from "../../../../type";
 
-
 interface TableProps {
-  columns: Column[];
   data: OrderData[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-const TableOrder: React.FC<TableProps> = ({ columns, data, onEdit, onDelete }) => {
-  const getProperty = (obj: OrderData, key: keyof OrderData) => {
-    return obj[key];
-  };
-
+const TableOrder: React.FC<TableProps> = ({ data, onEdit, onDelete }) => {
   return (
     <TableWrapper>
       <TableHead>
         <tr>
-          {columns.map((column) => (
-            <TableHeader key={column.key}>{column.label}</TableHeader>
-          ))}
+          <TableHeader>Comprador</TableHeader>
+          <TableHeader>Produtos</TableHeader>
+          <TableHeader>Total</TableHeader>
+          <TableHeader>Data</TableHeader>
           <TableHeader>Ações</TableHeader>
         </tr>
       </TableHead>
       <tbody>
-        {data.map((user: OrderData) => (
-          <TableRow key={user.id}>
-            {columns.map((column) => (
-              <TableCell key={column.key}>{getProperty(user, column.key)}</TableCell>
-            ))}
+        {data.map((order: OrderData) => (
+          <TableRow key={order.id}>
+            <TableCell>{order.buyer}</TableCell>
+            <TableCell>{order.cart}</TableCell>
+            <TableCell>{order.total_value}</TableCell>
+            <TableCell>{order.created_at}</TableCell>
+
             <TableCell>
-              <ActionButton onClick={() => onEdit(user.id)}>
+              <ActionButton onClick={() => onEdit(order.id)}>
                 <RiEdit2Line />
               </ActionButton>
-              <ActionButton onClick={() => onDelete(user.id)} >
+              <ActionButton onClick={() => onDelete(order.id)}>
                 <RiDeleteBinLine />
               </ActionButton>
             </TableCell>

@@ -44,7 +44,7 @@ export default function Produto() {
     }
 
     const cartObj = {
-      user_id: userId as number, // Conversão explícita de tipo
+      user_id: userId as number, 
       product_id: productId,
       product_quantity: quantity,
     };
