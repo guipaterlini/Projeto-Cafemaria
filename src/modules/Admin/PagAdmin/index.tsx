@@ -11,20 +11,27 @@ import OrderSection from "../Pedidos/OrderSection";
 import AdminSection from "../UserAdmin/AdminSection";
 
 export default function PagAdmin() {
+  // Estado para controlar o estado de abertura do menu lateral
   const [open, setOpen] = useState(false);
+
+  // Estado para controlar a seção atual
   const [section, setSection] = useState<Menu | null>("products");
 
+  // Função para lidar com o clique nos itens do menu lateral
   const handleMenuClick = (menu: Menu) => {
     setSection(menu);
   };
 
+  // Hook de roteamento para navegar entre as páginas
   const navigate = useNavigate();
 
+  // Função para realizar o logout
   const logout = () => {
     localStorage.removeItem("token"); // Remove o token antigo, se existir
     navigate("/"); // Redirecionamento para a página Home
   };
 
+  // Definição das seções disponíveis no admin e seus títulos
   const sections = {
     products: <ProductSection title="Produtos" />,
     categories: <CategorySection title="Categorias" />,
@@ -33,6 +40,7 @@ export default function PagAdmin() {
     users: <AdminSection title="Usuários Admin" />,
   };
 
+  // Itens do menu lateral
   const menuItems = [
     { id: "products", label: "Produtos" },
     { id: "categories", label: "Categorias" },
@@ -43,9 +51,10 @@ export default function PagAdmin() {
 
   return (
     <main>
-      <Header open={open} setOpen={setOpen} />
+      <Header open={open} setOpen={setOpen} /> {/* Componente de cabeçalho */}
       <Container>
         <AsideMenu>
+          {/* Menu lateral */}
           <ul>
             {menuItems.map((item) => (
               <AsideItem
@@ -54,9 +63,11 @@ export default function PagAdmin() {
                 label={item.label}
               />
             ))}
+            {/* Item de logout */}
             <AsideItem onClick={() => logout()} label="Logout" />
           </ul>
         </AsideMenu>
+        {/* Seção atual renderizada */}
         <TableSection>{sections[section || "products"]}</TableSection>
       </Container>
     </main>
