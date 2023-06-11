@@ -57,16 +57,7 @@ export default function PagAdmin() {
         <TableSection>
           {section === "products" && <ProductSection title="Produtos" />}
           {section === "categories" && <CategorySection title="Categorias" />}
-          {section === "clients" && (
-            <ClienteSection
-              title="Cliente"
-              columns={[
-                { key: "name", label: "Nome" },
-                { key: "email", label: "Email" },
-                { key: "password", label: "Senha" },
-              ]}
-            />
-          )}
+          {section === "clients" && <ClienteSection title="Cliente" />}
           {section === "orders" && (
             <OrderSection
               title="Pedidos"
@@ -77,16 +68,7 @@ export default function PagAdmin() {
               ]}
             />
           )}
-          {section === "users" && (
-            <AdminSection
-              title="Usuários Admin"
-              columns={[
-                { key: "name", label: "Nome" },
-                { key: "email", label: "Email" },
-                { key: "password", label: "Senha" },
-              ]}
-            />
-          )}
+          {section === "users" && <AdminSection title="Usuários Admin" />}
         </TableSection>
       </Container>
     </main>

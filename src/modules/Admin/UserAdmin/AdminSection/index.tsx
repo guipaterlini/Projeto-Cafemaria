@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from "react";
 import {
   deletarUsuario,
+  listarUsuario,
   listarUsuarios,
 } from "../../../../services/MainApi/usuarios";
-import FormModal from "../../Components/FormModal";
 import ListSectionHeader from "../../Components/ListSectionHeader";
 import { UserData } from "../../../../type";
 import TableAdmin from "../TableAdmin";
-
-export interface Column {
-  key: keyof UserData;
-  label: string;
-}
+import AdminModal from "../AdminModal";
 
 interface ListSectionProps {
   title: string;
-  columns: Column[];
 }
 
-const AdminSection: React.FC<ListSectionProps> = ({ title, columns }) => {
+const AdminSection: React.FC<ListSectionProps> = ({ title }) => {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedAdmin, setSelectedAdmin] = useState<UserData | null>(null);
+  const [isCreatingAdmin, setIsCreatingAdmin] = useState(false);
 
   useEffect(() => {
     async function fetchListData() {
       try {
         const response = await listarUsuarios();
-        setData(response.data.result || []);
+        setData(response.data?.result || []);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);
@@ -38,82 +34,77 @@ const AdminSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     fetchListData();
   }, []);
 
-  const handleEdit = (id: number) => {
-    setSelectedUserId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (id: number) => {
-    const confirmed = window.confirm("Tem certeza que deseja deletar?");
-    if (confirmed) {
-      deletarUsuario(id);
+  const fetchAdminData = async (id: number) => {
+    try {
+      const response = await listarUsuario(id);
+      setSelectedAdmin(response.data.result);
+    } catch (error) {
+      console.error("Erro ao buscar dados do usuario admin:", error);
     }
   };
 
-  const handleAddUser = () => {
-    setSelectedUserId(null);
+  const handleCreateAdminSuccess = async () => {
+    setIsCreatingAdmin(true);
+
+    try {
+      const response = await listarUsuarios();
+      setData(response.data?.result || []);
+    } catch (error) {
+      console.error("Erro ao buscar dados da lista:", error);
+    }
+
+    setIsCreatingAdmin(false);
+  };
+
+  const handleEdit = async (id: number) => {
+    setIsModalOpen(true);
+    await fetchAdminData(id);
+  };
+
+  const handleDelete = async (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja deletar?");
+    if (!confirmed) return;
+
+    try {
+      await deletarUsuario(id);
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar admin:", error);
+    }
+  };
+
+  const handleAddAdmin = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedAdmin(null);
   };
-
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
-  const fields = [
-    { label: "Nome", name: "name", type: "text", required: true },
-    { label: "Email", name: "email", type: "email", required: true },
-    { label: "Senha", name: "password", type: "password", required: true },
-  ];
 
   return (
     <div>
-      <ListSectionHeader title={title} onAddItem={handleAddUser} />
+      <ListSectionHeader title={title} onAddItem={handleAddAdmin} />
       {loading && <div>Carregando...</div>}
-      {!loading && data.length === 0 && <div>Nenhum usuário encontrado.</div>}
+      {isCreatingAdmin && <div>Cadastrando admin...</div>}
+      {!loading && data.length === 0 && <div>Nenhum admin encontrado.</div>}
       {!loading && data.length > 0 && (
         <>
-          <TableAdmin
-            columns={columns}
-            data={data}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          <TableAdmin data={data} onEdit={handleEdit} onDelete={handleDelete} />
           {isModalOpen && (
-            <div className="modal" onClick={handleOutsideClick}>
+            <div className="modal">
               <div className="modal-content">
-                <FormModal
+                <AdminModal
                   onClose={handleCloseModal}
-                  userId={selectedUserId}
-                  fields={fields}
-                  entityType="Produtos" // Tipo de entidade
-                  title={title}
+                  onCreateSuccess={handleCreateAdminSuccess}
+                  admin={selectedAdmin}
                 />
               </div>
             </div>
           )}
         </>
       )}
-      {isModalOpen && (
-        <div className="modal" onClick={handleOutsideClick}>
-          <div className="modal-content">
-            <FormModal
-              onClose={handleCloseModal}
-              userId={selectedUserId}
-              fields={fields}
-              entityType="Produtos" // Tipo de entidade
-              title={title}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };
-
 export default AdminSection;

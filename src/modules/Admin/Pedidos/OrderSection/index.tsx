@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import FormModal from "../../Components/FormModal";
 import ListSectionHeader from "../../Components/ListSectionHeader";
 import { OrderData } from "../../../../type";
 import { deletarPedido, listarPPedidos } from "../../../../services/MainApi/pedidos";
@@ -84,30 +83,17 @@ const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
           {isModalOpen && (
             <div className="modal" onClick={handleOutsideClick}>
               <div className="modal-content">
-                <FormModal
+                {/* <OrderModal
                   onClose={handleCloseModal}
                   userId={selectedUserId}
                   fields={fields}
                   entityType="Produtos" // Tipo de entidade
                   title={title}
-                />
+                /> */}
               </div>
             </div>
           )}
         </>
-      )}
-      {isModalOpen && (
-        <div className="modal" onClick={handleOutsideClick}>
-          <div className="modal-content">
-            <FormModal
-              onClose={handleCloseModal}
-              userId={selectedUserId}
-              fields={fields}
-              entityType="Produtos" // Tipo de entidade
-              title={title}
-            />
-          </div>
-        </div>
       )}
     </div>
   );
