@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Footer } from "../../../components/Footer";
 import Header from "../../../components/Header";
-import React from "react";
 import {
   AddToCartButton,
   ProductDescription,
@@ -14,11 +13,12 @@ import {
   QuantitySelector,
 } from "./styles";
 import { useParams } from "react-router-dom";
-import { ProdutoPayload, listarProduto } from "../../../services/MainApi/produtos";
-import * as jose from "jose";
-import { addToCart } from "../../../services/MainApi/carrinho";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {
+  ProdutoPayload,
+  listarProduto,
+} from "../../../services/MainApi/produtos";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Produto() {
   const [open, setOpen] = useState(false);
@@ -26,44 +26,50 @@ export default function Produto() {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
-  const handleQuantityChange = (event: { target: { value: string } }) => {
-    const value = parseInt(event.target.value);
-    setQuantity(value);
+  const handleQuantityChange = ({
+    target: { value },
+  }: {
+    target: { value: string };
+  }) => {
+    const parsedValue = parseInt(value);
+    setQuantity(parsedValue);
   };
 
   const handleAddToCart = () => {
     const productId = Number(id);
-    let userId;
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      const decodedToken = jose.decodeJwt(token);
-      userId = decodedToken.id;
-    } else {
-      console.error("Usuário nao está logado.");
-    }
 
     const cartObj = {
-      user_id: userId as number, 
       product_id: productId,
+      product_title: product?.title || "",
+      product_price: product?.price || "",
       product_quantity: quantity,
     };
 
-    addToCart(cartObj)
-    .then(() => {
-      toast.success(`O item "${product?.title}" foi adicionado ao carrinho`);
-    })
-    .catch((error) => {
-      console.error('Erro ao adicionar ao carrinho:', error);
-      toast.error('Erro ao adicionar ao carrinho. Por favor, tente novamente.');
-    });
+    // Verifica se já existe algum item no carrinho
+    const cartItems = localStorage.getItem("cartItems");
+    if (cartItems) {
+      // Atualiza o carrinho com o novo item
+      const updatedCart = [...JSON.parse(cartItems), cartObj];
+      localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+    } else {
+      // Cria o carrinho com o novo item
+      localStorage.setItem("cartItems", JSON.stringify([cartObj]));
+    }
+
+    toast.success(`O item "${product?.title}" foi adicionado ao carrinho`);
   };
 
   useEffect(() => {
     async function fetchProduct() {
       try {
+        // Busca o produto com o ID fornecido
         const response = await listarProduto(Number(id));
-        setProduct(response.data.result || []);
+
+        // Armazena os dados do produto em uma variável
+        const productData = { ...response.data.result };
+
+        // Atualiza o estado do produto
+        setProduct(productData);
       } catch (error) {
         console.error("Erro ao buscar produto:", error);
       }
@@ -73,24 +79,31 @@ export default function Produto() {
   }, [id]);
 
   if (!product) {
-    // Renderizar um componente de carregamento ou uma mensagem de erro enquanto os dados do produto são buscados
+    // Renderiza um componente de carregamento ou uma mensagem de erro enquanto os dados do produto são buscados
     return null;
   }
 
   return (
-    <main>
+    <>
       <Header open={open} setOpen={setOpen} />
 
       <ProductPageContainer>
         <ProductInfoContainer>
-          <ProductImage src={product.image} alt={product.title} />
+          <ProductImage
+            src={product.image || "../../../assets/images/defaultImage.png"}
+            alt={product.title}
+          />
 
           <ProductDetailsContainer>
+            {/* Renderiza os detalhes do produto */}
             <ProductTitle>{product.title}</ProductTitle>
             <ProductDescription>{product.description}</ProductDescription>
+            <ProductDescription>{product.option}</ProductDescription>
             <ProductPrice>R$ {product.price}</ProductPrice>
 
+            {/* Permite selecionar a quantidade do produto */}
             <QuantitySelector value={quantity} onChange={handleQuantityChange}>
+              {/* Cria as opções de quantidade com base no estoque disponível */}
               {[...Array(product.amount)].map((_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
@@ -98,6 +111,7 @@ export default function Produto() {
               ))}
             </QuantitySelector>
 
+            {/* Botão para adicionar o produto ao carrinho */}
             <AddToCartButton onClick={handleAddToCart}>
               Adicionar ao Carrinho
             </AddToCartButton>
@@ -107,6 +121,6 @@ export default function Produto() {
       </ProductPageContainer>
 
       <Footer />
-    </main>
+    </>
   );
 }
