@@ -4,7 +4,7 @@ import { Img, StyledSlider, Wrapper } from "./styles";
 import { useMediaQuery } from "react-responsive";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { listarProdutos } from "../../services/MainApi/produtos";
+import { listarProdutos } from "../../../../services/MainApi/produtos";
 
 type ProductImage = {
   image: string;
