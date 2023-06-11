@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Footer } from "../../components/Footer";
-import Header from "../../components/Header";
+import { Footer } from "../../../components/Footer";
+import Header from "../../../components/Header";
 import React from "react";
 import {
   AddToCartButton,
@@ -14,9 +14,9 @@ import {
   QuantitySelector,
 } from "./styles";
 import { useParams } from "react-router-dom";
-import { ProdutoPayload, listarProduto } from "../../services/MainApi/produtos";
+import { ProdutoPayload, listarProduto } from "../../../services/MainApi/produtos";
 import * as jose from "jose";
-import { addToCart } from "../../services/MainApi/carrinho";
+import { addToCart } from "../../../services/MainApi/carrinho";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
