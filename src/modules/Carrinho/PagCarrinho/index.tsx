@@ -3,7 +3,8 @@ import { Footer } from "../../../components/Footer";
 import Header from "../../../components/Header";
 import * as jose from "jose";
 import { CarrinhoPayload, addToCart } from "../../../services/MainApi/carrinho";
-import { Button, Table } from "./style";
+import { CancelButton, H1, OrderButton, Section, Table } from "./style";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 interface CartItem {
   product_id: number;
@@ -87,8 +88,8 @@ export default function Carrinho() {
     <main>
       <Header open={open} setOpen={setOpen} />
 
-      <div>
-        <h1>Carrinho de Compras</h1>
+      <Section>
+        <H1>Carrinho de Compras</H1>
         {cartItems.length === 0 ? (
           <p>O carrinho está vazio.</p>
         ) : (
@@ -98,7 +99,7 @@ export default function Carrinho() {
                 <th>Produto</th>
                 <th>Quantidade</th>
                 <th>Preço Unitário</th>
-                <th>Ações</th>
+                <th>Remover</th>
               </tr>
             </thead>
             <tbody>
@@ -108,8 +109,8 @@ export default function Carrinho() {
                   <td>{item.product_quantity}</td>
                   <td>R$ {item.product_price}</td>
                   <td>
-                    <button onClick={() => handleRemoveItem(index)}>
-                      Remover
+                    <button className="RemoveBtn" onClick={() => handleRemoveItem(index)}>
+                    <RiDeleteBinLine />
                     </button>
                   </td>
                 </tr>
@@ -117,17 +118,19 @@ export default function Carrinho() {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={2}></td>
-                <td>Total: R$ {totalPrice.toFixed(2)}</td>
+                <td className="tdTotal" colSpan={2}></td>
+                <td className="tdTotal">R$ {totalPrice.toFixed(2)}</td>
               </tr>
             </tfoot>
           </Table>
         )}
         <div>
-          <Button onClick={handleCancelCart}>Cancelar Carrinho</Button>
-          <Button onClick={handleCheckout}>Fechar Pedido</Button>
+          <CancelButton onClick={handleCancelCart}>
+            Cancelar Carrinho
+          </CancelButton>
+          <OrderButton onClick={handleCheckout}>Fechar Pedido</OrderButton>
         </div>
-      </div>
+      </Section>
 
       <Footer />
     </main>

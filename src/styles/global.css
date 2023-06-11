@@ -15,7 +15,7 @@
   --fonte-muito-grande: 2.5rem; /* 40px / 16px */
   --fonte-enorme: 3rem; /* 48px / 16px */
   --fonte-family: "Lora", serif;
-  --fonte-destaque: "Fraunces", serif;
+  --fonte-family-destaque: "Fraunces", serif;
 }
 
 * {
