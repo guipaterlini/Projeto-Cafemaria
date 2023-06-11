@@ -25,42 +25,39 @@ export default function PagAdmin() {
     navigate("/"); // Redirecionamento para a página Home
   };
 
+  const sections = {
+    products: <ProductSection title="Produtos" />,
+    categories: <CategorySection title="Categorias" />,
+    clients: <ClienteSection title="Cliente" />,
+    orders: <OrderSection title="Pedidos" />,
+    users: <AdminSection title="Usuários Admin" />,
+  };
+
+  const menuItems = [
+    { id: "products", label: "Produtos" },
+    { id: "categories", label: "Categorias" },
+    { id: "clients", label: "Clientes" },
+    { id: "orders", label: "Pedidos" },
+    { id: "users", label: "Usuários Admin" },
+  ];
+
   return (
     <main>
       <Header open={open} setOpen={setOpen} />
       <Container>
         <AsideMenu>
           <ul>
-            <AsideItem
-              onClick={() => handleMenuClick("products")}
-              label="Produtos"
-            />
-            <AsideItem
-              onClick={() => handleMenuClick("categories")}
-              label="Categorias"
-            />
-            <AsideItem
-              onClick={() => handleMenuClick("clients")}
-              label="Clientes"
-            />
-            <AsideItem
-              onClick={() => handleMenuClick("orders")}
-              label="Pedidos"
-            />
-            <AsideItem
-              onClick={() => handleMenuClick("users")}
-              label="Usuários Admin"
-            />
+            {menuItems.map((item) => (
+              <AsideItem
+                key={item.id}
+                onClick={() => handleMenuClick(item.id as Menu)}
+                label={item.label}
+              />
+            ))}
             <AsideItem onClick={() => logout()} label="Logout" />
           </ul>
         </AsideMenu>
-        <TableSection>
-          {section === "products" && <ProductSection title="Produtos" />}
-          {section === "categories" && <CategorySection title="Categorias" />}
-          {section === "clients" && <ClienteSection title="Cliente" />}
-          {section === "orders" && <OrderSection title="Pedidos" />}
-          {section === "users" && <AdminSection title="Usuários Admin" />}
-        </TableSection>
+        <TableSection>{sections[section || "products"]}</TableSection>
       </Container>
     </main>
   );
