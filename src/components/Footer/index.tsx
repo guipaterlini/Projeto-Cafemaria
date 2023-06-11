@@ -7,9 +7,34 @@ import {
 } from "./styles";
 import React from "react";
 
+// Links da seção "Loja"
+const storeLinks = [
+  { text: "Cafés Premium", to: "/produtos" },
+  { text: "Cafés Tradicionais", to: "/produtos" },
+  { text: "Cafeteiras", to: "/produtos" },
+];
+
+// Links da seção "Ajuda"
+const helpLinks = [
+  { text: "Central de Ajuda", to: "/helpcenter" },
+  { text: "Meus pedidos", to: "/meuspedidos" },
+  { text: "Carrinho", to: "/carrinho" },
+  { text: "Política de devolução", to: "/politicas" },
+  { text: "Contato", to: "/contato" },
+];
+
+// Links da seção "Sobre nós"
+const aboutLinks = [
+  { text: "Nossa história", to: "/about" },
+  { text: "Seja um representante", to: "/contato" },
+  { text: "Trabalhe conosco", to: "/contato" },
+  { text: "Equipe Cafemaria", to: "/nossaequipe" },
+];
+
 export function Footer() {
   return (
     <FooterDefault>
+      {/* Seção da Newsletter */}
       <NewsletterContainer>
         <h2>Acompanhe nossa newsletter</h2>
         <p>
@@ -23,51 +48,37 @@ export function Footer() {
           </button>
         </FormNewsLetter>
       </NewsletterContainer>
+
+      {/* Seção de Links */}
       <LinksContainer>
+        {/* Lista de links da seção "Loja" */}
         <ul>
           <h3>Loja</h3>
-          <li>
-            <Link to="/produtos">Cafés Premium</Link>
-          </li>
-          <li>
-            <Link to="/produtos">Cafés Tradicionais</Link>
-          </li>
-          <li>
-            <Link to="/produtos">Cafeteiras</Link>
-          </li>
+          {storeLinks.map((link, index) => (
+            <li key={index}>
+              <Link to={link.to}>{link.text}</Link>
+            </li>
+          ))}
         </ul>
+
+        {/* Lista de links da seção "Ajuda" */}
         <ul>
           <h3>Ajuda</h3>
-          <li>
-            <Link to="/helpcenter">Central de Ajuda</Link>
-          </li>
-          <li>
-            <Link to="/meuspedidos">Meus pedidos</Link>
-          </li>
-          <li>
-            <Link to="/carrinho">Carrinho</Link>
-          </li>
-          <li>
-            <Link to="/politicas">Política de devolução</Link>
-          </li>
-          <li>
-            <Link to="/contato">Contato</Link>
-          </li>
+          {helpLinks.map((link, index) => (
+            <li key={index}>
+              <Link to={link.to}>{link.text}</Link>
+            </li>
+          ))}
         </ul>
+
+        {/* Lista de links da seção "Sobre nós" */}
         <ul>
           <h3>Sobre nós</h3>
-          <li>
-            <Link to="/about">Nossa história</Link>
-          </li>
-          <li>
-            <Link to="/contato">Seja um representante</Link>
-          </li>
-          <li>
-            <Link to="/contato">Trabalhe conosco</Link>
-          </li>
-          <li>
-            <Link to="/nossaequipe">Equipe Cafemaria</Link>
-          </li>
+          {aboutLinks.map((link, index) => (
+            <li key={index}>
+              <Link to={link.to}>{link.text}</Link>
+            </li>
+          ))}
         </ul>
       </LinksContainer>
     </FooterDefault>
