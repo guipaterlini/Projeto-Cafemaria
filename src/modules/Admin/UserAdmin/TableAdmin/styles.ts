@@ -12,7 +12,6 @@ export const TableWrapper = styled.table`
 `;
 
 export const TableHead = styled.thead`
-  background-color: var(--cor-primaria);
   border-bottom: 1px solid var(--cor-secundaria);
 `;
 

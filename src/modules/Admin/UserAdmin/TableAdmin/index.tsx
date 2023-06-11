@@ -1,42 +1,45 @@
 import React from "react";
 import { RiEdit2Line, RiDeleteBinLine } from "react-icons/ri";
-import { ActionButton, TableCell, TableHead, TableHeader, TableRow, TableWrapper } from "./styles";
-import { Column } from "../AdminSection";
+import {
+  ActionButton,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableWrapper,
+} from "./styles";
 import { UserData } from "../../../../type";
 
 interface TableProps {
-  columns: Column[];
   data: UserData[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-const TableAdmin: React.FC<TableProps> = ({ columns, data, onEdit, onDelete }) => {
-  const getProperty = (obj: UserData, key: keyof UserData) => {
-    return obj[key];
-  };
+const TableAdmin: React.FC<TableProps> = ({ data, onEdit, onDelete }) => {
+  const filteredData = data.filter((user: UserData) => user.role === "admin");
 
   return (
     <TableWrapper>
       <TableHead>
         <tr>
-          {columns.map((column) => (
-            <TableHeader key={column.key}>{column.label}</TableHeader>
-          ))}
+          <TableHeader>Nome</TableHeader>
+          <TableHeader>Email</TableHeader>
+          <TableHeader>Tipo</TableHeader>
           <TableHeader>Ações</TableHeader>
         </tr>
       </TableHead>
       <tbody>
-        {data.map((user: UserData) => (
+        {filteredData.map((user: UserData) => (
           <TableRow key={user.id}>
-            {columns.map((column) => (
-              <TableCell key={column.key}>{getProperty(user, column.key)}</TableCell>
-            ))}
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.role}</TableCell>
             <TableCell>
               <ActionButton onClick={() => onEdit(user.id)}>
                 <RiEdit2Line />
               </ActionButton>
-              <ActionButton onClick={() => onDelete(user.id)} >
+              <ActionButton onClick={() => onDelete(user.id)}>
                 <RiDeleteBinLine />
               </ActionButton>
             </TableCell>

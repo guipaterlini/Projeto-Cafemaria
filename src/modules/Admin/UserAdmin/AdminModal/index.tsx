@@ -3,30 +3,30 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
 import {
   atualizarUsuario,
-  cadastroUsuario,
+  cadastroAdmin,
 } from "../../../../services/MainApi/usuarios";
 import { UserData } from "../../../../type";
 
 interface FormModalProps {
   onClose: () => void;
   onCreateSuccess?: () => void;
-  client: UserData | null;
+  admin: UserData | null;
 }
 
-const ClientModal: React.FC<FormModalProps> = ({
+const AdminModal: React.FC<FormModalProps> = ({
   onClose,
   onCreateSuccess,
-  client,
+  admin,
 }) => {
   const { handleSubmit, register, formState, setValue } = useForm();
   const { errors } = formState;
 
   useEffect(() => {
-    if (client) {
-      setValue("name", client.name);
-      setValue("email", client.email);
+    if (admin) {
+      setValue("name", admin.name);
+      setValue("email", admin.email);
     }
-  }, [client, setValue]);
+  }, [admin, setValue]);
 
   // Função de callback que é executada quando o formulário é submetido
   const onSubmit: SubmitHandler<any> = async (data) => {
@@ -37,12 +37,12 @@ const ClientModal: React.FC<FormModalProps> = ({
         password: data.password,
       };
 
-      if (client) {
+      if (admin) {
         // Chama a função de atualização da categoria para enviar os dados para a API
-        await atualizarUsuario(client.id, requestedData);
+        await atualizarUsuario(admin.id, requestedData);
       } else {
         // Modo de criação - cria uma nova categoria
-        await cadastroUsuario(requestedData);
+        await cadastroAdmin(requestedData);
       }
 
       // Chama a função onCreateSuccess, se fornecida, para indicar o sucesso da criação da categoria
@@ -62,7 +62,7 @@ const ClientModal: React.FC<FormModalProps> = ({
   return (
     <ModalContainer onClick={handleOutsideClick}>
       <ModalContent>
-        <h2>{client ? "Editar Cliente" : "Cadastrar Cliente"}</h2>
+        <h2>{admin ? "Editar Admin User" : "Cadastrar Admin User"}</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <label>
             Nome:
@@ -97,7 +97,7 @@ const ClientModal: React.FC<FormModalProps> = ({
           {errors.email && <span>"Este campo é obrigatório"</span>}
 
           <div className="button-group">
-            <button type="submit">{client ? "Editar" : "Cadastrar"}</button>
+            <button type="submit">{admin ? "Editar" : "Cadastrar"}</button>
             <button type="button" onClick={() => onClose()}>
               Cancelar
             </button>
@@ -108,4 +108,4 @@ const ClientModal: React.FC<FormModalProps> = ({
   );
 };
 
-export default ClientModal;
+export default AdminModal;

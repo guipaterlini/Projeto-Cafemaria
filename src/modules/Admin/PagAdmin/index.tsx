@@ -68,16 +68,7 @@ export default function PagAdmin() {
               ]}
             />
           )}
-          {section === "users" && (
-            <AdminSection
-              title="Usuários Admin"
-              columns={[
-                { key: "name", label: "Nome" },
-                { key: "email", label: "Email" },
-                { key: "password", label: "Senha" },
-              ]}
-            />
-          )}
+          {section === "users" && <AdminSection title="Usuários Admin" />}
         </TableSection>
       </Container>
     </main>
