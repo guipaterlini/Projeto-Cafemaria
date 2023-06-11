@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import ListSectionHeader from "../../Components/ListSectionHeader";
 import { OrderData } from "../../../../type";
-import { deletarPedido, listarPPedidos } from "../../../../services/MainApi/pedidos";
+import {
+  deletarPedido,
+  listarPedido,
+  listarPedidos,
+} from "../../../../services/MainApi/pedidos";
 import TableOrder from "../TableOrder";
-
-export interface Column {
-  key: keyof OrderData;
-  label: string;
-}
+import OrderModal from "../OrderModal";
 
 interface ListSectionProps {
   title: string;
-  columns: Column[];
 }
 
-const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
+const OrderSection: React.FC<ListSectionProps> = ({ title }) => {
   const [data, setData] = useState<OrderData[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null);
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   useEffect(() => {
     async function fetchListData() {
       try {
-        const response = await listarPPedidos();
-        setData(response.data.result || []);
+        const response = await listarPedidos();
+        setData(response.data?.result || []);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);
@@ -34,69 +34,78 @@ const OrderSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     fetchListData();
   }, []);
 
-  const handleEdit = (id: number) => {
-    setSelectedUserId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (id: number) => {
-    const confirmed = window.confirm("Tem certeza que deseja deletar?");
-    if (confirmed) {
-      deletarPedido(id);
+  const fetchOrderData = async (id: number) => {
+    try {
+      const response = await listarPedido(id);
+      setSelectedOrder(response.data.result);
+    } catch (error) {
+      console.error("Erro ao buscar dados do pedido:", error);
     }
   };
 
-  const handleAddUser = () => {
-    setSelectedUserId(null);
+  const handleCreateOrderSuccess = async () => {
+    setIsCreatingOrder(true);
+
+    try {
+      const response = await listarPedidos();
+      setData(response.data?.result || []);
+    } catch (error) {
+      console.error("Erro ao buscar dados da lista:", error);
+    }
+
+    setIsCreatingOrder(false);
+  };
+
+  const handleEdit = async (id: number) => {
+    setIsModalOpen(true);
+    await fetchOrderData(id);
+  };
+
+  const handleDelete = async (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja deletar?");
+    if (!confirmed) return;
+
+    try {
+      await deletarPedido(id);
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar pedido:", error);
+    }
+  };
+
+  const handleAddOrder = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedOrder(null);
   };
-
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
-  const fields = [
-    { label: "Nome", name: "title", type: "text", required: true },
-    { label: "Descrição", name: "description", type: "text", required: true },
-    { label: "Publicado", name: "published", type: "checkbox", required: true },
-  ];
 
   return (
     <div>
-      <ListSectionHeader title={title} onAddItem={handleAddUser} />
+      <ListSectionHeader title={title} onAddItem={handleAddOrder} />
       {loading && <div>Carregando...</div>}
-      {!loading && data.length === 0 && <div>Nenhum usuário encontrado.</div>}
+      {isCreatingOrder && <div>Cadastrando pedido...</div>}
+      {!loading && data.length === 0 && <div>Nenhum pedido encontrado.</div>}
       {!loading && data.length > 0 && (
         <>
-          <TableOrder
-            columns={columns}
-            data={data}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          <TableOrder data={data} onEdit={handleEdit} onDelete={handleDelete} />
           {isModalOpen && (
-            <div className="modal" onClick={handleOutsideClick}>
+            <div className="modal">
               <div className="modal-content">
-                {/* <OrderModal
+                <OrderModal
                   onClose={handleCloseModal}
-                  userId={selectedUserId}
-                  fields={fields}
-                  entityType="Produtos" // Tipo de entidade
-                  title={title}
-                /> */}
-              </div>
-            </div>
+                  onCreateSuccess={handleCreateOrderSuccess}
+                  order={selectedOrder}
+                  />
+                  </div>
+                </div>
+              )}
+            </>
           )}
-        </>
-      )}
-    </div>
-  );
-};
+        </div>
+      );
+    };
 
 export default OrderSection;

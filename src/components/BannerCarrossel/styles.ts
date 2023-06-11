@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 `;
 export const Img = styled.img`
   max-width: 250px;
-  background-color: #fff;
+  background-color: var(--cor-font-secundaria);
   border-radius: 30px;
 
   @media (min-width: 768px) and (max-width: 1024px) {

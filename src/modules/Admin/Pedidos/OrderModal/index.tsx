@@ -1,48 +1,52 @@
 import React, { useEffect } from "react";
-import { SubmitHandler, useForm, FieldError } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Form, ModalContainer, ModalContent } from "./styles";
+import { OrderData } from "../../../../type";
 import {
-  atualizarCategoria,
-  cadastroCategoria,
-} from "../../../../services/MainApi/categorias";
-import { CategoryData } from "../../../../type";
+  atualizarStatus,
+  cadastroPedido,
+} from "../../../../services/MainApi/pedidos";
 
 interface FormModalProps {
   onClose: () => void;
   onCreateSuccess?: () => void;
-  category: CategoryData | null; // Categoria selecionada como propriedade
+  order: OrderData | null; // pedido selecionado como propriedade
 }
 
 const OrderModal: React.FC<FormModalProps> = ({
   onClose,
   onCreateSuccess,
-  category,
+  order,
 }) => {
   const { handleSubmit, register, formState, setValue } = useForm();
   const { errors } = formState;
 
   useEffect(() => {
-    if (category) {
-      setValue("title", category.title);
-      setValue("description", category.description);
+    if (order) {
+      setValue("buyer", order.buyer);
+      setValue("cart", order.cart);
+      setValue("total_value", order.total_value);
+      setValue("created_at", order.created_at);
     }
-  }, [category, setValue]);
+  }, [order, setValue]);
 
   // Função de callback que é executada quando o formulário é submetido
   const onSubmit: SubmitHandler<any> = async (data) => {
     try {
       // Cria um novo FormData e preenche com os dados do formulário
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("published", "true");
+      const requestedData = {
+        buyer: data.buyer,
+        cart: data.cart,
+        total_value: data.total_value,
+        created_at: data.created_at,
+      };
 
-      if (category) {
+      if (order) {
         // Chama a função de atualização da categoria para enviar os dados para a API
-        await atualizarCategoria(category.id, formData);
+        await atualizarStatus(order.id, requestedData);
       } else {
         // Modo de criação - cria uma nova categoria
-        await cadastroCategoria(formData);
+        await cadastroPedido(requestedData);
       }
 
       // Chama a função onCreateSuccess, se fornecida, para indicar o sucesso da criação da categoria
@@ -62,43 +66,54 @@ const OrderModal: React.FC<FormModalProps> = ({
   return (
     <ModalContainer onClick={handleOutsideClick}>
       <ModalContent>
-        <h2>{category ? "Editar Categoria" : "Adicionar Categoria"}</h2>
+        <h2>{order ? "Editar Pedido" : "Adicionar Pedido"}</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <label>
-            Nome:
+            Comprador:
             <input
               type="text"
-              {...register("title", {
+              {...register("buyer", {
                 required: true,
-                maxLength: { value: 100, message: "Máximo de 100 caracteres" },
               })}
             />
           </label>
-          {errors.title && (
-            <span>
-              {(errors.title as FieldError)?.message ||
-                "Este campo é obrigatório"}
-            </span>
-          )}
+          {errors.buyer && <span>"Este campo é obrigatório"</span>}
 
           <label>
-            Descrição:
-            <textarea
-              {...register("description", {
+            Produtos:
+            <input
+              type="text"
+              {...register("cart", {
                 required: true,
-                maxLength: { value: 300, message: "Máximo de 300 caracteres" },
               })}
             />
           </label>
-          {errors.description && (
-            <span>
-              {(errors.description as FieldError)?.message ||
-                "Este campo é obrigatório"}
-            </span>
-          )}
+          {errors.cart && <span>"Este campo é obrigatório"</span>}
+
+          <label>
+            Total:
+            <input
+              type="number"
+              {...register("total_value", {
+                required: true,
+              })}
+            />
+          </label>
+          {errors.total_value && <span>"Este campo é obrigatório"</span>}
+
+          <label>
+            Data da Compra:
+            <input
+              type="date"
+              {...register("created_at", {
+                required: true,
+              })}
+            />
+          </label>
+          {errors.created_at && <span>"Este campo é obrigatório"</span>}
 
           <div className="button-group">
-            <button type="submit">{category ? "Editar" : "Criar"}</button>
+            <button type="submit">{order ? "Editar" : "Criar"}</button>
             <button type="button" onClick={() => onClose()}>
               Cancelar
             </button>
