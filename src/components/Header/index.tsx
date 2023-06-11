@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-
 import ImageLink from "../ImageLink";
 import ProductSearch from "../ProductSearch";
 import TokenButton from "../LoginBtn";
-
 import { HeaderDefault, ListDefault, ListItem, StyledBurger } from "./styles";
 
 type Props = {
