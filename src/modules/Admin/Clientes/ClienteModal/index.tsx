@@ -78,6 +78,7 @@ const ClientModal: React.FC<FormModalProps> = ({
           <label>
             Email:
             <input
+            type="email"
               {...register("email", {
                 required: true,
               })}
@@ -87,6 +88,7 @@ const ClientModal: React.FC<FormModalProps> = ({
           <label>
             Senha:
             <input
+            type="password"
               {...register("password", {
                 required: true,
               })}
