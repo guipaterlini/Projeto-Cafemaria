@@ -1,133 +1,133 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Footer } from "../../../components/Footer";
 import Header from "../../../components/Header";
-import { addToCart, listarCarrinho } from "../../../services/MainApi/carrinho";
-import CartTable from "../Components/CartTable";
-import { Container } from "./style";
 import * as jose from "jose";
+import { CarrinhoPayload, addToCart } from "../../../services/MainApi/carrinho";
+import { Button, Table } from "./style";
 
-interface CarrinhoPayload {
-  user_id: number;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
+interface CartItem {
+  product_id: number;
+  product_title: string;
+  product_price: number;
+  product_quantity: number;
 }
 
-interface Produto {
-  _id: string;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-}
+const getUserIdFromToken = (token: string | null) => {
+  if (!token || typeof token === "undefined") {
+    return null;
+  }
+  try {
+    const decodedToken: any = jose.decodeJwt(token);
+    return decodedToken.id;
+  } catch (error) {
+    console.error("Erro ao decodificar o token:", error);
+    return null;
+  }
+};
 
-function randomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min) + min);
+function preprocessCartItems(cartItems: CartItem[]): [CartItem[], number] {
+  const processedCartItems: CartItem[] = [];
+  const productMap = new Map<number, CartItem>();
+  let totalPrice = 0;
+
+  for (const item of cartItems) {
+    const existingItem = productMap.get(item.product_id);
+    if (existingItem) {
+      existingItem.product_quantity += item.product_quantity;
+    } else {
+      productMap.set(item.product_id, { ...item });
+    }
+    totalPrice += item.product_price * item.product_quantity;
+  }
+
+  const values = Array.from(productMap.values());
+  for (const item of values) {
+    processedCartItems.push(item);
+  }
+
+  return [processedCartItems, totalPrice];
 }
 
 export default function Carrinho() {
   const [open, setOpen] = useState(false);
-  const [cart, setCart] = useState<Produto[]>([]);
-  let userId: number | undefined;
+  const [cartItems, setCartItems] = useState<CartItem[]>(
+    JSON.parse(localStorage.getItem("cartItems") || "[]")
+  );
   const token = localStorage.getItem("token");
+  const userID = token ? getUserIdFromToken(token) : null;
 
-  if (token) {
-    const decodedToken = jose.decodeJwt(token);
-    userId = decodedToken.id as number;
-  } else {
-    console.error("Usuário não está logado.");
-  }
-
-
-  const productObject: CarrinhoPayload = {
-    user_id: userId ?? -1,
-    name: "produto",
-    category: "categoria",
-    price: randomNumber(80, 1200),
-    quantity: 1,
+  const handleRemoveItem = (index: number) => {
+    const updatedCartItems = [...cartItems];
+    updatedCartItems.splice(index, 1);
+    setCartItems(updatedCartItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const handleCancelCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("cartItems");
+  };
 
-  const getData = () => {
-    if (userId) {
-      const id = Number(userId);
-      listarCarrinho(id)
-        .then((response) => {
-          const responseData = response.data;
-          if (Array.isArray(responseData)) {
-            setCart(responseData);
-          } else {
-            console.error("Dados inválidos retornados do servidor. Esperava-se uma matriz.");
-          }
-        })
-        .catch((error) => {
-          console.error("Erro ao obter os dados do carrinho:", error);
-        });
+  const handleCheckout = () => {
+    for (const item of processedCartItems) {
+      const payload: CarrinhoPayload = {
+        user_id: userID,
+        product_id: item.product_id,
+        product_quantity: item.product_quantity,
+      };
+      addToCart(payload); // Chamar a função addToCart() com o payload adequado
     }
-  };
-  
 
-  const handleAddItem = () => {
-    addToCart(productObject as CarrinhoPayload).then((response) => {
-      getData();
-      console.log(response);
-      console.log("Disparou addItem");
-    });
+    console.log("Pedido fechado!");
   };
 
-  const handleRemoveItem = (item: Produto) => {
-    console.log({ item });
-    console.log("disparou remove item");
-  };
-
-  const handleUpdateItem = () => {
-    return;
-  };
+  const [processedCartItems, totalPrice] = preprocessCartItems(cartItems);
 
   return (
     <main>
       <Header open={open} setOpen={setOpen} />
 
-      <main>
-        <h1>Carrinho</h1>
-        {/* <button onClick={handleAddItem} style={{padding: '5px 10px', margin: '15px' }}>add to cart</button> */}
-        <div className="cart-content">
-          <Container>
-            <table>
-              <thead>
-                <tr>
-                  <th>Produto</th>
-                  <th>Preço</th>
-                  <th>Quantidade</th>
-                  <th>Total</th>
-                  <th>-</th>
+      <div>
+        <h1>Carrinho de Compras</h1>
+        {cartItems.length === 0 ? (
+          <p>O carrinho está vazio.</p>
+        ) : (
+          <Table>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {processedCartItems.map((item: CartItem, index: number) => (
+                <tr key={index}>
+                  <td>{item.product_title}</td>
+                  <td>{item.product_quantity}</td>
+                  <td>R$ {item.product_price}</td>
+                  <td>
+                    <button onClick={() => handleRemoveItem(index)}>
+                      Remover
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {cart.map((props: Produto) => (
-                  <CartTable
-                    data={props}
-                    key={props._id}
-                    handleRemoveItem={handleRemoveItem}
-                    userId={userId}
-                  />
-                ))}
-                {cart.length === 0 && (
-                  <tr>
-                    <td colSpan={5} style={{ textAlign: "center" }}>
-                      <b>Carrinho de compras vazio.</b>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </Container>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan={2}></td>
+                <td>Total: R$ {totalPrice.toFixed(2)}</td>
+              </tr>
+            </tfoot>
+          </Table>
+        )}
+        <div>
+          <Button onClick={handleCancelCart}>Cancelar Carrinho</Button>
+          <Button onClick={handleCheckout}>Fechar Pedido</Button>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </main>

@@ -9,6 +9,7 @@ export interface ProdutoPayload {
   option: string;
   image: string;
   published: string;
+  category_id: number;
 }
 
 export function cadastroProduto(payload: FormData) {

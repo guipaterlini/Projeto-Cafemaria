@@ -1,6 +1,6 @@
 import baseAPI from "./config";
 
-interface CarrinhoPayload {
+export interface CarrinhoPayload {
   cart_id?: number;
   user_id: number;
   product_id?: number;
