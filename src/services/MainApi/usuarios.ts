@@ -4,6 +4,7 @@ interface UsuarioPayload {
   name?: string;
   email: string;
   password: string;
+  role?: string;
 }
 
 export function cadastroUsuario(payload: UsuarioPayload) {
