@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from "react";
 import {
   deletarUsuario,
+  listarUsuario,
   listarUsuarios,
 } from "../../../../services/MainApi/usuarios";
-import FormModal from "../../Components/FormModal";
 import ListSectionHeader from "../../Components/ListSectionHeader";
 import { UserData } from "../../../../type";
-import TableCliente from "../TableCliente";
-
-export interface Column {
-  key: keyof UserData;
-  label: string;
-}
+import TableClient from "../TableCliente";
+import ClientModal from "../ClienteModal";
 
 interface ListSectionProps {
   title: string;
-  columns: Column[];
 }
 
-const ClienteSection: React.FC<ListSectionProps> = ({ title, columns }) => {
+const ClienteSection: React.FC<ListSectionProps> = ({ title }) => {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedClient, setSelectedClient] = useState<UserData | null>(null);
+  const [isCreatingClient, setIsCreatingClient] = useState(false);
 
   useEffect(() => {
     async function fetchListData() {
       try {
         const response = await listarUsuarios();
-        setData(response.data.result || []);
+        setData(response.data?.result || []);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados da lista:", error);
@@ -38,79 +34,79 @@ const ClienteSection: React.FC<ListSectionProps> = ({ title, columns }) => {
     fetchListData();
   }, []);
 
-  const handleEdit = (id: number) => {
-    setSelectedUserId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (id: number) => {
-    const confirmed = window.confirm("Tem certeza que deseja deletar?");
-    if (confirmed) {
-      deletarUsuario(id);
+  const fetchClientData = async (id: number) => {
+    try {
+      const response = await listarUsuario(id);
+      setSelectedClient(response.data.result);
+    } catch (error) {
+      console.error("Erro ao buscar dados do cliente:", error);
     }
   };
 
-  const handleAddUser = () => {
-    setSelectedUserId(null);
+  const handleCreateClientSuccess = async () => {
+    setIsCreatingClient(true);
+
+    try {
+      const response = await listarUsuarios();
+      setData(response.data?.result || []);
+    } catch (error) {
+      console.error("Erro ao buscar dados da lista:", error);
+    }
+
+    setIsCreatingClient(false);
+  };
+
+  const handleEdit = async (id: number) => {
+    setIsModalOpen(true);
+    await fetchClientData(id);
+  };
+
+  const handleDelete = async (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja deletar?");
+    if (!confirmed) return;
+
+    try {
+      await deletarUsuario(id);
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar cliente:", error);
+    }
+  };
+
+  const handleAddClient = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedClient(null);
   };
-
-  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
-  const fields = [
-    { label: "Nome", name: "name", type: "text", required: true },
-    { label: "Email", name: "email", type: "email", required: true },
-    { label: "Senha", name: "password", type: "password", required: true },
-  ];
 
   return (
     <div>
-      <ListSectionHeader title={title} onAddItem={handleAddUser} />
+      <ListSectionHeader title={title} onAddItem={handleAddClient} />
       {loading && <div>Carregando...</div>}
-      {!loading && data.length === 0 && <div>Nenhum usuário encontrado.</div>}
+      {isCreatingClient && <div>Cadastrando cliente...</div>}
+      {!loading && data.length === 0 && <div>Nenhum cliente encontrado.</div>}
       {!loading && data.length > 0 && (
         <>
-          <TableCliente
-            columns={columns}
+          <TableClient
             data={data}
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
           {isModalOpen && (
-            <div className="modal" onClick={handleOutsideClick}>
+            <div className="modal">
               <div className="modal-content">
-                <FormModal
+                <ClientModal
                   onClose={handleCloseModal}
-                  userId={selectedUserId}
-                  fields={fields}
-                  entityType="Produtos" // Tipo de entidade
-                  title={title}
+                  onCreateSuccess={handleCreateClientSuccess}
+                  client={selectedClient}
                 />
               </div>
             </div>
           )}
         </>
-      )}
-      {isModalOpen && (
-        <div className="modal" onClick={handleOutsideClick}>
-          <div className="modal-content">
-            <FormModal
-              onClose={handleCloseModal}
-              userId={selectedUserId}
-              fields={fields}
-              entityType="Produtos" // Tipo de entidade
-              title={title}
-            />
-          </div>
-        </div>
       )}
     </div>
   );

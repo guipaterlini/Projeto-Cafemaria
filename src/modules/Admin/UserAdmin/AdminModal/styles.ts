@@ -23,19 +23,17 @@ export const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
-  overflow-y: auto; /* Habilita a rolagem da página */
 `;
 
 export const ModalContent = styled.div`
   background-color: ${colors.fontSecondary};
   padding: 20px;
-  margin: 20px;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 50%;
+  width: 40%;
 
   h2 {
     width: 90%;
