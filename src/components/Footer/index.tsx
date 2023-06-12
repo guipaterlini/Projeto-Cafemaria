@@ -5,7 +5,7 @@ import {
   LinksContainer,
   FormNewsLetter,
 } from "./styles";
-import React from "react";
+import React, { useState } from "react";
 
 // Links da seção "Loja"
 const storeLinks = [
@@ -32,6 +32,14 @@ const aboutLinks = [
 ];
 
 export function Footer() {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = () => {
+    if (email.trim() !== "") {
+      alert("Obrigado por se inscrever!");
+    }
+  };
+
   return (
     <FooterDefault>
       {/* Seção da Newsletter */}
@@ -42,8 +50,18 @@ export function Footer() {
           lançamentos de produtos.
         </p>
         <FormNewsLetter>
-          <input type="text" name="email" placeholder="Seu melhor email" />
-          <button aria-label="Digite aqui seu endereço de email">
+          <input
+            type="text"
+            name="email"
+            placeholder="Seu melhor email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button
+            aria-label="Digite aqui seu endereço de email"
+            onClick={handleSubscribe}
+          >
             Inscreva-se
           </button>
         </FormNewsLetter>

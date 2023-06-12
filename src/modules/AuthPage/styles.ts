@@ -13,6 +13,14 @@ export const Form = styled.form`
   align-items: center;
   min-height: 50vh;
   justify-content: center;
+  span {
+    a{
+      transition: 300ms;
+      :hover {
+        font-weight: 700;
+      }
+    }
+  }
 `;
 
 const SharedStyles = css`
@@ -42,6 +50,12 @@ export const Button = styled.button`
   border-radius: 5px;
   background-color: #f2465c;
   font-weight: 500;
+  cursor: pointer;
+  transition: 300ms;
+
+  :hover {
+    opacity: 0.7;
+  }
 `;
 
 export const Span = styled.span`
