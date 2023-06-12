@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Footer } from "../../components/Footer";
-import Header from "../../components/Header";
+import { Footer } from "../../../components/Footer";
+import Header from "../../../components/Header";
 import {Container, ListItem, LogoutBtn} from "./styles";
 import { useNavigate } from "react-router-dom";
 
-export default function Pedidos() {
+export default function MinhaConta() {
   const [open, setOpen] = useState(false);
 
 

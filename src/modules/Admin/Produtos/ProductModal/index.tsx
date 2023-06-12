@@ -167,6 +167,7 @@ const ProductModal: React.FC<FormModalProps> = ({
           <label>
             Categoria:
             <select {...register("category_id", { required: true })}>
+              <option value="">Selecione uma categoria</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.title}
