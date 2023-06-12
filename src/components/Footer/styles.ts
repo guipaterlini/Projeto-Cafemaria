@@ -46,12 +46,13 @@ export const FormNewsLetter = styled.form`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  padding: 10px;
 
   input {
     border: none;
     border-radius: 20px;
     width: 70%;
+    padding: 10px 10px 10px 20px;
+    margin: 0;
   }
 
   button {
@@ -61,6 +62,12 @@ export const FormNewsLetter = styled.form`
     font-size: 0.8rem;
     font-weight: 600;
     line-height: 1rem;
+    transition: 300ms;
+
+    :hover {
+      font-weight: 700;
+      font-size: 1rem;
+    }
   }
 
   @media (max-width: 768px) {
@@ -124,6 +131,10 @@ export const LinksContainer = styled.div`
   a {
     font-size: 0.9rem;
     line-height: 26px;
+    transition: 300ms;
+    :hover {
+      opacity: 0.7;
+    }
   }
 
   @media (max-width: 480px) {

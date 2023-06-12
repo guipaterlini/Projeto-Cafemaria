@@ -29,6 +29,12 @@ export const FirstContainer = styled.div`
     font-weight: 600;
     margin-top: 30px;
     padding: 15px 45px;
+    cursor: pointer;
+    transition: 300ms;
+
+    :hover {
+      opacity: 0.7;
+    }
   }
 
   @media (max-width: 1024px) {

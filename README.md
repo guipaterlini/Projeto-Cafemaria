@@ -11,6 +11,9 @@ Você está no repositório Front-End.
 <br><br>
 Para visualizar o projeto, acesse:<br>
 https://projeto-cafemaria.vercel.app/
+* Use o Login Admin para acessar o painel adm<br>
+* email: admin@mail.com
+* senha: 123456789
 <br><br>
 Para ver o repositório back-End, acesse:<br>
  https://github.com/guipaterlini/Projeto-Cafemaria

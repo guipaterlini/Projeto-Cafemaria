@@ -44,11 +44,25 @@ export const ListDefault = styled.ul<Props>`
 
 export const ListItem = styled.li`
   font-weight: 600;
-  padding: 1.5rem;
+  margin: 1.5rem;
   text-decoration: none;
+  transition: 300ms;
+
+  :hover {
+    a,
+    button {
+      color: var(--cor-font-preta);
+      font-weight: 700;
+    }
+  }
 
   img {
     width: 30px;
+    transition: 300ms;
+    :hover {
+      width: 35px;
+      opacity: 0.7;
+    }
   }
 `;
 interface Props {
