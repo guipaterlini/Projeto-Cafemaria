@@ -46,6 +46,10 @@ export const ListItem = styled.li`
   font-weight: 600;
   padding: 1.5rem;
   text-decoration: none;
+
+  img {
+    width: 30px;
+  }
 `;
 interface Props {
   open: boolean;
