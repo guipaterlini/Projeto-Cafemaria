@@ -5,9 +5,8 @@ import MeuPerfil from "./pages/MeuPerfil";
 import Pedidos from "./pages/Pedidos";
 import Produto from "./modules/Produto/PagProduto";
 import Produtos from "./modules/Produto/PagProdutos";
-import Sucesso from "./pages/Sucesso";
+import Sucesso from "./modules/Carrinho/PagSucesso";
 import AuthPage from "./pages/AuthPage";
-import Contato from "./pages/Contato";
 import React from "react";
 import withAuth from "./components/ProtectedRoute";
 import PagAdmin from "./modules/Admin/PagAdmin";
@@ -26,12 +25,11 @@ export default function Router() {
         <Route path="/login" element={<AuthPage formType="login" />} />
         <Route path="/admin" element={<AdminRoute />} />
         <Route path="/produtos" element={<Produtos />} />
-        <Route path="/produto/:id" element={<Produto/>} />
+        <Route path="/produto/:id" element={<Produto />} />
         <Route path="/carrinho" element={<CarrinhoRoute />} />
         <Route path="/sucesso" element={<SucessoRoute />} />
         <Route path="/meuperfil/:email" element={<MeuPerfil />} />
         <Route path="/pedidos" element={<PedidoRoute />} />
-        <Route path="/contato" element={<Contato />} />
       </Routes>
     </BrowserRouter>
   );
