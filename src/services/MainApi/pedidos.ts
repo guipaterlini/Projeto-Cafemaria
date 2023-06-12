@@ -1,6 +1,6 @@
 import baseAPI from "./config";
 
-interface PedidoPayload {
+export interface PedidoPayload {
   cart_id?: number;
   buyer_id?: number;
   total_value: number;

@@ -2,8 +2,18 @@ import { useState } from "react";
 import { Footer } from "../../../components/Footer";
 import Header from "../../../components/Header";
 import * as jose from "jose";
-import { CarrinhoPayload, addToCart } from "../../../services/MainApi/carrinho";
-import { Button, Table } from "./style";
+import {
+  CarrinhoPayload,
+  addToCart,
+  deletarCarrinho,
+} from "../../../services/MainApi/carrinho";
+import { CancelButton, H1, OrderButton, Section, Table } from "./style";
+import { RiDeleteBinLine } from "react-icons/ri";
+import {
+  PedidoPayload,
+  cadastroPedido,
+} from "../../../services/MainApi/pedidos";
+import { useNavigate } from "react-router-dom";
 
 interface CartItem {
   product_id: number;
@@ -12,6 +22,7 @@ interface CartItem {
   product_quantity: number;
 }
 
+// Função para obter o ID do usuário a partir do token
 const getUserIdFromToken = (token: string | null) => {
   if (!token || typeof token === "undefined") {
     return null;
@@ -25,6 +36,7 @@ const getUserIdFromToken = (token: string | null) => {
   }
 };
 
+// Função para processar os itens do carrinho antes de exibi-los na tabela
 function preprocessCartItems(cartItems: CartItem[]): [CartItem[], number] {
   const processedCartItems: CartItem[] = [];
   const productMap = new Map<number, CartItem>();
@@ -56,6 +68,8 @@ export default function Carrinho() {
   const token = localStorage.getItem("token");
   const userID = token ? getUserIdFromToken(token) : null;
 
+  const navigate = useNavigate();
+
   const handleRemoveItem = (index: number) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
@@ -68,17 +82,54 @@ export default function Carrinho() {
     localStorage.removeItem("cartItems");
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
+    let pedidoCriado = false;
+    let cartId: number | undefined; // Variável para armazenar o ID do carrinho
+
     for (const item of processedCartItems) {
       const payload: CarrinhoPayload = {
         user_id: userID,
         product_id: item.product_id,
         product_quantity: item.product_quantity,
       };
-      addToCart(payload); // Chamar a função addToCart() com o payload adequado
+
+      const response = await addToCart(payload);
+      cartId = response.data.result.cart_id; // Acessando o valor de cart_id na resposta
+
+      console.log("Pedido fechado!");
+
+      // Não faça nada relacionado ao cadastroPedido aqui dentro do loop
+
+      if (response.status === 200) {
+        pedidoCriado = true;
+      } else {
+        pedidoCriado = false;
+        // Lógica para lidar com a falha ao adicionar item ao carrinho, se necessário
+      }
     }
 
-    console.log("Pedido fechado!");
+    // Cadastro do pedido fora do loop, após o processamento de todos os produtos do carrinho
+    if (pedidoCriado && cartId !== undefined) {
+      const pedidoPayload: PedidoPayload = {
+        cart_id: cartId,
+        total_value: totalPrice,
+        cart: processedCartItems.map((item) => item.product_title),
+        created_at: new Date().toISOString(),
+        buyer: userID?.toString() ?? "",
+      };
+
+      try {
+        await cadastroPedido(pedidoPayload);
+        // Excluir o carrinho somente se o pedido foi criado com sucesso
+        await deletarCarrinho(userID, cartId);
+        localStorage.removeItem("cartItems");
+        navigate("/sucesso"); // Redirecionar para "/sucesso"
+      } catch (error) {
+        console.error("Erro ao cadastrar pedido:", error);
+        alert("Erro ao cadastrar pedido, por favor tente mais tarde");
+        // Lógica para lidar com o erro de cadastro do pedido, se necessário
+      }
+    }
   };
 
   const [processedCartItems, totalPrice] = preprocessCartItems(cartItems);
@@ -87,8 +138,8 @@ export default function Carrinho() {
     <main>
       <Header open={open} setOpen={setOpen} />
 
-      <div>
-        <h1>Carrinho de Compras</h1>
+      <Section>
+        <H1>Carrinho de Compras</H1>
         {cartItems.length === 0 ? (
           <p>O carrinho está vazio.</p>
         ) : (
@@ -98,18 +149,21 @@ export default function Carrinho() {
                 <th>Produto</th>
                 <th>Quantidade</th>
                 <th>Preço Unitário</th>
-                <th>Ações</th>
+                <th>Remover</th>
               </tr>
             </thead>
             <tbody>
-              {processedCartItems.map((item: CartItem, index: number) => (
-                <tr key={index}>
+              {processedCartItems.map((item: CartItem) => (
+                <tr key={item.product_id}>
                   <td>{item.product_title}</td>
                   <td>{item.product_quantity}</td>
                   <td>R$ {item.product_price}</td>
                   <td>
-                    <button onClick={() => handleRemoveItem(index)}>
-                      Remover
+                    <button
+                      className="RemoveBtn"
+                      onClick={() => handleRemoveItem(item.product_id)}
+                    >
+                      <RiDeleteBinLine />
                     </button>
                   </td>
                 </tr>
@@ -117,17 +171,19 @@ export default function Carrinho() {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={2}></td>
-                <td>Total: R$ {totalPrice.toFixed(2)}</td>
+                <td className="tdTotal" colSpan={2}></td>
+                <td className="tdTotal">R$ {totalPrice.toFixed(2)}</td>
               </tr>
             </tfoot>
           </Table>
         )}
         <div>
-          <Button onClick={handleCancelCart}>Cancelar Carrinho</Button>
-          <Button onClick={handleCheckout}>Fechar Pedido</Button>
+          <CancelButton onClick={handleCancelCart}>
+            Cancelar Carrinho
+          </CancelButton>
+          <OrderButton onClick={handleCheckout}>Fechar Pedido</OrderButton>
         </div>
-      </div>
+      </Section>
 
       <Footer />
     </main>
