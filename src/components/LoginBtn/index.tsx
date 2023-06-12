@@ -28,7 +28,7 @@ const TokenButton: React.FC = () => {
       navigate("/login"); // Redireciona para a página de login
     } else {
       if (userType === "buyer") {
-        navigate("/pedidos"); // Redireciona para a página de pedidos para usuários compradores
+        navigate("/minhaconta"); // Redireciona para a página de pedidos para usuários compradores
       } else if (userType === "admin") {
         navigate("/admin"); // Redireciona para a página de administração para usuários administradores
       } else {

@@ -70,9 +70,10 @@ export default function Carrinho() {
 
   const navigate = useNavigate();
 
-  const handleRemoveItem = (index: number) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(index, 1);
+  const handleRemoveItem = (productId: number) => {
+    const updatedCartItems = cartItems.filter(
+      (item) => item.product_id !== productId
+    );
     setCartItems(updatedCartItems);
     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   };
