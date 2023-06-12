@@ -5,12 +5,12 @@ export const Container = styled.div`
   width: 50%;
   height: 50%;
   justify-content: center;
-  background-color: #F2E7DC;
+  background-color: #f2e7dc;
   flex-direction: column;
   border-radius: 0.938rem;
   padding: 1rem;
 
-  h1{
+  h1 {
     justify-content: center;
     text-align: center;
     align-items: center;
@@ -26,8 +26,8 @@ export const BotaoHome = styled.button`
   border-radius: 0.938rem;
   border: none;
   margin-bottom: 0.625rem;
-  
-  a{
+
+  a {
     font-family: var(--fonte-family);
     font-weight: 800;
     text-transform: uppercase;

@@ -12,7 +12,9 @@ export default function Sucesso() {
 
       <Container>
         <h1>Compra realizada com sucesso!</h1>
-        <BotaoHome><a href="*">Voltar a Página Inicial</a></BotaoHome>
+        <BotaoHome>
+          <a href="/">Voltar a Página Inicial</a>
+        </BotaoHome>
       </Container>
 
       <Footer />
