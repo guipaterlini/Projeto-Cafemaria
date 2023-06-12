@@ -3,7 +3,7 @@ import baseAPI from "./config";
 export interface PedidoPayload {
   id?: number;
   cart_id?: number;
-  buyer_id?: number;
+  user_id?: number;
   total_value?: number;
   cart?: string[];
   created_at?: string;

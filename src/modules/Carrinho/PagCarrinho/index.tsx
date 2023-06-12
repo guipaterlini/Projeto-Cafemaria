@@ -112,7 +112,8 @@ export default function Carrinho() {
     // Cadastro do pedido fora do loop, após o processamento de todos os produtos do carrinho
     if (pedidoCriado && cartId !== undefined) {
       const pedidoPayload: PedidoPayload = {
-        cart_id: cartId
+        cart_id: cartId,
+        user_id: userID
         // total_value: totalPrice,
         // cart: processedCartItems.map((item) => item.product_title),
         // created_at: new Date().toISOString(),
@@ -122,7 +123,7 @@ export default function Carrinho() {
       try {
         await cadastroPedido(pedidoPayload);
         // Excluir o carrinho somente se o pedido foi criado com sucesso
-        await deletarCarrinho(userID, cartId);
+        await deletarCarrinho(cartId);
         localStorage.removeItem("cartItems");
         navigate("/sucesso"); // Redirecionar para "/sucesso"
       } catch (error) {
