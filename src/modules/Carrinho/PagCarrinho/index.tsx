@@ -112,11 +112,11 @@ export default function Carrinho() {
     // Cadastro do pedido fora do loop, após o processamento de todos os produtos do carrinho
     if (pedidoCriado && cartId !== undefined) {
       const pedidoPayload: PedidoPayload = {
-        cart_id: cartId,
-        total_value: totalPrice,
-        cart: processedCartItems.map((item) => item.product_title),
-        created_at: new Date().toISOString(),
-        buyer: userID?.toString() ?? "",
+        cart_id: cartId
+        // total_value: totalPrice,
+        // cart: processedCartItems.map((item) => item.product_title),
+        // created_at: new Date().toISOString(),
+        // buyer: userID?.toString() ?? "",
       };
 
       try {

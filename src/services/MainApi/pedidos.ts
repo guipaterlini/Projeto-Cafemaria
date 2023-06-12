@@ -4,10 +4,10 @@ export interface PedidoPayload {
   id?: number;
   cart_id?: number;
   buyer_id?: number;
-  total_value: number;
-  cart: string[];
-  created_at: string;
-  buyer: string;
+  total_value?: number;
+  cart?: string[];
+  created_at?: string;
+  buyer?: string;
   order_status?: string;
 }
 
